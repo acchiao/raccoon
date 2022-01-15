@@ -1,0 +1,85 @@
+name: CI
+
+on:
+  push:
+  workflow_dispatch:
+
+env:
+  TF_VERSION: 1.1.3
+
+jobs:
+  tfsec:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: "Checkout ${{ github.ref }} [${{ github.sha }}]"
+        uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+
+      - name: Scan
+        run: |
+          wget -nv https://github.com/aquasecurity/tfsec/releases/download/v0.63.1/tfsec-linux-amd64
+          echo "feb3999ab1f846f2099498a32751fdb6fe2705e83e220e0d934239b10e92cf98  tfsec-linux-amd64" | sha256sum -c
+
+          wget -nv https://github.com/aquasecurity/tfsec/releases/download/v0.63.1/tfsec-linux-amd64.D66B222A3EA4C25D5D1A097FC34ACEFB46EC39CE.sig
+          echo "745d1671a070c2abeab35d50284489cf37ea5c0fea37b5999ec5273ba743dec4  tfsec-linux-amd64.D66B222A3EA4C25D5D1A097FC34ACEFB46EC39CE.sig" | sha256sum -c
+
+          gpg --import < tfsec.asc
+          gpg --list-keys signing@tfsec.dev
+          gpg --verify tfsec-linux-amd64.D66B222A3EA4C25D5D1A097FC34ACEFB46EC39CE.sig tfsec-linux-amd64
+
+          chmod +x tfsec-linux-amd64
+          sudo mv -vn tfsec-linux-amd64 /usr/local/bin/tfsec
+          tfsec .
+
+  validate:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: "Checkout ${{ github.ref }} [${{ github.sha }}]"
+        uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+
+      - name: Setup Terraform v${{ env.TF_VERSION }}
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: ${{ env.TF_VERSION }}
+
+      - name: Initalize
+        run: terraform init -backend=false
+
+      - name: Validate
+        run: terraform validate
+
+      - name: Lint
+        run: terraform fmt -list -diff -recursive -check
+
+  drift:
+    runs-on: ubuntu-20.04
+    environment:
+      name: core
+    steps:
+      - name: "Checkout ${{ github.ref }} [${{ github.sha }}]"
+        uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+
+      - name: Setup Terraform v${{ env.TF_VERSION }}
+        uses: hashicorp/setup-terraform@v1
+        with:
+          cli_config_credentials_hostname: app.terraform.io
+          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+          terraform_version: ${{ env.TF_VERSION }}
+
+      - name: Initalize
+        run: terraform init -backend-config=env/core.hcl
+
+      - name: Validate
+        run:
+          terraform refresh -var-file=env/core.tfvars
+          terraform plan -var-file=env/core.tfvars -out=core.tplan
+
+      - name: Cleanup
+        run: |
+          find . -type d -name ".terraform" -print -prune -exec rm -rf {} +;
+          terraform logout
