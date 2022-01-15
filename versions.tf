@@ -5,7 +5,7 @@ terraform {
     # https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs
     digitalocean = {
       source  = "digitalocean/digitalocean"
-      version = "~> 2.16.0"
+      version = "~> 2.17.0"
     }
 
     # https://registry.terraform.io/providers/hashicorp/random/latest/docs
