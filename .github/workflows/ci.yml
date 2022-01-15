@@ -58,6 +58,9 @@ jobs:
     runs-on: ubuntu-20.04
     environment:
       name: core
+    needs:
+      - tfsec
+      - validate
     steps:
       - name: "Checkout ${{ github.ref }} [${{ github.sha }}]"
         uses: actions/checkout@v2
@@ -75,11 +78,11 @@ jobs:
         run: terraform init -backend-config=env/core.hcl
 
       - name: Validate
-        run:
+        run: |
           terraform refresh -var-file=env/core.tfvars
           terraform plan -var-file=env/core.tfvars -out=core.tplan
 
       - name: Cleanup
         run: |
+          find . -type f -name "*.tfplan" -print -delete;
           find . -type d -name ".terraform" -print -prune -exec rm -rf {} +;
-          terraform logout
