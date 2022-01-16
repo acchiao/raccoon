@@ -78,9 +78,11 @@ jobs:
         run: terraform init -backend-config=env/core.hcl
 
       - name: Validate
+        env:
+          DIGITALOCEAN_TOKEN: ${{ secrets.DIGITALOCEAN_TOKEN }}
         run: |
           terraform refresh -var-file=env/core.tfvars
-          terraform plan -var-file=env/core.tfvars -out=core.tplan
+          terraform plan -var-file=env/core.tfvars -out=core.tplan -detailed-exitcode
 
       - name: Cleanup
         run: |
