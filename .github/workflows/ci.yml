@@ -89,7 +89,7 @@ jobs:
       - name: Initalize Terraform Workspace
         run: terraform init -backend-config=env/core.hcl
 
-      - name: Detect Drift
+      - name: Detect Resource Drift
         env:
           DIGITALOCEAN_TOKEN: ${{ secrets.DIGITALOCEAN_TOKEN }}
         run: |
@@ -97,6 +97,7 @@ jobs:
           terraform plan -var-file=env/core.tfvars -out=core.tplan -detailed-exitcode
 
       - name: Cleanup Workspace
+        if: always()
         run: |
           find . -type f -name "*.tfplan" -print -delete;
           find . -type d -name ".terraform" -print -prune -exec rm -rf {} +;
