@@ -8,8 +8,11 @@ resource "digitalocean_kubernetes_cluster" "raccoon" {
   name   = "${var.do_project_name}-${random_id.cluster.hex}"
   region = var.do_cluster_region
 
-  auto_upgrade = true
-  version      = data.digitalocean_kubernetes_versions.prefix.latest_version
+  version  = data.digitalocean_kubernetes_versions.prefix.latest_version
+  vpc_uuid = digitalocean_vpc.raccoon.id
+
+  auto_upgrade  = true
+  surge_upgrade = true
 
   maintenance_policy {
     day        = "monday"
@@ -29,6 +32,6 @@ resource "digitalocean_container_registry" "raccoon" {
 }
 
 resource "digitalocean_vpc" "raccoon" {
-  name     = "vpc-${var.do_project_name}-${var.do_cluster_region}-${random_id.vpc.hex}"
-  region   = var.do_cluster_region
+  name   = "vpc-${var.do_project_name}-${var.do_cluster_region}-${random_id.vpc.hex}"
+  region = var.do_cluster_region
 }
