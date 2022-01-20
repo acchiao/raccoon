@@ -8,6 +8,12 @@ terraform {
       version = "~> 2.17.0"
     }
 
+    # https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs
+    kubernetes = {
+      source  = "hashicorp/kubernetes"
+      version = "~> 2.7.1"
+    }
+
     # https://registry.terraform.io/providers/hashicorp/random/latest/docs
     random = {
       source  = "hashicorp/random"
