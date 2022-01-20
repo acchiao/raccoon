@@ -5,7 +5,7 @@ resource "digitalocean_project" "raccoon" {
 }
 
 resource "digitalocean_kubernetes_cluster" "raccoon" {
-  name   = "${var.do_project_name}-${random_id.cluster.id}"
+  name   = "${var.do_project_name}-${random_id.cluster.hex}"
   region = var.do_cluster_region
 
   auto_upgrade = true
@@ -17,13 +17,18 @@ resource "digitalocean_kubernetes_cluster" "raccoon" {
   }
 
   node_pool {
-    name       = "${var.do_project_name}-${random_id.pool.id}"
+    name       = "${var.do_project_name}-${random_id.pool.hex}"
     size       = var.do_cluster_size
     node_count = var.do_node_count
   }
 }
 
 resource "digitalocean_container_registry" "raccoon" {
-  name                   = "${var.do_project_name}-${random_id.registry.id}"
+  name                   = "${var.do_project_name}-${random_id.registry.hex}"
   subscription_tier_slug = "starter"
+}
+
+resource "digitalocean_vpc" "raccoon" {
+  name     = "vpc-${var.do_project_name}-${var.do_cluster_region}-${random_id.vpc.hex}"
+  region   = var.do_cluster_region
 }
