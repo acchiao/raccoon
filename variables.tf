@@ -4,6 +4,12 @@ variable "do_project_name" {
   default     = ""
 }
 
+variable "do_project_purpose" {
+  description = "The DigitalOcean project purpose."
+  type        = string
+  default     = "Web Application"
+}
+
 variable "do_project_environment" {
   description = "The DigitalOcean project environment."
   type        = string
