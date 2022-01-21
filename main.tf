@@ -14,15 +14,18 @@ resource "digitalocean_kubernetes_cluster" "raccoon" {
   auto_upgrade  = true
   surge_upgrade = true
 
-  maintenance_policy {
-    day        = "monday"
-    start_time = "00:00"
-  }
-
   node_pool {
     name       = "${var.do_project_name}-${random_id.pool.hex}"
     size       = var.do_cluster_size
     node_count = var.do_node_count
+    auto_scale = true
+    min_nodes  = 1
+    max_nodes  = 2
+  }
+
+  maintenance_policy {
+    day        = "monday"
+    start_time = "00:00"
   }
 }
 
