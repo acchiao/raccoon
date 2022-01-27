@@ -15,5 +15,5 @@ output "cluster_version" {
 
 output "node_count" {
   description = "The current node count."
-  value = digitalocean_kubernetes_cluster.raccoon.node_pool[0].actual_node_count
+  value       = digitalocean_kubernetes_cluster.raccoon.node_pool[0].actual_node_count
 }

@@ -8,16 +8,22 @@ terraform {
       version = "~> 2.17.0"
     }
 
+    # https://registry.terraform.io/providers/hashicorp/random/latest/docs
+    random = {
+      source  = "hashicorp/random"
+      version = "~> 3.1.0"
+    }
+
     # https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs
     kubernetes = {
       source  = "hashicorp/kubernetes"
       version = "~> 2.7.1"
     }
 
-    # https://registry.terraform.io/providers/hashicorp/random/latest/docs
-    random = {
-      source  = "hashicorp/random"
-      version = "~> 3.1.0"
+    # https://registry.terraform.io/providers/hashicorp/helm/latest/docs
+    helm = {
+      source = "hashicorp/helm"
+      version = "2.4.1"
     }
   }
 
@@ -29,4 +35,12 @@ terraform {
       prefix = "raccoon-"
     }
   }
+
+  # cloud {
+  #   organization = "acchiao"
+
+  #   workspaces {
+  #     tags = ["raccoon"]
+  #   }
+  # }
 }

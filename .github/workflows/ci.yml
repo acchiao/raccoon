@@ -34,7 +34,7 @@ jobs:
           wget -nv https://github.com/aquasecurity/tfsec/releases/download/v0.63.1/tfsec-linux-amd64.D66B222A3EA4C25D5D1A097FC34ACEFB46EC39CE.sig
           echo "745d1671a070c2abeab35d50284489cf37ea5c0fea37b5999ec5273ba743dec4  tfsec-linux-amd64.D66B222A3EA4C25D5D1A097FC34ACEFB46EC39CE.sig" | sha256sum -c
 
-          gpg --import < tfsec.asc
+          gpg --import < tfsec/tfsec.asc
           gpg --list-keys signing@tfsec.dev
           gpg --verify tfsec-linux-amd64.D66B222A3EA4C25D5D1A097FC34ACEFB46EC39CE.sig tfsec-linux-amd64
 

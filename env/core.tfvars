@@ -1,7 +1,6 @@
-do_project_name        = "raccoon"
-do_project_purpose     = "Operational / Developer tooling"
-do_project_environment = "development"
-do_cluster_version     = "1.21.5-do.0"
-do_cluster_region      = "nyc1"
-do_cluster_size        = "s-1vcpu-2gb"
-do_node_count          = 1
+cluster_region      = "nyc1"
+cluster_size        = "s-1vcpu-2gb"
+node_count          = 1
+project_environment = "development"
+project_name        = "raccoon"
+project_purpose     = "Operational / Developer tooling"

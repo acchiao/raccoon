@@ -1,12 +1,12 @@
 resource "digitalocean_project" "raccoon" {
-  name        = var.do_project_name
-  purpose     = var.do_project_purpose
-  environment = var.do_project_environment
+  name        = var.project_name
+  purpose     = var.project_purpose
+  environment = var.project_environment
 }
 
 resource "digitalocean_kubernetes_cluster" "raccoon" {
-  name   = "${var.do_project_name}-${random_id.cluster.hex}"
-  region = var.do_cluster_region
+  name   = "${var.project_name}-${random_id.cluster.hex}"
+  region = var.cluster_region
 
   version  = data.digitalocean_kubernetes_versions.prefix.latest_version
   vpc_uuid = digitalocean_vpc.raccoon.id
@@ -15,9 +15,9 @@ resource "digitalocean_kubernetes_cluster" "raccoon" {
   surge_upgrade = true
 
   node_pool {
-    name       = "${var.do_project_name}-${random_id.pool.hex}"
-    size       = var.do_cluster_size
-    node_count = var.do_node_count
+    name       = "${var.project_name}-${random_id.pool.hex}"
+    size       = var.cluster_size
+    node_count = var.node_count
     auto_scale = true
     min_nodes  = 1
     max_nodes  = 2
@@ -30,11 +30,11 @@ resource "digitalocean_kubernetes_cluster" "raccoon" {
 }
 
 resource "digitalocean_container_registry" "raccoon" {
-  name                   = "${var.do_project_name}-${random_id.registry.hex}"
+  name                   = "${var.project_name}-${random_id.registry.hex}"
   subscription_tier_slug = "starter"
 }
 
 resource "digitalocean_vpc" "raccoon" {
-  name   = "vpc-${var.do_project_name}-${var.do_cluster_region}-${random_id.vpc.hex}"
-  region = var.do_cluster_region
+  name   = "vpc-${var.project_name}-${var.cluster_region}-${random_id.vpc.hex}"
+  region = var.cluster_region
 }
