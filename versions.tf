@@ -22,7 +22,7 @@ terraform {
 
     # https://registry.terraform.io/providers/hashicorp/helm/latest/docs
     helm = {
-      source = "hashicorp/helm"
+      source  = "hashicorp/helm"
       version = "2.4.1"
     }
   }

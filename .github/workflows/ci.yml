@@ -1,3 +1,5 @@
+# https://docs.github.com/en/actions/security-guides/security-hardening-for-github-actions
+
 name: CI
 
 on:
@@ -14,15 +16,15 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  TF_VERSION: 1.1.3
+  TF_VERSION: 1.1.4
 
 jobs:
   tfsec:
-    name: "Static Analysis"
+    name: tfsec Static Analysis
     runs-on: ubuntu-20.04
     steps:
-      - name: "Checkout ${{ github.ref }} [${{ github.sha }}]"
-        uses: actions/checkout@v2
+      - name: Checkout ${{ github.ref }} [${{ github.sha }}]
+        uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579 #v2.4.0
         with:
           persist-credentials: false
 
@@ -42,17 +44,33 @@ jobs:
           mv -vn tfsec-linux-amd64 /usr/local/bin/tfsec
           tfsec .
 
-  validate:
-    name: "Validation"
+  snyk:
+    name: Snyk IaC
     runs-on: ubuntu-20.04
     steps:
-      - name: "Checkout ${{ github.ref }} [${{ github.sha }}]"
-        uses: actions/checkout@v2
+      - name: Checkout ${{ github.ref }} [${{ github.sha }}]
+        uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579 #v2.4.0
+        with:
+          persist-credentials: false
+
+      - name: Snyk Test
+        uses: snyk/actions/iac@14818c4695ecc4045f33c9cee9e795a788711ca4
+        with:
+          file: main.tf
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
+  validate:
+    name: Validation
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout ${{ github.ref }} [${{ github.sha }}]
+        uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579 #v2.4.0
         with:
           persist-credentials: false
 
       - name: Setup Terraform v${{ env.TF_VERSION }}
-        uses: hashicorp/setup-terraform@v1
+        uses: hashicorp/setup-terraform@3d8debd658c92063839bc97da5c2427100420dec #v1.3.2
         with:
           terraform_version: ${{ env.TF_VERSION }}
 
@@ -66,7 +84,7 @@ jobs:
         run: terraform fmt -list -diff -recursive -check
 
   drift:
-    name: "Drift Detection"
+    name: Drift Detection
     runs-on: ubuntu-20.04
     environment:
       name: core
@@ -74,16 +92,16 @@ jobs:
       - tfsec
       - validate
     steps:
-      - name: "Checkout ${{ github.ref }} [${{ github.sha }}]"
-        uses: actions/checkout@v2
+      - name: Checkout ${{ github.ref }} [${{ github.sha }}]
+        uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579 #v2.4.0
         with:
           persist-credentials: false
 
       - name: Setup Terraform v${{ env.TF_VERSION }}
-        uses: hashicorp/setup-terraform@v1
+        uses: hashicorp/setup-terraform@3d8debd658c92063839bc97da5c2427100420dec #v1.3.2
         with:
           cli_config_credentials_hostname: app.terraform.io
-          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+          cli_config_credentials_token: ${{ secrets.TERRAFORM_TOKEN }}
           terraform_version: ${{ env.TF_VERSION }}
 
       - name: Initalize Terraform Workspace
