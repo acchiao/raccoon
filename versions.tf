@@ -27,20 +27,12 @@ terraform {
     }
   }
 
-  backend "remote" {
-    hostname     = "app.terraform.io"
+  cloud {
     organization = "acchiao"
+    hostname     = "app.terraform.io"
 
     workspaces {
-      prefix = "raccoon-"
+      tags = ["raccoon"]
     }
   }
-
-  # cloud {
-  #   organization = "acchiao"
-
-  #   workspaces {
-  #     tags = ["raccoon"]
-  #   }
-  # }
 }

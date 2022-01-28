@@ -20,7 +20,7 @@ env:
 
 jobs:
   tfsec:
-    name: tfsec Static Analysis
+    name: Static Analysis
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout ${{ github.ref }} [${{ github.sha }}]
@@ -28,7 +28,7 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Run tfsec Static Analysis
+      - name: Run tfsec
         run: |
           wget -nv https://github.com/aquasecurity/tfsec/releases/download/v0.63.1/tfsec-linux-amd64
           echo "feb3999ab1f846f2099498a32751fdb6fe2705e83e220e0d934239b10e92cf98  tfsec-linux-amd64" | sha256sum -c
@@ -53,7 +53,7 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Snyk Test
+      - name: Run snyk iac test
         uses: snyk/actions/iac@14818c4695ecc4045f33c9cee9e795a788711ca4
         with:
           file: main.tf
@@ -74,10 +74,10 @@ jobs:
         with:
           terraform_version: ${{ env.TF_VERSION }}
 
-      - name: Initalize Terraform Workspace
+      - name: Initalize Terraform workspace
         run: terraform init -backend=false
 
-      - name: Validate Configuration Files
+      - name: Validate configuration files
         run: terraform validate
 
       - name: Lint
@@ -107,14 +107,14 @@ jobs:
       - name: Initalize Terraform Workspace
         run: terraform init -backend-config=env/core.hcl
 
-      - name: Detect Resource Drift
+      - name: Detect resource drift
         env:
           DIGITALOCEAN_TOKEN: ${{ secrets.DIGITALOCEAN_TOKEN }}
         run: |
           terraform refresh -var-file=env/core.tfvars
           terraform plan -var-file=env/core.tfvars -out=core.tplan -detailed-exitcode
 
-      - name: Cleanup Workspace
+      - name: Cleanup workspace
         if: always()
         run: |
           find . -type f -name "*.tfplan" -print -delete;
