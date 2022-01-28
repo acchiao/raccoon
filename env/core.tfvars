@@ -1,5 +1,6 @@
 cluster_region      = "nyc1"
 cluster_size        = "s-1vcpu-2gb"
+domain_name         = "acchiao.com"
 node_count          = 1
 project_environment = "development"
 project_name        = "raccoon"

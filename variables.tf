@@ -33,3 +33,9 @@ variable "node_count" {
   type        = number
   default     = 1
 }
+
+variable "domain_name" {
+  description = "The name of the DigitalOcean domain resource."
+  type        = string
+  default     = ""
+}

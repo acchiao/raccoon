@@ -27,6 +27,7 @@ alias tf="terraform"
 terraform init -upgrade
 terraform validate
 terraform fmt -list=true -write=true -recursive -diff
-terraform refresh -var-file=env/$(tf workspace show).tfvars
-terraform plan -var-file=env/$(tf workspace show).tfvars -out=$(tf workspace show).tfplan
+terraform refresh -var-file=env/$(terraform workspace show).tfvars
+terraform plan -var-file=env/$(terraform workspace show).tfvars -out=$(terraform workspace show).tfplan
+terraform output
 ```

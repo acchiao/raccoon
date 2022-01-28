@@ -38,3 +38,7 @@ resource "digitalocean_vpc" "raccoon" {
   name   = "vpc-${var.project_name}-${var.cluster_region}-${random_id.vpc.hex}"
   region = var.cluster_region
 }
+
+resource "digitalocean_domain" "raccoon" {
+  name = var.domain_name
+}
