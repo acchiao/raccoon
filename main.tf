@@ -20,7 +20,7 @@ resource "digitalocean_kubernetes_cluster" "raccoon" {
     node_count = var.node_count
     auto_scale = true
     min_nodes  = 1
-    max_nodes  = 2
+    max_nodes  = 1
   }
 
   maintenance_policy {

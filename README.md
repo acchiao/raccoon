@@ -31,3 +31,15 @@ terraform refresh -var-file=env/$(terraform workspace show).tfvars
 terraform plan -var-file=env/$(terraform workspace show).tfvars -out=$(terraform workspace show).tfplan
 terraform output
 ```
+
+## Stack
+
+- [cert-manager]
+- [external-dns]
+- [kubed]
+- [linkerd]
+
+[cert-manager]: https://cert-manager.io/
+[external-dns]: https://github.com/kubernetes-sigs/external-dns/
+[kubed]: https://appscode.com/products/kubed/
+[linkerd]: https://linkerd.io/
