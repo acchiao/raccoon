@@ -1,0 +1,5 @@
+domain_name         = "acchiao.com"
+environment         = "core"
+project_environment = "production"
+project_name        = "raccoon"
+region              = "nyc1"

@@ -5,6 +5,10 @@ updates:
     schedule:
       interval: "daily"
   - package-ecosystem: "terraform"
-    directory: "/"
+    directory: "core"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "terraform"
+    directory: "stack"
     schedule:
       interval: "daily"

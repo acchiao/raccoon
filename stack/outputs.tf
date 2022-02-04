@@ -1,6 +1,6 @@
 output "project_name" {
-  description = "The DigitalOcean Kubernetes cluster name."
-  value       = digitalocean_project.raccoon.name
+  description = "The DigitalOcean project name."
+  value       = data.terraform_remote_state.raccoon.outputs.project_name
 }
 
 output "cluster_name" {

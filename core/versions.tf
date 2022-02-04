@@ -13,18 +13,6 @@ terraform {
       source  = "hashicorp/random"
       version = "~> 3.1.0"
     }
-
-    # https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs
-    kubernetes = {
-      source  = "hashicorp/kubernetes"
-      version = "~> 2.7.1"
-    }
-
-    # https://registry.terraform.io/providers/hashicorp/helm/latest/docs
-    helm = {
-      source  = "hashicorp/helm"
-      version = "2.4.1"
-    }
   }
 
   cloud {
@@ -32,7 +20,7 @@ terraform {
     hostname     = "app.terraform.io"
 
     workspaces {
-      tags = ["raccoon"]
+      tags = ["raccoon", "core"]
     }
   }
 }

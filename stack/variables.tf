@@ -1,0 +1,40 @@
+variable "region" {
+  description = "See `doctl kubernetes options regions`."
+  type        = string
+  default     = "nyc1"
+}
+
+variable "cluster_size" {
+  description = "See `doctl kubernetes options sizes`."
+  type        = string
+  default     = "s-1vcpu-2gb"
+}
+
+variable "node_count" {
+  description = "The number of Droplet instances in the node pool."
+  type        = number
+  default     = 1
+}
+
+variable "environment" {
+  description = "The project environment."
+  type        = string
+}
+
+variable "auto_scale" {
+  description = "Enable auto-scaling for the Kubernetes cluster within given min/max node range."
+  type        = bool
+  default     = true
+}
+
+variable "min_nodes" {
+  description = "If auto-scaling is enabled, this represents the minimum number of nodes that the node pool can be scaled down to."
+  type        = number
+  default     = 1
+}
+
+variable "max_nodes" {
+  description = "If auto-scaling is enabled, this represents the maximum number of nodes that the node pool can be scaled up to."
+  type        = number
+  default     = 1
+}

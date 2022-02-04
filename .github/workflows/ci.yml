@@ -24,7 +24,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout ${{ github.ref }} [${{ github.sha }}]
-        uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579 #v2.4.0
+        uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579 # v2.4.0
         with:
           persist-credentials: false
 
@@ -44,33 +44,17 @@ jobs:
           mv -vn tfsec-linux-amd64 /usr/local/bin/tfsec
           tfsec .
 
-  snyk:
-    name: Snyk IaC
-    runs-on: ubuntu-20.04
-    steps:
-      - name: Checkout ${{ github.ref }} [${{ github.sha }}]
-        uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579 #v2.4.0
-        with:
-          persist-credentials: false
-
-      - name: Run snyk iac test
-        uses: snyk/actions/iac@14818c4695ecc4045f33c9cee9e795a788711ca4
-        with:
-          file: main.tf
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-
   validate:
     name: Validation
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout ${{ github.ref }} [${{ github.sha }}]
-        uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579 #v2.4.0
+        uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579 # v2.4.0
         with:
           persist-credentials: false
 
       - name: Setup Terraform v${{ env.TF_VERSION }}
-        uses: hashicorp/setup-terraform@3d8debd658c92063839bc97da5c2427100420dec #v1.3.2
+        uses: hashicorp/setup-terraform@3d8debd658c92063839bc97da5c2427100420dec # v1.3.2
         with:
           terraform_version: ${{ env.TF_VERSION }}
 
@@ -80,42 +64,58 @@ jobs:
       - name: Validate configuration files
         run: terraform validate
 
-      - name: Lint
+      - name: Lint configuration files
         run: terraform fmt -list -diff -recursive -check
 
-  drift:
-    name: Drift Detection
-    runs-on: ubuntu-20.04
-    environment:
-      name: core
-    needs:
-      - tfsec
-      - validate
-    steps:
-      - name: Checkout ${{ github.ref }} [${{ github.sha }}]
-        uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579 #v2.4.0
-        with:
-          persist-credentials: false
+  # snyk:
+  #   name: Snyk IaC
+  #   runs-on: ubuntu-20.04
+  #   steps:
+  #     - name: Checkout ${{ github.ref }} [${{ github.sha }}]
+  #       uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579 # v2.4.0
+  #       with:
+  #         persist-credentials: false
 
-      - name: Setup Terraform v${{ env.TF_VERSION }}
-        uses: hashicorp/setup-terraform@3d8debd658c92063839bc97da5c2427100420dec #v1.3.2
-        with:
-          cli_config_credentials_hostname: app.terraform.io
-          cli_config_credentials_token: ${{ secrets.TERRAFORM_TOKEN }}
-          terraform_version: ${{ env.TF_VERSION }}
+  #     - name: Run snyk iac test
+  #       uses: snyk/actions/iac@14818c4695ecc4045f33c9cee9e795a788711ca4
+  #       with:
+  #         file: main.tf
+  #       env:
+  #         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
-      - name: Initalize Terraform Workspace
-        run: terraform init -backend-config=env/core.hcl
+  # drift:
+  #   name: Drift Detection
+  #   runs-on: ubuntu-20.04
+  #   environment:
+  #     name: core
+  #   needs:
+  #     - tfsec
+  #     - validate
+  #   steps:
+  #     - name: Checkout ${{ github.ref }} [${{ github.sha }}]
+  #       uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579 # v2.4.0
+  #       with:
+  #         persist-credentials: false
 
-      - name: Detect resource drift
-        env:
-          DIGITALOCEAN_TOKEN: ${{ secrets.DIGITALOCEAN_TOKEN }}
-        run: |
-          terraform refresh -var-file=env/core.tfvars
-          terraform plan -var-file=env/core.tfvars -out=core.tplan -detailed-exitcode
+  #     - name: Setup Terraform v${{ env.TF_VERSION }}
+  #       uses: hashicorp/setup-terraform@3d8debd658c92063839bc97da5c2427100420dec # v1.3.2
+  #       with:
+  #         cli_config_credentials_hostname: app.terraform.io
+  #         cli_config_credentials_token: ${{ secrets.TERRAFORM_TOKEN }}
+  #         terraform_version: ${{ env.TF_VERSION }}
 
-      - name: Cleanup workspace
-        if: always()
-        run: |
-          find . -type f -name "*.tfplan" -print -delete;
-          find . -type d -name ".terraform" -print -prune -exec rm -rf {} +;
+  #     - name: Initalize Terraform Workspace
+  #       run: terraform init -backend-config=env/core.hcl
+
+  #     - name: Detect resource drift
+  #       env:
+  #         DIGITALOCEAN_TOKEN: ${{ secrets.DIGITALOCEAN_TOKEN }}
+  #       run: |
+  #         terraform refresh -var-file=env/core.tfvars
+  #         terraform plan -var-file=env/core.tfvars -out=core.tplan -detailed-exitcode
+
+  #     - name: Cleanup workspace
+  #       if: always()
+  #       run: |
+  #         find . -type f -name "*.tfplan" -print -delete;
+  #         find . -type d -name ".terraform" -print -prune -exec rm -rf {} +;
