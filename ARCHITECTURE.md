@@ -2,8 +2,6 @@
 
 ---
 
-## Core
-
 ### Requirements
 
 | Name | Version |
@@ -28,7 +26,9 @@ No modules.
 | Name | Type |
 |------|------|
 | [digitalocean_container_registry.raccoon](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/resources/container_registry) | resource |
+| [digitalocean_domain.raccoon](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/resources/domain) | resource |
 | [digitalocean_project.raccoon](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/resources/project) | resource |
+| [digitalocean_project_resources.raccoon](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/resources/project_resources) | resource |
 | [digitalocean_vpc.raccoon](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/resources/vpc) | resource |
 | [random_id.registry](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/id) | resource |
 | [random_id.vpc](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/id) | resource |
@@ -39,7 +39,7 @@ No modules.
 |------|-------------|------|---------|:--------:|
 | <a name="input_domain_name"></a> [domain\_name](#input\_domain\_name) | The name of the DigitalOcean domain resource. | `string` | `""` | no |
 | <a name="input_environment"></a> [environment](#input\_environment) | The project environment. | `string` | n/a | yes |
-| <a name="input_project_environment"></a> [project\_environment](#input\_project\_environment) | The DigitalOcean project environment. The possible values are: `Development`, `Staging`, `Production`. | `string` | n/a | yes |
+| <a name="input_project_environment"></a> [project\_environment](#input\_project\_environment) | The DigitalOcean project environment. The possible values are: `Development`, `Staging`, `Production`. | `string` | `"Production"` | no |
 | <a name="input_project_name"></a> [project\_name](#input\_project\_name) | The DigitalOcean project name. | `string` | n/a | yes |
 | <a name="input_region"></a> [region](#input\_region) | See `doctl kubernetes options regions`. | `string` | `"nyc1"` | no |
 
@@ -81,6 +81,8 @@ No modules.
 | Name | Type |
 |------|------|
 | [digitalocean_kubernetes_cluster.raccoon](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/resources/kubernetes_cluster) | resource |
+| [digitalocean_project.raccoon](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/resources/project) | resource |
+| [digitalocean_project_resources.raccoon](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/resources/project_resources) | resource |
 | [digitalocean_vpc.raccoon](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/resources/vpc) | resource |
 | [random_id.cluster](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/id) | resource |
 | [random_id.pool](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/id) | resource |
@@ -99,6 +101,8 @@ No modules.
 | <a name="input_max_nodes"></a> [max\_nodes](#input\_max\_nodes) | If auto-scaling is enabled, this represents the maximum number of nodes that the node pool can be scaled up to. | `number` | `1` | no |
 | <a name="input_min_nodes"></a> [min\_nodes](#input\_min\_nodes) | If auto-scaling is enabled, this represents the minimum number of nodes that the node pool can be scaled down to. | `number` | `1` | no |
 | <a name="input_node_count"></a> [node\_count](#input\_node\_count) | The number of Droplet instances in the node pool. | `number` | `1` | no |
+| <a name="input_project_environment"></a> [project\_environment](#input\_project\_environment) | The DigitalOcean project environment. The possible values are: `Development`, `Staging`, `Production`. | `string` | `"Production"` | no |
+| <a name="input_project_name"></a> [project\_name](#input\_project\_name) | The DigitalOcean project name. | `string` | n/a | yes |
 | <a name="input_region"></a> [region](#input\_region) | See `doctl kubernetes options regions`. | `string` | `"nyc1"` | no |
 
 ### Outputs

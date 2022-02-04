@@ -1,3 +1,19 @@
+variable "environment" {
+  description = "The project environment."
+  type        = string
+}
+
+variable "project_name" {
+  description = "The DigitalOcean project name."
+  type        = string
+}
+
+variable "project_environment" {
+  description = "The DigitalOcean project environment. The possible values are: `Development`, `Staging`, `Production`."
+  type        = string
+  default     = "Production"
+}
+
 variable "region" {
   description = "See `doctl kubernetes options regions`."
   type        = string
@@ -14,11 +30,6 @@ variable "node_count" {
   description = "The number of Droplet instances in the node pool."
   type        = number
   default     = 1
-}
-
-variable "environment" {
-  description = "The project environment."
-  type        = string
 }
 
 variable "auto_scale" {

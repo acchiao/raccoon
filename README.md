@@ -39,7 +39,7 @@ find . -type f -name "*.tfplan" -print -delete
 find . -type d -name ".terraform" -print -prune -exec rm -rf {} +;
 ```
 
-## Stack
+## Kubernetes Add-ons
 
 - [cert-manager]
 - [external-dns]

@@ -1,3 +1,15 @@
+resource "digitalocean_project" "raccoon" {
+  name        = "${var.project_name}-${var.environment}"
+  environment = var.environment
+}
+
+resource "digitalocean_project_resources" "raccoon" {
+  project = digitalocean_project.raccoon.id
+  resources = [
+    digitalocean_kubernetes_cluster.raccoon.urn
+  ]
+}
+
 resource "digitalocean_kubernetes_cluster" "raccoon" {
   name   = "${data.terraform_remote_state.raccoon.outputs.project_name}-${random_id.cluster.hex}"
   region = data.terraform_remote_state.raccoon.outputs.region
@@ -11,7 +23,8 @@ resource "digitalocean_kubernetes_cluster" "raccoon" {
   node_pool {
     name       = "${data.terraform_remote_state.raccoon.outputs.project_name}-${random_id.pool.hex}"
     size       = var.cluster_size
-    node_count = var.node_count
+
+    # node_count = var.node_count
     auto_scale = var.auto_scale
     min_nodes  = var.min_nodes
     max_nodes  = var.max_nodes
