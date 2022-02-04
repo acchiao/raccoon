@@ -3,6 +3,13 @@ resource "digitalocean_project" "raccoon" {
   environment = var.project_environment
 }
 
+resource "digitalocean_project_resources" "raccoon" {
+  project = digitalocean_project.raccoon.id
+  resources = [
+    digitalocean_domain.raccoon.urn
+  ]
+}
+
 resource "digitalocean_container_registry" "raccoon" {
   name                   = "${var.project_name}-${var.environment}-${random_id.vpc.hex}"
   subscription_tier_slug = "starter"
@@ -13,6 +20,6 @@ resource "digitalocean_vpc" "raccoon" {
   region = var.region
 }
 
-# resource "digitalocean_domain" "raccoon" {
-#   name = var.domain_name
-# }
+resource "digitalocean_domain" "raccoon" {
+  name = var.domain_name
+}
