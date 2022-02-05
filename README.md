@@ -22,8 +22,6 @@ The raccoon, sometimes called the common raccoon to distinguish it from other sp
 
 Authenticate with Terraform Cloud using `terraform login -init` and source the `DIGITALOCEAN_TOKEN` token.
 
-To differentiate
-
 ```sh
 alias tf="terraform"
 RPROMPT+="$(terraform workspace show)"

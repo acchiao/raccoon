@@ -21,19 +21,26 @@ resource "digitalocean_kubernetes_cluster" "raccoon" {
   surge_upgrade = true
 
   node_pool {
-    name       = "${data.terraform_remote_state.raccoon.outputs.project_name}-${random_id.pool.hex}"
-    size       = var.cluster_size
+    name = "${data.terraform_remote_state.raccoon.outputs.project_name}-${random_id.pool.hex}"
+    size = var.cluster_size
 
+    # Uncomment node_count to explicitly reset the number of nodes to this value
     # node_count = var.node_count
+
     auto_scale = var.auto_scale
     min_nodes  = var.min_nodes
     max_nodes  = var.max_nodes
+
+    tags   = local.common_tags
+    labels = local.node_labels
   }
 
   maintenance_policy {
     day        = "monday"
     start_time = "00:00"
   }
+
+  tags = local.common_tags
 }
 
 resource "digitalocean_vpc" "raccoon" {

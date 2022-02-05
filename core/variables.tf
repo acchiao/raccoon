@@ -11,7 +11,7 @@ variable "project_name" {
 variable "project_environment" {
   description = "The DigitalOcean project environment. The possible values are: `Development`, `Staging`, `Production`."
   type        = string
-  default = "Production"
+  default     = "Production"
 }
 
 variable "region" {
