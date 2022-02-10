@@ -10,6 +10,11 @@ resource "digitalocean_project_resources" "raccoon" {
   ]
 }
 
+resource "digitalocean_vpc" "raccoon" {
+  name   = "${data.terraform_remote_state.raccoon.outputs.project_name}-${var.environment}-${data.terraform_remote_state.raccoon.outputs.region}-${random_id.vpc.hex}"
+  region = data.terraform_remote_state.raccoon.outputs.region
+}
+
 resource "digitalocean_kubernetes_cluster" "raccoon" {
   name   = "${data.terraform_remote_state.raccoon.outputs.project_name}-${random_id.cluster.hex}"
   region = data.terraform_remote_state.raccoon.outputs.region
@@ -41,9 +46,4 @@ resource "digitalocean_kubernetes_cluster" "raccoon" {
   }
 
   tags = local.common_tags
-}
-
-resource "digitalocean_vpc" "raccoon" {
-  name   = "${data.terraform_remote_state.raccoon.outputs.project_name}-${var.environment}-${data.terraform_remote_state.raccoon.outputs.region}-${random_id.vpc.hex}"
-  region = data.terraform_remote_state.raccoon.outputs.region
 }
