@@ -17,3 +17,8 @@ output "region" {
   description = "The DigitalOcean resource region."
   value       = var.region
 }
+
+output "cloudflare_zone" {
+  description = "The Cloudflare domain."
+  value = cloudflare_zone.raccoon.zone
+}
