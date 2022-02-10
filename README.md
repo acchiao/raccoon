@@ -12,15 +12,17 @@ The raccoon, sometimes called the common raccoon to distinguish it from other sp
 - [DigitalOcean CLI] ^1.69.0
 - [Terraform Cloud] Personal Access Token
 - [DigitalOcean] Personal Access Token
+- [Cloudflare] Personal Access Token
 
 [Terraform CLI]: https://www.terraform.io/
 [DigitalOcean CLI]: https://docs.digitalocean.com/reference/doctl/
 [Terraform Cloud]: https://cloud.hashicorp.com/products/terraform/
 [DigitalOcean]: https://www.digitalocean.com/
+[Cloudflare]: https://www.cloudflare.com/
 
 ## Usage
 
-Authenticate with Terraform Cloud using `terraform login -init` and source the `DIGITALOCEAN_TOKEN` token.
+Authenticate with Terraform Cloud using `terraform login -init` and source the `DIGITALOCEAN_TOKEN` and `CLOUDFLARE_API_TOKEN` shell environment variables.
 
 ```sh
 alias tf="terraform"
