@@ -20,5 +20,10 @@ output "region" {
 
 output "cloudflare_zone" {
   description = "The Cloudflare domain."
-  value = cloudflare_zone.raccoon.zone
+  value       = cloudflare_zone.raccoon.zone
+}
+
+output "cloudflare_zone_id" {
+  description = "The Cloudflare DNS zone ID."
+  value       = cloudflare_zone.raccoon.id
 }
