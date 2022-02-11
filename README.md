@@ -22,7 +22,14 @@ The raccoon, sometimes called the common raccoon to distinguish it from other sp
 
 ## Usage
 
-Authenticate with Terraform Cloud using `terraform login -init` and source the `DIGITALOCEAN_TOKEN` and `CLOUDFLARE_API_TOKEN` shell environment variables.
+Authenticate with Terraform Cloud using `terraform login -init`. Source the following environment variables.
+
+- `DIGITALOCEAN_TOKEN`
+- `CLOUDFLARE_API_TOKEN`
+- `CLOUDFLARE_API_USER_SERVICE_KEY`
+- `OKTA_ORG_NAME`
+- `OKTA_BASE_URL`
+- `OKTA_API_TOKEN`
 
 ```sh
 alias tf="terraform"
