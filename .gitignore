@@ -1,3 +1,5 @@
 **/.terraform/*
 *.tfplan
 *.pem
+*.cert
+*.key

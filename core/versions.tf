@@ -23,7 +23,7 @@ terraform {
     # See https://registry.terraform.io/providers/okta/okta/latest/docs
     okta = {
       source  = "okta/okta"
-      version = "~> 3.20"
+      version = "~> 3.21.0"
     }
 
     # See https://registry.terraform.io/providers/hashicorp/tls/latest/docs
