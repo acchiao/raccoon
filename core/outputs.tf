@@ -1,19 +1,24 @@
-output "project_name" {
+output "core_project_name" {
   description = "The DigitalOcean project name."
   value       = digitalocean_project.raccoon.name
 }
 
-output "registry_name" {
+output "core_project_prefix" {
+  description = "The DigitalOcean project prefix."
+  value       = var.project_name
+}
+
+output "core_registry_name" {
   description = "The DigitalOcean container registry name."
   value       = digitalocean_container_registry.raccoon.name
 }
 
-output "vpc_name" {
+output "core_vpc_name" {
   description = "The DigitalOcean VPC name."
   value       = digitalocean_vpc.raccoon.name
 }
 
-output "region" {
+output "core_region" {
   description = "The DigitalOcean resource region."
   value       = var.region
 }

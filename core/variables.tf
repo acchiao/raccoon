@@ -25,3 +25,9 @@ variable "domain_name" {
   type        = string
   default     = ""
 }
+
+variable "raccoon_domain_name" {
+  description = "The name of the DigitalOcean domain resource."
+  type        = string
+  default     = ""
+}

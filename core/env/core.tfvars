@@ -1,4 +1,5 @@
 domain_name         = "acchiao.com"
+raccoon_domain_name = "raccoon.team"
 environment         = "core"
 project_environment = "production"
 project_name        = "raccoon"
