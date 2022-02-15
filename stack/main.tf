@@ -48,6 +48,22 @@ resource "digitalocean_kubernetes_cluster" "raccoon" {
   tags = local.common_tags
 }
 
+resource "digitalocean_certificate" "raccoon" {
+  name = "${data.terraform_remote_state.raccoon.outputs.core_project_prefix}-${var.environment}-${random_id.certificate.hex}"
+  type = "lets_encrypt"
+
+  domains = [data.digitalocean_domain.domain_name.name]
+
+  # Ensure the certificate is correctly updated when changed
+  # Order of operations requires tainting name/random_id
+  # 1. Create new certificate
+  # 2. Update loadbalancer with new certificate
+  # 3. Delete old certificate
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+
 resource "digitalocean_loadbalancer" "raccoon" {
   name   = "${data.terraform_remote_state.raccoon.outputs.core_project_prefix}-${var.environment}-${random_id.loadbalancer.hex}"
   region = data.terraform_remote_state.raccoon.outputs.core_region
@@ -65,6 +81,8 @@ resource "digitalocean_loadbalancer" "raccoon" {
 
     target_port     = 80
     target_protocol = "http"
+
+    certificate_name = digitalocean_certificate.raccoon.name
   }
 
   healthcheck {

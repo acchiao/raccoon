@@ -37,3 +37,13 @@ output "okta_domain" {
   description = "The custom Okta URL domain name."
   value       = okta_domain.raccoon.name
 }
+
+output "domain_name" {
+  description = "The domain name."
+  value       = var.domain_name
+}
+
+output "raccoon_domain_name" {
+  description = "The raccoon domain name."
+  value       = var.raccoon_domain_name
+}

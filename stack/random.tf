@@ -13,3 +13,7 @@ resource "random_id" "vpc" {
 resource "random_id" "loadbalancer" {
   byte_length = 4
 }
+
+resource "random_id" "certificate" {
+  byte_length = 4
+}
