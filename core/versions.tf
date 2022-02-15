@@ -17,7 +17,7 @@ terraform {
     # See https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs
     cloudflare = {
       source  = "cloudflare/cloudflare"
-      version = "~> 3.8.0"
+      version = "~> 3.9.1"
     }
 
     # See https://registry.terraform.io/providers/okta/okta/latest/docs

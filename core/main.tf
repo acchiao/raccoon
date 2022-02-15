@@ -6,7 +6,7 @@ resource "digitalocean_project" "raccoon" {
 resource "digitalocean_project_resources" "raccoon" {
   project = digitalocean_project.raccoon.id
   resources = [
-    digitalocean_domain.raccoon.urn
+    digitalocean_domain.site.urn
   ]
 }
 
@@ -20,6 +20,6 @@ resource "digitalocean_vpc" "raccoon" {
   region = var.region
 }
 
-resource "digitalocean_domain" "raccoon" {
+resource "digitalocean_domain" "site" {
   name = var.domain_name
 }
