@@ -13,6 +13,11 @@ output "core_registry_name" {
   value       = digitalocean_container_registry.raccoon.name
 }
 
+output "core_registry_endpoint" {
+  description = "The DigitalOcean container registry endpoint."
+  value       = digitalocean_container_registry.raccoon.endpoint
+}
+
 output "core_vpc_name" {
   description = "The DigitalOcean VPC name."
   value       = digitalocean_vpc.raccoon.name
