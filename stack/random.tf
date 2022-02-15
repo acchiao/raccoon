@@ -9,3 +9,7 @@ resource "random_id" "pool" {
 resource "random_id" "vpc" {
   byte_length = 4
 }
+
+resource "random_id" "loadbalancer" {
+  byte_length = 4
+}

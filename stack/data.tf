@@ -12,7 +12,7 @@ data "terraform_remote_state" "raccoon" {
 }
 
 data "digitalocean_project" "raccoon" {
-  name = data.terraform_remote_state.raccoon.outputs.project_name
+  name = data.terraform_remote_state.raccoon.outputs.core_project_name
 }
 
 data "digitalocean_kubernetes_versions" "prefix" {
