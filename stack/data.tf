@@ -11,6 +11,12 @@ data "terraform_remote_state" "raccoon" {
   }
 }
 
+# TODO: Replace terraform_remote_state data source with tfe_outputs
+data "tfe_outputs" "raccoon" {
+  organization = "acchiao"
+  workspace    = "core"
+}
+
 data "digitalocean_project" "raccoon" {
   name = data.terraform_remote_state.raccoon.outputs.core_project_name
 }

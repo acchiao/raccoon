@@ -1,8 +1,8 @@
 # raccoon
 
-DigitalOcean Kubernetes Cluster
-
 [![CI](https://github.com/acchiao/raccoon/actions/workflows/ci.yml/badge.svg)](https://github.com/acchiao/raccoon/actions/workflows/ci.yml)
+
+Terraform-Managed DigitalOcean Kubernetes Cluster.
 
 The raccoon, sometimes called the common raccoon to distinguish it from other species, is a medium-sized mammal native to North America.
 
@@ -33,7 +33,8 @@ Authenticate with Terraform Cloud using `terraform login -init`. Source the foll
 
 ```sh
 alias tf="terraform"
-RPROMPT+="$(terraform workspace show)"
+RPROMPT='$(terraform workspace show)'
+RPROMPT='$(kubectl config current-context)'
 
 terraform init -upgrade
 terraform validate
@@ -68,9 +69,11 @@ raccoon
 
 At the highest level, this project is split into two logical groupings. For the core and stack folders, each represents a Terraform working directory. Resources that reside in the core directory are common entities that are unique ***per project*** (e.g., a single container registry used across the `test`/`dev`/`stage`/`prod` environments). From an environment perspective, these might be considered global resources or entities, and don't easily fit into the traditional classifications. Resources that reside in the stack directory are entities that are unique ***per environment*** (e.g., creating individual VPCs to isolate execution environments). Whereas the core directory has a one-to-one mapping to a single workspace, the stack directory has a one-to-many relationship; each workspace maps to an environment. Determining where a resource belongs is highly subjective and will be governed by cost, scale, project requirements, and resource limitations.
 
+As the `core` workspace has resources that will be referenced in each environment, its state backend is used as a `terraform_remote_state` data source.
+
 ## Chicken or the Egg
 
-All Terraform states are stored in Terraform Cloud for state management. The execution mode for each workspace has been set to `Local` and all plans, applies, or state operations are performed locally.
+All Terraform states are stored in Terraform Cloud for state management. The execution mode for each workspace has been set to `Local` and all plans, applies, and state operations are performed locally.
 
 ## Kubernetes Add-ons
 

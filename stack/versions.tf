@@ -25,6 +25,12 @@ terraform {
       source  = "hashicorp/helm"
       version = "~> 2.4.1"
     }
+
+    # See https://registry.terraform.io/providers/hashicorp/tfe/latest/docs
+    tfe = {
+      source  = "hashicorp/tfe"
+      version = "~> 0.28.1"
+    }
   }
 
   cloud {
