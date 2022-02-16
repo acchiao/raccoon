@@ -6,7 +6,8 @@ resource "digitalocean_project" "raccoon" {
 resource "digitalocean_project_resources" "raccoon" {
   project = digitalocean_project.raccoon.id
   resources = [
-    digitalocean_kubernetes_cluster.raccoon.urn
+    digitalocean_kubernetes_cluster.raccoon.urn,
+    digitalocean_loadbalancer.raccoon.urn,
   ]
 }
 
@@ -68,12 +69,10 @@ resource "digitalocean_loadbalancer" "raccoon" {
   name   = "${data.terraform_remote_state.raccoon.outputs.core_project_prefix}-${var.environment}-${random_id.loadbalancer.hex}"
   region = data.terraform_remote_state.raccoon.outputs.core_region
 
-  size = "lb-small"
-
-  vpc_uuid = digitalocean_vpc.raccoon.id
-
+  vpc_uuid    = digitalocean_vpc.raccoon.id
   droplet_tag = "terraform:default-node-pool"
-  # droplet_ids = [digitalocean_kubernetes_cluster.raccoon.node_pool[0].nodes[0].droplet_id]
+
+  size_unit = 1
 
   forwarding_rule {
     entry_port     = 80
@@ -82,11 +81,12 @@ resource "digitalocean_loadbalancer" "raccoon" {
     target_port     = 80
     target_protocol = "http"
 
-    certificate_name = digitalocean_certificate.raccoon.name
+    # certificate_name = digitalocean_certificate.raccoon.name
   }
 
   healthcheck {
+    path     = "/"
     port     = 80
-    protocol = "tcp"
+    protocol = "http"
   }
 }
