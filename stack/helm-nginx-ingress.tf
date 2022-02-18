@@ -24,4 +24,9 @@ resource "helm_release" "nginx_ingress" {
     name  = "service.type"
     value = "ClusterIP"
   }
+
+  set {
+    name  = "controller.publishService.enabled"
+    value = "true"
+  }
 }

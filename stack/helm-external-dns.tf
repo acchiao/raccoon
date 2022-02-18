@@ -30,7 +30,7 @@ resource "helm_release" "external_dns" {
   }
 
   set {
-    name = "interval"
+    name  = "interval"
     value = "1m"
   }
 

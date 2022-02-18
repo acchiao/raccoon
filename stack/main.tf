@@ -55,7 +55,7 @@ resource "digitalocean_domain" "digitalocean_domain_name" {
 }
 
 resource "digitalocean_loadbalancer" "raccoon" {
-  name   = "${data.terraform_remote_state.raccoon.outputs.core_project_prefix}-${var.environment}-${random_id.loadbalancer.hex}"
+  name   = "${data.terraform_remote_state.raccoon.outputs.core_project_prefix}-${var.environment}-${data.terraform_remote_state.raccoon.outputs.core_region}-${random_id.loadbalancer.hex}"
   region = data.terraform_remote_state.raccoon.outputs.core_region
 
   vpc_uuid    = digitalocean_vpc.raccoon.id
@@ -69,10 +69,5 @@ resource "digitalocean_loadbalancer" "raccoon" {
 
     target_port     = 80
     target_protocol = "http"
-  }
-
-  healthcheck {
-    port     = 80
-    protocol = "tcp"
   }
 }

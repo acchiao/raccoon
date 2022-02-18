@@ -46,6 +46,10 @@ terraform import -var-file=env/$(tf workspace show).tfvars resource.example reso
 terraform output
 terraform output -json
 
+doctl registry login
+doctl kubernetes cluster registry add <cluster-id|cluster-name>
+doctl kubernetes cluster kubeconfig save <cluster-id|cluster-name>
+
 find . -type f -name "*.tfplan" -print -delete
 find . -type d -name ".terraform" -print -prune -exec rm -rf {} +
 ```
