@@ -67,7 +67,7 @@ provider "registry.terraform.io/hashicorp/random" {
 
 provider "registry.terraform.io/hashicorp/tls" {
   version     = "3.1.0"
-  constraints = "3.1.0"
+  constraints = "~> 3.1.0"
   hashes = [
     "h1:XTU9f6sGMZHOT8r/+LWCz2BZOPH127FBTPjMMEAAu1U=",
     "zh:3d46616b41fea215566f4a957b6d3a1aa43f1f75c26776d72a98bdba79439db6",
@@ -86,7 +86,7 @@ provider "registry.terraform.io/hashicorp/tls" {
 
 provider "registry.terraform.io/okta/okta" {
   version     = "3.21.0"
-  constraints = "~> 3.20"
+  constraints = "~> 3.21.0"
   hashes = [
     "h1:xItpLyqe8zIH4cBjedL0olCH7THAgChMW+sRuydWB2U=",
     "zh:1c1dd14b7985c2c72fd1f43814dc3d47ac865910542330378873596277d204a5",

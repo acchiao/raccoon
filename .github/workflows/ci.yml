@@ -1,5 +1,4 @@
-# https://docs.github.com/en/actions/security-guides/security-hardening-for-github-actions
-
+---
 name: CI
 
 on:

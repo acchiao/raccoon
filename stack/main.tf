@@ -65,7 +65,7 @@ resource "digitalocean_loadbalancer" "raccoon" {
 
   forwarding_rule {
     entry_port     = 80
-    entry_protocol = "http"
+    entry_protocol = "http" # #tfsec:ignore:digitalocean-compute-enforce-https
 
     target_port     = 80
     target_protocol = "http"
