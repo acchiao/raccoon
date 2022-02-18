@@ -49,3 +49,21 @@ variable "max_nodes" {
   type        = number
   default     = 1
 }
+
+variable "digitalocean_domain_name" {
+  description = "The name of the DigitalOcean domain resource."
+  type        = string
+  default     = ""
+}
+
+variable "helm_wait" {
+  description = "If true, apply operations will wait for Helm release status."
+  type        = bool
+  default     = false
+}
+
+variable "helm_timeout" {
+  description = "The duration time to wait for Helm actions."
+  type        = number
+  default     = 300
+}

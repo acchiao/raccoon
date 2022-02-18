@@ -1,31 +1,36 @@
-resource "kubernetes_namespace" "external_dns" {
+# Imported resource
+resource "kubernetes_namespace" "kube_system" {
   metadata {
-    name        = "external-dns"
-    labels      = {}
-    annotations = {}
+    name = "kube-system"
+    labels = {
+      "istio-injection" = "disabled"
+    }
   }
 }
 
-resource "kubernetes_namespace" "cert_manager" {
+# Imported resource
+resource "kubernetes_namespace" "kube_node_lease" {
   metadata {
-    name        = "cert-manager"
-    labels      = {}
-    annotations = {}
+    name = "kube-node-lease"
   }
 }
 
-resource "kubernetes_namespace" "ingress_nginx" {
+# Imported resource
+resource "kubernetes_namespace" "kube_public" {
   metadata {
-    name        = "ingress-nginx"
-    labels      = {}
-    annotations = {}
+    name = "kube-public"
+  }
+}
+
+# Imported resource
+resource "kubernetes_namespace" "default" {
+  metadata {
+    name = "default"
   }
 }
 
 resource "kubernetes_namespace" "sandbox" {
   metadata {
-    name        = "sandbox"
-    labels      = {}
-    annotations = {}
+    name = "sandbox"
   }
 }

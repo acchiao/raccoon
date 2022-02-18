@@ -27,3 +27,8 @@ output "loadbalancer_id" {
   description = "The DigitalOcean loadbalancer ID."
   value       = digitalocean_loadbalancer.raccoon.id
 }
+
+output "kubernetes_namespaces" {
+  description = "All available namespaces."
+  value       = data.kubernetes_all_namespaces.raccoon.namespaces
+}
