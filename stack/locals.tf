@@ -6,10 +6,12 @@ locals {
   common_tags = [
     var.project_name,
     var.environment,
+    var.region,
   ]
 
   node_labels = {
     "project"     = var.project_name
     "environment" = var.environment
+    "region"      = var.region,
   }
 }
