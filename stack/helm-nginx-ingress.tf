@@ -22,7 +22,7 @@ resource "helm_release" "nginx_ingress" {
 
   set {
     name  = "service.type"
-    value = "ClusterIP"
+    value = "LoadBalancer"
   }
 
   set {
