@@ -1,0 +1,2 @@
+digitalocean:
+  apiToken: DIGITALOCEAN_TOKEN

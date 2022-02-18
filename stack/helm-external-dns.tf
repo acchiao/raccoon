@@ -15,6 +15,10 @@ resource "helm_release" "external_dns" {
   wait    = var.helm_wait
   timeout = var.helm_timeout
 
+  values = [
+    "${file("values/external-dns-values.yaml")}"
+  ]
+
   set {
     name  = "rbac.create"
     value = "true"
@@ -23,6 +27,11 @@ resource "helm_release" "external_dns" {
   set {
     name  = "policy"
     value = "sync"
+  }
+
+  set {
+    name = "interval"
+    value = "1m"
   }
 
   set {
