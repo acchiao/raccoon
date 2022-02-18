@@ -1,5 +1,5 @@
 resource "cloudflare_zone" "raccoon" {
-  zone = "raccoon.team"
+  zone = var.cloudflare_zone_name
 }
 
 resource "cloudflare_record" "raccoon_sso" {

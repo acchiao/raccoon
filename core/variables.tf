@@ -20,14 +20,8 @@ variable "region" {
   default     = "nyc1"
 }
 
-variable "domain_name" {
-  description = "The name of the DigitalOcean domain resource."
-  type        = string
-  default     = ""
-}
-
-variable "raccoon_domain_name" {
-  description = "The name of the DigitalOcean domain resource."
+variable "cloudflare_zone_name" {
+  description = "The name of the Cloudflare zone."
   type        = string
   default     = ""
 }

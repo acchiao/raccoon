@@ -1,13 +1,6 @@
 terraform {
   required_version = "~> 1.1.5"
 
-  # Providers
-  # https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs
-  # https://registry.terraform.io/providers/hashicorp/random/latest/docs
-  # https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs
-  # https://registry.terraform.io/providers/okta/okta/latest/docs
-  # https://registry.terraform.io/providers/hashicorp/tls/latest/docs
-
   required_providers {
     digitalocean = {
       source  = "digitalocean/digitalocean"
