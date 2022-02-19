@@ -1,6 +1,7 @@
 resource "digitalocean_project" "raccoon" {
   name        = "${var.project_name}-${var.environment}"
   environment = var.environment
+  purpose     = "Operational / Developer tooling"
 }
 
 resource "digitalocean_project_resources" "raccoon" {

@@ -2,6 +2,7 @@
 *.tfplan
 *.pem
 *.cert
+*.crt
 *.key
 
 external-dns-values.yaml

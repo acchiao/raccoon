@@ -80,6 +80,31 @@ As the `core` workspace has resources that will be referenced in each environmen
 
 [digitalocean dns]: https://docs.digitalocean.com/products/networking/dns/
 
+### Core
+
+### Stack
+
+The Linkerd Helm chart doesn't generate the trust anchor certificate and the issuer certificate/key required for mTLS connections. Linkerd requires ECDSA P-256 certificates which can be created using `openssl` or `step`. See [Installing Linkerd with Helm].
+
+[installing linkerd with helm]: https://linkerd.io/2.11/tasks/generate-certificates/
+
+```sh
+# Generate the root certificate and private key
+step certificate create root.linkerd.cluster.local ca.crt ca.key \
+  --profile root-ca \
+  --no-password \
+  --insecure
+
+# Generate the intermediate certificate and key pair to sign the Linkerd proxies’ CSR
+step certificate create identity.linkerd.cluster.local issuer.crt issuer.key \
+  --profile intermediate-ca \
+  --not-after 8760h \
+  --no-password \
+  --insecure \
+  --ca ca.crt \
+  --ca-key ca.key
+```
+
 ## Chicken or the Egg/Turtles All the Way Down
 
 All Terraform states are stored in Terraform Cloud for state management. The execution mode for each workspace has been set to `Local` and all plans, applies, and state operations are performed locally.
