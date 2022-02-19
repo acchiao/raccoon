@@ -38,7 +38,7 @@ output "cloudflare_zone_id" {
   value       = cloudflare_zone.raccoon.id
 }
 
-output "okta_domain" {
-  description = "The custom Okta URL domain name."
-  value       = okta_domain.raccoon.name
-}
+# output "okta_domain" {
+#   description = "The custom Okta URL domain name."
+#   value       = okta_domain.raccoon.name
+# }

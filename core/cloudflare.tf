@@ -2,19 +2,19 @@ resource "cloudflare_zone" "raccoon" {
   zone = var.cloudflare_zone_name
 }
 
-resource "cloudflare_record" "raccoon_sso" {
-  zone_id = cloudflare_zone.raccoon.id
-  name    = "sso"
-  value   = okta_domain.raccoon.dns_records[1].values[0]
-  type    = "CNAME"
-}
+# resource "cloudflare_record" "raccoon_sso" {
+#   zone_id = cloudflare_zone.raccoon.id
+#   name    = "sso"
+#   value   = okta_domain.raccoon.dns_records[1].values[0]
+#   type    = "CNAME"
+# }
 
-resource "cloudflare_record" "raccoon_sso_txt" {
-  zone_id = cloudflare_zone.raccoon.id
-  name    = "_oktaverification.sso"
-  value   = okta_domain.raccoon.dns_records[0].values[0]
-  type    = "TXT"
-}
+# resource "cloudflare_record" "raccoon_sso_txt" {
+#   zone_id = cloudflare_zone.raccoon.id
+#   name    = "_oktaverification.sso"
+#   value   = okta_domain.raccoon.dns_records[0].values[0]
+#   type    = "TXT"
+# }
 
 # https://github.com/cloudflare/terraform-provider-cloudflare/issues/1448
 # resource "tls_private_key" "raccoon" {
