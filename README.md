@@ -105,6 +105,10 @@ step certificate create identity.linkerd.cluster.local issuer.crt issuer.key \
   --ca-key ca.key
 ```
 
+### Helm
+
+The Helm releases are defined within the `.tf` files prepended with `helm-`. The creation of the namespace is left up to the `kubernetes_namespace` block rather than relying on the `create_namespace` parameter within `helm_release`.
+
 ## Chicken or the Egg/Turtles All the Way Down
 
 All Terraform states are stored in Terraform Cloud for state management. The execution mode for each workspace has been set to `Local` and all plans, applies, and state operations are performed locally.
