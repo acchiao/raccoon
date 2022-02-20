@@ -16,16 +16,6 @@ resource "helm_release" "meilisearch" {
   timeout = var.helm_timeout
 
   set {
-    name  = "installNamespace"
-    value = "false"
-  }
-
-  set {
-    name  = "namespace"
-    value = kubernetes_namespace.linkerd.metadata[0].name
-  }
-
-  set {
     name  = "environment.MEILI_NO_ANALYTICS"
     value = "true"
   }
@@ -37,16 +27,11 @@ resource "helm_release" "meilisearch" {
 
   set {
     name  = "replicaCount"
-    value = "3"
+    value = "1"
   }
 
   set {
     name  = "environment.MEILI_ENV"
     value = "production"
-  }
-
-  set {
-    name  = "auth.existingMasterKeySecret"
-    value = "meilisearch-master-key"
   }
 }
