@@ -82,6 +82,20 @@ As the `core` workspace has resources that will be referenced in each environmen
 
 ### Core
 
+When updating the outputs of the `core` module, ensure that the changes don't affect any resources downstream. The `stack` module references the outputs with a `terraform_remote_state` data source, so a plan operation should be run in the `stack` workspace to verify references to the old attributes haven't changed.
+
+```console
+# Example of breaking changes when renaming/removing outputs
+│ Error: Unsupported attribute
+│
+│   on data.tf line 21, in data "digitalocean_project" "raccoon":
+│   21:   name = data.terraform_remote_state.raccoon.outputs.core_project_name
+│     ├────────────────
+│     │ data.terraform_remote_state.raccoon.outputs is object with 7 attributes
+│
+│ This object does not have an attribute named "core_project_name".
+```
+
 ### Stack
 
 The Linkerd Helm chart doesn't generate the trust anchor certificate and the issuer certificate/key required for mTLS connections. Linkerd requires ECDSA P-256 certificates which can be created using `openssl` or `step`. See [Installing Linkerd with Helm].
@@ -90,19 +104,19 @@ The Linkerd Helm chart doesn't generate the trust anchor certificate and the iss
 
 ```sh
 # Generate the root certificate and private key
-step certificate create root.linkerd.cluster.local ca.crt ca.key \
+step certificate create root.linkerd.cluster.local certificates/ca.crt certificates/ca.key \
   --profile root-ca \
   --no-password \
   --insecure
 
 # Generate the intermediate certificate and key pair to sign the Linkerd proxies’ CSR
-step certificate create identity.linkerd.cluster.local issuer.crt issuer.key \
+step certificate create identity.linkerd.cluster.local certificates/issuer.crt certificates/issuer.key \
   --profile intermediate-ca \
   --not-after 8760h \
   --no-password \
   --insecure \
-  --ca ca.crt \
-  --ca-key ca.key
+  --ca certificates/ca.crt \
+  --ca-key certificates/ca.key
 ```
 
 ### Helm
