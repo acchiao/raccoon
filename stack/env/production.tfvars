@@ -1,6 +1,6 @@
 auto_scale          = true
 cloudflare_domain   = "raccoon.team"
-cluster_size        = "s-1vcpu-2gb"
+cluster_size        = "s-2vcpu-2gb"
 digitalocean_domain = "acchiao.com"
 environment         = "production"
 helm_timeout        = 600
@@ -11,3 +11,13 @@ node_count          = 1
 project_name        = "raccoon"
 region              = "nyc1"
 release             = "stable"
+
+# Helm charts
+enable_cert_manager  = false
+enable_external_dns  = false
+enable_ingress_nginx = false
+enable_kubed         = false
+enable_linkerd       = false
+enable_meilisearch   = false
+enable_metrics       = false
+enable_thanos        = false

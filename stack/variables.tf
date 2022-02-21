@@ -78,3 +78,100 @@ variable "helm_timeout" {
   type        = number
   default     = 300
 }
+
+# Booleans below represent the Helm charts to install to the cluster
+variable "enable_cert_manager" {
+  description = "If true, install the specified Helm chart."
+  type        = bool
+  default     = false
+}
+
+variable "cert_manager_version" {
+  description = "The version of the Helm chart to install."
+  type        = string
+  default     = "1.7.1"
+}
+
+variable "enable_external_dns" {
+  description = "If true, install the specified Helm chart."
+  type        = bool
+  default     = false
+}
+
+variable "external_dns_version" {
+  description = "The version of the Helm chart to install."
+  type        = string
+  default     = "6.1.5"
+}
+
+variable "enable_kubed" {
+  description = "If true, install the specified Helm chart."
+  type        = bool
+  default     = false
+}
+
+variable "kubed_version" {
+  description = "The version of the Helm chart to install."
+  type        = string
+  default     = "0.12.0"
+}
+
+variable "enable_linkerd" {
+  description = "If true, install the specified Helm chart."
+  type        = bool
+  default     = false
+}
+
+variable "linkerd_version" {
+  description = "The version of the Helm chart to install."
+  type        = string
+  default     = "2.11.1"
+}
+
+variable "enable_meilisearch" {
+  description = "If true, install the specified Helm chart."
+  type        = bool
+  default     = false
+}
+
+variable "meilisearch_version" {
+  description = "The version of the Helm chart to install."
+  type        = string
+  default     = "0.1.26"
+}
+
+variable "enable_metrics" {
+  description = "If true, install the specified Helm chart."
+  type        = bool
+  default     = false
+}
+
+variable "metrics_version" {
+  description = "The version of the Helm chart to install."
+  type        = string
+  default     = "3.8.1"
+}
+
+variable "enable_ingress_nginx" {
+  description = "If true, install the specified Helm chart."
+  type        = bool
+  default     = false
+}
+
+variable "ingress_nginx_version" {
+  description = "The version of the Helm chart to install."
+  type        = string
+  default     = "9.1.5"
+}
+
+variable "enable_thanos" {
+  description = "If true, install the specified Helm chart."
+  type        = bool
+  default     = false
+}
+
+variable "thanos_version" {
+  description = "The version of the Helm chart to install."
+  type        = string
+  default     = "9.0.4"
+}

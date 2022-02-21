@@ -1,3 +1,8 @@
+output "vpc_name" {
+  description = "The DigitalOcean VPC name."
+  value       = digitalocean_vpc.raccoon.name
+}
+
 output "kubernetes_cluster_name" {
   description = "The DigitalOcean Kubernetes cluster name."
   value       = digitalocean_kubernetes_cluster.raccoon.name
@@ -22,19 +27,3 @@ output "kubernetes_available_namespaces" {
   description = "All available namespaces."
   value       = data.kubernetes_all_namespaces.raccoon.namespaces
 }
-
-output "vpc_name" {
-  description = "The DigitalOcean VPC name."
-  value       = digitalocean_vpc.raccoon.name
-}
-
-# output "loadbalancer_name" {
-#   description = "The DigitalOcean loadbalancer name."
-#   value       = digitalocean_loadbalancer.raccoon.name
-# }
-
-# output "loadbalancer_id" {
-#   description = "The DigitalOcean loadbalancer ID."
-#   value       = digitalocean_loadbalancer.raccoon.id
-# }
-
