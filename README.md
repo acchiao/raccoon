@@ -26,33 +26,6 @@ Authenticate with Terraform Cloud using `terraform login -init`. Source the foll
 
 - `DIGITALOCEAN_TOKEN`
 - `CLOUDFLARE_API_TOKEN`
-- `CLOUDFLARE_API_USER_SERVICE_KEY`
-- `OKTA_ORG_NAME`
-- `OKTA_BASE_URL`
-- `OKTA_API_TOKEN`
-
-```sh
-alias tf="terraform"
-RPROMPT='$(terraform workspace show)'
-RPROMPT='$(kubectl config current-context)'
-RPROMPT='$(kubectl config view --minify --output "jsonpath={..namespace}")'
-
-terraform init -upgrade
-terraform validate
-terraform fmt -list=true -write=true -recursive -diff
-terraform refresh -var-file=env/$(terraform workspace show).tfvars
-terraform plan -var-file=env/$(terraform workspace show).tfvars -out=$(terraform workspace show).tfplan
-terraform import -var-file=env/$(tf workspace show).tfvars resource.example resource
-terraform output
-terraform output -json
-
-doctl registry login
-doctl kubernetes cluster registry add <cluster-id|cluster-name>
-doctl kubernetes cluster kubeconfig save <cluster-id|cluster-name>
-
-find . -type f -name "*.tfplan" -print -delete
-find . -type d -name ".terraform" -print -prune -exec rm -rf {} +
-```
 
 ## Bird's Eye View
 
@@ -78,12 +51,16 @@ At the highest level, this project is split into two logical groupings. For the 
 
 As the `core` workspace has resources that will be referenced in each environment, its state backend is used as a `terraform_remote_state` data source. All Terraform states are stored in Terraform Cloud for state management. The execution mode for each workspace has been set to `Local` and all plans, applies, and state operations are performed locally.
 
+### Resource Naming
+
+For a project this size, the resource names omit the randomly generated ID typically included to ensure uniqueness. None of the resources use the `count` meta-argument either, so the count/number is also omitted. The typical naming convention is as follows: `${var.project_name}-${var.environment}-${var.region}-<RESOURCE_TYPE>`
+
 ### Core
 
 When updating the outputs of the `core` module, ensure that the changes don't affect any resources downstream. The `stack` module references the outputs with a `terraform_remote_state` data source, so a plan operation should be run in the `stack` workspace to verify references to the old attributes haven't changed.
 
 ```console
-# Example of breaking changes when renaming/removing outputs
+# Example of breaking changes when renaming or removing outputs used downstream
 │ Error: Unsupported attribute
 │
 │   on data.tf line 21, in data "digitalocean_project" "raccoon":
@@ -117,21 +94,6 @@ step certificate create identity.linkerd.cluster.local certificates/issuer.crt c
   --ca-key certificates/ca.key
 ```
 
-## Cost
-
-The total cost for this project as of February 2022 is around $20, depending on the number of nodes and if the load balancer exists. Other costs such as the domain name registrations aren't included. The cost breakdown is below.
-
-| Resource                                          | Cost per Resource  | Cost per Month |
-| ------------------------------------------------- | ------------------ | -------------- |
-| DigitalOcean Kubernetes Control Plane (non-HA)    | Free               | $0             |
-| DigitalOcean Kubernetes Worker Node (autoscaling) | $10 per node       | $10-$20        |
-| DigitalOcean Container Registry (free-basic)      | $0-$5 per registry | $0-$5          |
-| DigitalOcean Load Balancer                        | $10.00 per node    | $10            |
-
-See [DigitalOcean pricing].
-
-[digitalocean pricing]: https://www.digitalocean.com/pricing/
-
 ## Kubernetes Add-ons
 
 - [cert-manager]
@@ -143,6 +105,31 @@ See [DigitalOcean pricing].
 [external-dns]: https://github.com/kubernetes-sigs/external-dns/
 [kubed]: https://appscode.com/products/kubed/
 [linkerd]: https://linkerd.io/
+
+## Helpful Commands
+
+```sh
+alias tf="terraform"
+RPROMPT='$(terraform workspace show)'
+RPROMPT='$(kubectl config current-context)'
+RPROMPT='$(kubectl config view --minify --output "jsonpath={..namespace}")'
+
+terraform init -upgrade
+terraform validate
+terraform fmt -list=true -write=true -recursive -diff
+terraform refresh -var-file=env/$(terraform workspace show).tfvars
+terraform plan -var-file=env/$(terraform workspace show).tfvars -out=$(terraform workspace show).tfplan
+terraform import -var-file=env/$(tf workspace show).tfvars resource.example resource
+terraform output
+terraform output -json
+
+doctl registry login
+doctl kubernetes cluster registry add <cluster-id|cluster-name>
+doctl kubernetes cluster kubeconfig save <cluster-id|cluster-name>
+
+find . -type f -name "*.tfplan" -print -delete
+find . -type d -name ".terraform" -print -prune -exec rm -rf {} +
+```
 
 ## DigitalOcean
 
