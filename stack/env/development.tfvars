@@ -3,11 +3,21 @@ cloudflare_domain   = ""
 cluster_size        = "s-1vcpu-2gb"
 digitalocean_domain = ""
 environment         = "development"
-helm_timeout        = 300
-helm_wait           = false
 max_nodes           = 1
 min_nodes           = 1
 node_count          = 1
 project_name        = "raccoon"
 region              = "nyc1"
 release             = "canary"
+
+# Helm charts
+helm_timeout         = 300
+helm_wait            = false
+enable_cert_manager  = true
+enable_external_dns  = true
+enable_ingress_nginx = true
+enable_kubed         = true
+enable_linkerd       = true
+enable_meilisearch   = true
+enable_metrics       = true
+enable_thanos        = true
