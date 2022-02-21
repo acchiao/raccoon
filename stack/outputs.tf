@@ -18,15 +18,15 @@ output "node_count" {
   value       = digitalocean_kubernetes_cluster.raccoon.node_pool[0].actual_node_count
 }
 
-output "loadbalancer_name" {
-  description = "The DigitalOcean loadbalancer name."
-  value       = digitalocean_loadbalancer.raccoon.name
-}
+# output "loadbalancer_name" {
+#   description = "The DigitalOcean loadbalancer name."
+#   value       = digitalocean_loadbalancer.raccoon.name
+# }
 
-output "loadbalancer_id" {
-  description = "The DigitalOcean loadbalancer ID."
-  value       = digitalocean_loadbalancer.raccoon.id
-}
+# output "loadbalancer_id" {
+#   description = "The DigitalOcean loadbalancer ID."
+#   value       = digitalocean_loadbalancer.raccoon.id
+# }
 
 output "kubernetes_namespaces" {
   description = "All available namespaces."

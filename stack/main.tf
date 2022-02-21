@@ -8,8 +8,8 @@ resource "digitalocean_project_resources" "raccoon" {
   project = digitalocean_project.raccoon.id
   resources = [
     digitalocean_kubernetes_cluster.raccoon.urn,
-    digitalocean_domain.digitalocean_domain_name.urn,
-    digitalocean_loadbalancer.raccoon.urn,
+    digitalocean_domain.digitalocean_domain.urn,
+    # digitalocean_loadbalancer.raccoon.urn,
   ]
 }
 
@@ -51,24 +51,24 @@ resource "digitalocean_kubernetes_cluster" "raccoon" {
   tags = local.common_tags
 }
 
-resource "digitalocean_domain" "digitalocean_domain_name" {
-  name = var.digitalocean_domain_name
+resource "digitalocean_domain" "digitalocean_domain" {
+  name = var.digitalocean_domain
 }
 
-resource "digitalocean_loadbalancer" "raccoon" {
-  name   = "${data.terraform_remote_state.raccoon.outputs.core_project_prefix}-${var.environment}-${data.terraform_remote_state.raccoon.outputs.core_region}-${random_id.loadbalancer.hex}"
-  region = data.terraform_remote_state.raccoon.outputs.core_region
+# resource "digitalocean_loadbalancer" "raccoon" {
+#   name   = "${data.terraform_remote_state.raccoon.outputs.core_project_prefix}-${var.environment}-${data.terraform_remote_state.raccoon.outputs.core_region}-${random_id.loadbalancer.hex}"
+#   region = data.terraform_remote_state.raccoon.outputs.core_region
 
-  vpc_uuid    = digitalocean_vpc.raccoon.id
-  droplet_tag = "terraform:default-node-pool"
+#   vpc_uuid    = digitalocean_vpc.raccoon.id
+#   droplet_tag = "terraform:default-node-pool"
 
-  size_unit = 1
+#   size_unit = 1
 
-  forwarding_rule {
-    entry_port     = 80
-    entry_protocol = "http" # #tfsec:ignore:digitalocean-compute-enforce-https
+#   forwarding_rule {
+#     entry_port     = 80
+#     entry_protocol = "http" # #tfsec:ignore:digitalocean-compute-enforce-https
 
-    target_port     = 80
-    target_protocol = "http"
-  }
-}
+#     target_port     = 80
+#     target_protocol = "http"
+#   }
+# }

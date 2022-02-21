@@ -3,6 +3,11 @@ variable "environment" {
   type        = string
 }
 
+variable "release" {
+  description = "The project release track."
+  type        = string
+}
+
 variable "project_name" {
   description = "The DigitalOcean project name."
   type        = string
@@ -50,8 +55,14 @@ variable "max_nodes" {
   default     = 1
 }
 
-variable "digitalocean_domain_name" {
+variable "digitalocean_domain" {
   description = "The name of the DigitalOcean domain resource."
+  type        = string
+  default     = ""
+}
+
+variable "cloudflare_domain" {
+  description = "The name of the Cloudflare domain resource."
   type        = string
   default     = ""
 }

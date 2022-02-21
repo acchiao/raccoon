@@ -12,6 +12,7 @@ locals {
   node_labels = {
     "project"     = var.project_name
     "environment" = var.environment
+    "release"     = var.release
     "region"      = var.region,
   }
 }
