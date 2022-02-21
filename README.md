@@ -76,9 +76,7 @@ raccoon
 
 At the highest level, this project is split into two logical groupings. For the core and stack folders, each represents a Terraform working directory. Resources that reside in the core directory are common entities that are unique **_per project_** (e.g., a single container registry used across the `test`/`dev`/`stage`/`prod` environments). From an environment perspective, these might be considered global resources or entities, and don't easily fit into the traditional classifications. Resources that reside in the stack directory are entities that are unique **_per environment_** (e.g., creating individual VPCs to isolate execution environments). Whereas the core directory has a one-to-one mapping to a single workspace, the stack directory has a one-to-many relationship; each workspace maps to an environment. Determining where a resource belongs is highly subjective and will be governed by cost, scale, project requirements, and resource limitations.
 
-As the `core` workspace has resources that will be referenced in each environment, its state backend is used as a `terraform_remote_state` data source.
-
-[digitalocean dns]: https://docs.digitalocean.com/products/networking/dns/
+As the `core` workspace has resources that will be referenced in each environment, its state backend is used as a `terraform_remote_state` data source. All Terraform states are stored in Terraform Cloud for state management. The execution mode for each workspace has been set to `Local` and all plans, applies, and state operations are performed locally.
 
 ### Core
 
@@ -118,14 +116,6 @@ step certificate create identity.linkerd.cluster.local certificates/issuer.crt c
   --ca certificates/ca.crt \
   --ca-key certificates/ca.key
 ```
-
-### Helm
-
-The Helm releases are defined within the `.tf` files prepended with `helm-`. The creation of the namespace is left up to the `kubernetes_namespace` block rather than relying on the `create_namespace` parameter within `helm_release`.
-
-## Chicken or the Egg/Turtles All the Way Down
-
-All Terraform states are stored in Terraform Cloud for state management. The execution mode for each workspace has been set to `Local` and all plans, applies, and state operations are performed locally.
 
 ## Cost
 
