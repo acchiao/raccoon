@@ -1,11 +1,11 @@
-resource "okta_domain" "raccoon" {
-  name                    = "sso.raccoon.team"
-  certificate_source_type = "MANUAL"
-}
+# resource "okta_domain" "raccoon" {
+#   name                    = "sso.raccoon.team"
+#   certificate_source_type = "MANUAL"
+# }
 
-resource "okta_domain_verification" "raccoon" {
-  domain_id = okta_domain.raccoon.id
-}
+# resource "okta_domain_verification" "raccoon" {
+#   domain_id = okta_domain.raccoon.id
+# }
 
 # resource "okta_domain_certificate" "raccoon" {
 #   domain_id   = okta_domain.raccoon.id

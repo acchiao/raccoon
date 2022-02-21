@@ -18,11 +18,6 @@ output "core_registry_endpoint" {
   value       = digitalocean_container_registry.raccoon.endpoint
 }
 
-output "core_vpc_name" {
-  description = "The DigitalOcean VPC name."
-  value       = digitalocean_vpc.raccoon.name
-}
-
 output "core_region" {
   description = "The DigitalOcean resource region."
   value       = var.region
@@ -37,6 +32,11 @@ output "cloudflare_zone_id" {
   description = "The Cloudflare DNS zone ID."
   value       = cloudflare_zone.raccoon.id
 }
+
+# output "core_vpc_name" {
+#   description = "The DigitalOcean VPC name."
+#   value       = digitalocean_vpc.raccoon.name
+# }
 
 # output "okta_domain" {
 #   description = "The custom Okta URL domain name."
