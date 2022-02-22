@@ -98,13 +98,21 @@ step certificate create identity.linkerd.cluster.local certificates/issuer.crt c
 
 - [cert-manager]
 - [external-dns]
+- [ingress-nginx]
 - [kubed]
 - [linkerd]
+- [metrics]
+- [thanos]
+- [meilisearch]
 
 [cert-manager]: https://cert-manager.io/
 [external-dns]: https://github.com/kubernetes-sigs/external-dns/
+[ingress-nginx]: https://kubernetes.github.io/ingress-nginx/
 [kubed]: https://appscode.com/products/kubed/
 [linkerd]: https://linkerd.io/
+[metrics]: https://github.com/kubernetes-sigs/metrics-server
+[thanos]: https://thanos.io/
+[meilisearch]: https://www.meilisearch.com/
 
 ## Helpful Commands
 
@@ -112,7 +120,7 @@ step certificate create identity.linkerd.cluster.local certificates/issuer.crt c
 alias tf="terraform"
 RPROMPT='$(terraform workspace show)'
 RPROMPT='$(kubectl config current-context)'
-RPROMPT='$(kubectl config view --minify --output "jsonpath={..namespace}")'
+RPROMPT+='-$(kubectl config view --minify --output "jsonpath={..namespace}")'
 
 terraform init -upgrade
 terraform validate
