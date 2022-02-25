@@ -1,8 +1,8 @@
-# resource "kubernetes_namespace" "sandbox" {
-#   metadata {
-#     name = "sandbox"
-#   }
-# }
+resource "kubernetes_namespace" "sandbox" {
+  metadata {
+    name = "sandbox"
+  }
+}
 
 # resource "kubernetes_namespace" "kube_system" {
 #   metadata {

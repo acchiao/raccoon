@@ -11,13 +11,5 @@ region              = "nyc1"
 release             = "stable"
 
 # Helm charts
-helm_timeout         = 600
-helm_wait            = false
-enable_cert_manager  = true
-enable_external_dns  = true
-enable_ingress_nginx = true
-enable_kubed         = true
-enable_linkerd       = true
-enable_meilisearch   = true
-enable_metrics       = true
-enable_thanos        = true
+helm_timeout = 600
+helm_wait    = false

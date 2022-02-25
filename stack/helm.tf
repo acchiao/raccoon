@@ -1,18 +1,14 @@
 resource "kubernetes_namespace" "metrics" {
-  count = var.enable_metrics ? 1 : 0
-
   metadata {
     name = "metrics"
   }
 }
 
 resource "helm_release" "metrics" {
-  count = var.enable_metrics ? 1 : 0
-
   name       = "metrics-server"
   repository = "https://kubernetes-sigs.github.io/metrics-server/"
   chart      = "metrics-server"
-  namespace  = kubernetes_namespace.metrics[count.index].metadata[0].name
+  namespace  = kubernetes_namespace.metrics.metadata[0].name
   version    = var.metrics_version
 
   lint    = true
@@ -25,20 +21,16 @@ resource "helm_release" "metrics" {
 }
 
 resource "kubernetes_namespace" "external_dns" {
-  count = var.enable_external_dns ? 1 : 0
-
   metadata {
     name = "external-dns"
   }
 }
 
 resource "helm_release" "external_dns" {
-  count = var.enable_external_dns ? 1 : 0
-
   name       = "external-dns"
   repository = "https://charts.bitnami.com/bitnami"
   chart      = "external-dns"
-  namespace  = kubernetes_namespace.external_dns[count.index].metadata[0].name
+  namespace  = kubernetes_namespace.external_dns.metadata[0].name
   version    = var.external_dns_version
 
   lint    = true
@@ -75,20 +67,16 @@ resource "helm_release" "external_dns" {
 }
 
 resource "kubernetes_namespace" "cert_manager" {
-  count = var.enable_cert_manager ? 1 : 0
-
   metadata {
     name = "cert-manager"
   }
 }
 
 resource "helm_release" "cert_manager" {
-  count = var.enable_cert_manager ? 1 : 0
-
   name       = "cert-manager"
   repository = "https://charts.jetstack.io"
   chart      = "cert-manager"
-  namespace  = kubernetes_namespace.cert_manager[count.index].metadata[0].name
+  namespace  = kubernetes_namespace.cert_manager.metadata[0].name
   version    = var.cert_manager_version
 
   lint    = true
@@ -106,20 +94,16 @@ resource "helm_release" "cert_manager" {
 }
 
 resource "kubernetes_namespace" "kubed" {
-  count = var.enable_kubed ? 1 : 0
-
   metadata {
     name = "kubed"
   }
 }
 
 resource "helm_release" "kubed" {
-  count = var.enable_kubed ? 1 : 0
-
   name       = "kubed"
   repository = "https://charts.appscode.com/stable/"
   chart      = "kubed"
-  namespace  = kubernetes_namespace.kubed[count.index].metadata[0].name
+  namespace  = kubernetes_namespace.kubed.metadata[0].name
   version    = var.kubed_version
 
   lint    = true
@@ -137,20 +121,16 @@ resource "helm_release" "kubed" {
 }
 
 resource "kubernetes_namespace" "ingress_nginx" {
-  count = var.enable_ingress_nginx ? 1 : 0
-
   metadata {
     name = "ingress-nginx"
   }
 }
 
 resource "helm_release" "nginx_ingress" {
-  count = var.enable_ingress_nginx ? 1 : 0
-
   name       = "nginx-ingress-controller"
   repository = "https://charts.bitnami.com/bitnami"
   chart      = "nginx-ingress-controller"
-  namespace  = kubernetes_namespace.ingress_nginx[count.index].metadata[0].name
+  namespace  = kubernetes_namespace.ingress_nginx.metadata[0].name
   version    = var.ingress_nginx_version
 
   lint    = true
@@ -163,8 +143,26 @@ resource "helm_release" "nginx_ingress" {
   }
 
   set {
-    name  = "service.type"
-    value = "LoadBalancer"
+    name  = "service.annotations.service\\.beta\\.kubernetes\\.io/do-loadbalancer-name"
+    value = "raccoon"
+  }
+
+  set {
+    name  = "service.annotations.service\\.beta\\.kubernetes\\.io/do-loadbalancer-tls-passthrough"
+    type  = "string"
+    value = "true"
+  }
+
+  set {
+    name  = "service.annotations.service\\.beta\\.kubernetes\\.io/do-loadbalancer-enable-proxy-protocol"
+    type  = "string"
+    value = "true"
+  }
+
+  set {
+    name  = "service.annotations.service\\.beta\\.kubernetes\\.io/do-loadbalancer-size-unit"
+    type  = "string"
+    value = "1"
   }
 
   set {
@@ -178,20 +176,16 @@ resource "helm_release" "nginx_ingress" {
 }
 
 resource "kubernetes_namespace" "monitoring" {
-  count = var.enable_thanos ? 1 : 0
-
   metadata {
     name = "thanos"
   }
 }
 
 resource "helm_release" "thanos" {
-  count = var.enable_thanos ? 1 : 0
-
   name       = "thanos"
   repository = "https://charts.bitnami.com/bitnami"
   chart      = "thanos"
-  namespace  = kubernetes_namespace.monitoring[count.index].metadata[0].name
+  namespace  = kubernetes_namespace.monitoring.metadata[0].name
   version    = var.thanos_version
 
   lint    = true
@@ -204,20 +198,16 @@ resource "helm_release" "thanos" {
 }
 
 resource "kubernetes_namespace" "linkerd" {
-  count = var.enable_linkerd ? 1 : 0
-
   metadata {
     name = "linkerd"
   }
 }
 
 resource "helm_release" "linkerd" {
-  count = var.enable_linkerd ? 1 : 0
-
   name       = "linkerd"
   repository = "https://helm.linkerd.io/stable"
   chart      = "linkerd2"
-  namespace  = kubernetes_namespace.linkerd[count.index].metadata[0].name
+  namespace  = kubernetes_namespace.linkerd.metadata[0].name
   version    = var.linkerd_version
 
   lint    = true
@@ -231,7 +221,7 @@ resource "helm_release" "linkerd" {
 
   set {
     name  = "namespace"
-    value = kubernetes_namespace.linkerd[count.index].metadata[0].name
+    value = kubernetes_namespace.linkerd.metadata[0].name
   }
 
   set {
@@ -255,12 +245,10 @@ resource "helm_release" "linkerd" {
 }
 
 resource "helm_release" "linkerd_viz" {
-  count = var.enable_linkerd ? 1 : 0
-
   name       = "linkerd-viz"
   repository = "https://helm.linkerd.io/stable"
   chart      = "linkerd-viz"
-  namespace  = kubernetes_namespace.linkerd[count.index].metadata[0].name
+  namespace  = kubernetes_namespace.linkerd.metadata[0].name
   version    = "2.11.1"
 
   lint    = true
@@ -274,7 +262,7 @@ resource "helm_release" "linkerd_viz" {
 
   set {
     name  = "namespace"
-    value = kubernetes_namespace.linkerd[count.index].metadata[0].name
+    value = kubernetes_namespace.linkerd.metadata[0].name
   }
 
   depends_on = [
@@ -284,20 +272,16 @@ resource "helm_release" "linkerd_viz" {
 }
 
 resource "kubernetes_namespace" "meilisearch" {
-  count = var.enable_meilisearch ? 1 : 0
-
   metadata {
     name = "meilisearch"
   }
 }
 
 resource "helm_release" "meilisearch" {
-  count = var.enable_meilisearch ? 1 : 0
-
   name       = "meilisearch"
   repository = "https://meilisearch.github.io/meilisearch-kubernetes"
   chart      = "meilisearch"
-  namespace  = kubernetes_namespace.meilisearch[count.index].metadata[0].name
+  namespace  = kubernetes_namespace.meilisearch.metadata[0].name
   version    = var.meilisearch_version
 
   lint    = true
