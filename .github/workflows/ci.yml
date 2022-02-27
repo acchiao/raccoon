@@ -91,11 +91,14 @@ jobs:
           terraform_version: ${{ env.TF_VERSION }}
 
       - name: Initalize Terraform Workspace
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
         run: terraform init
 
       - name: Detect resource drift
         env:
           DIGITALOCEAN_TOKEN: ${{ secrets.DIGITALOCEAN_TOKEN }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
         run: |
           terraform refresh -var-file=env/core.tfvars
           terraform plan -var-file=env/core.tfvars -out=core.tplan -detailed-exitcode
