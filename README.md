@@ -51,6 +51,14 @@ At the highest level, this project is split into two logical groupings. For the 
 
 As the `core` workspace has resources that will be referenced in each environment, its state backend is used as a `terraform_remote_state` data source. All Terraform states are stored in Terraform Cloud for state management. The execution mode for each workspace has been set to `Local` and all plans, applies, and state operations are performed locally.
 
+The [CI workflows] provide static analysis, linting and validation, and [drift detection]. Tools like [tfsec], [snyk], and [checkov], help identify security issues, while dynamic tools such as Amazon Inspector, AWS Config, and AWS Security Hub, extend the coverage by evaluating any existing environments and services. Drift detection detects and assists in reconciling real-world drift.
+
+[ci workflows]: ./github/workflows/ci.yml
+[drift detection]: https://www.hashicorp.com/blog/detecting-and-managing-drift-with-terraform/
+[tfsec]: https://aquasecurity.github.io/tfsec/v1.4.2/
+[snyk]: https://snyk.io/product/infrastructure-as-code-security/
+[checkov]: https://www.checkov.io/
+
 ### Resource Naming
 
 For a project this size, the resource names omit the randomly generated ID typically included to ensure uniqueness. None of the resources use the `count` meta-argument either, so the count/number is also omitted. The typical naming convention is as follows: `${var.project_name}-${var.environment}-${var.region}-<RESOURCE_TYPE>`
