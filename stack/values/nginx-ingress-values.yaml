@@ -1,0 +1,16 @@
+---
+config:
+  use-proxy-protocol: "true"
+  use-forwarded-headers: "true"
+  compute-full-forwarded-for: "true"
+
+publishService:
+  enabled: true
+
+service:
+  externalTrafficPolicy: "Local"
+
+  annotations:
+    service.beta.kubernetes.io/do-loadbalancer-enable-proxy-protocol: "true"
+    service.beta.kubernetes.io/do-loadbalancer-size-unit: "1"
+    service.beta.kubernetes.io/do-loadbalancer-name: raccoon

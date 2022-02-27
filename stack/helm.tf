@@ -53,7 +53,7 @@ resource "helm_release" "external_dns" {
 
   set {
     name  = "interval"
-    value = "1m"
+    value = "30s"
   }
 
   set {
@@ -137,38 +137,9 @@ resource "helm_release" "nginx_ingress" {
   wait    = var.helm_wait
   timeout = var.helm_timeout
 
-  set {
-    name  = "rbac.create"
-    value = "true"
-  }
-
-  set {
-    name  = "service.annotations.service\\.beta\\.kubernetes\\.io/do-loadbalancer-name"
-    value = "raccoon"
-  }
-
-  set {
-    name  = "service.annotations.service\\.beta\\.kubernetes\\.io/do-loadbalancer-tls-passthrough"
-    type  = "string"
-    value = "true"
-  }
-
-  set {
-    name  = "service.annotations.service\\.beta\\.kubernetes\\.io/do-loadbalancer-enable-proxy-protocol"
-    type  = "string"
-    value = "true"
-  }
-
-  set {
-    name  = "service.annotations.service\\.beta\\.kubernetes\\.io/do-loadbalancer-size-unit"
-    type  = "string"
-    value = "1"
-  }
-
-  set {
-    name  = "controller.publishService.enabled"
-    value = "true"
-  }
+  values = [
+    file("values/nginx-ingress-values.yaml")
+  ]
 
   depends_on = [
     kubernetes_namespace.ingress_nginx,

@@ -4,6 +4,18 @@ resource "kubernetes_namespace" "sandbox" {
   }
 }
 
+resource "kubernetes_namespace" "rng" {
+  metadata {
+    name = "rng"
+  }
+}
+
+resource "kubernetes_namespace" "traefik" {
+  metadata {
+    name = "traefik"
+  }
+}
+
 # resource "kubernetes_namespace" "kube_system" {
 #   metadata {
 #     name = "kube-system"

@@ -88,14 +88,13 @@ variable "cert_manager_version" {
 variable "external_dns_version" {
   description = "The version of the Helm chart to install."
   type        = string
-  default     = "6.1.5"
+  default     = "6.1.6"
 }
-
 
 variable "kubed_version" {
   description = "The version of the Helm chart to install."
   type        = string
-  default     = "0.12.0"
+  default     = "0.13.2"
 }
 
 variable "linkerd_version" {
@@ -113,17 +112,17 @@ variable "meilisearch_version" {
 variable "metrics_version" {
   description = "The version of the Helm chart to install."
   type        = string
-  default     = "3.8.1"
+  default     = "3.8.2"
 }
 
 variable "ingress_nginx_version" {
   description = "The version of the Helm chart to install."
   type        = string
-  default     = "9.1.5"
+  default     = "9.1.8"
 }
 
 variable "thanos_version" {
   description = "The version of the Helm chart to install."
   type        = string
-  default     = "9.0.4"
+  default     = "9.0.8"
 }
