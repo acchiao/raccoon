@@ -69,6 +69,9 @@ jobs:
   drift:
     name: Drift Detection
     runs-on: ubuntu-20.04
+    defaults:
+      run:
+        working-directory: core
     environment:
       name: core
     needs:
@@ -88,11 +91,9 @@ jobs:
           terraform_version: ${{ env.TF_VERSION }}
 
       - name: Initalize Terraform Workspace
-        working-directory: core
-        run: terraform init -backend-config=env/core.hcl
+        run: terraform init
 
       - name: Detect resource drift
-        working-directory: core
         env:
           DIGITALOCEAN_TOKEN: ${{ secrets.DIGITALOCEAN_TOKEN }}
         run: |
@@ -100,7 +101,6 @@ jobs:
           terraform plan -var-file=env/core.tfvars -out=core.tplan -detailed-exitcode
 
       - name: Cleanup workspace
-        working-directory: core
         if: always()
         run: |
           find . -type f -name "*.tfplan" -print -delete;
