@@ -174,3 +174,9 @@ variable "fluent_bit_version" {
   type        = string
   default     = "0.19.19"
 }
+
+variable "haproxy_version" {
+  description = "The version of the Helm chart to install."
+  type        = string
+  default     = "0.3.7"
+}

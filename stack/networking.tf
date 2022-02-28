@@ -147,6 +147,29 @@ resource "helm_release" "external_dns_cloudflare" {
   ]
 }
 
+# resource "kubernetes_namespace" "haproxy" {
+#   metadata {
+#     name = "haproxy"
+#   }
+# }
+
+# resource "helm_release" "haproxy" {
+#   name       = "haproxy"
+#   repository = "https://charts.bitnami.com/bitnami"
+#   chart      = "haproxy"
+#   namespace  = kubernetes_namespace.haproxy.metadata[0].name
+#   version    = var.haproxy_version
+
+#   lint          = true
+#   wait          = var.helm_wait
+#   timeout       = var.helm_timeout
+#   recreate_pods = true
+
+#   depends_on = [
+#     kubernetes_namespace.haproxy,
+#   ]
+# }
+
 # resource "kubernetes_namespace" "linkerd" {
 #   metadata {
 #     name = "linkerd"

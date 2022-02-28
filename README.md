@@ -106,21 +106,23 @@ step certificate create identity.linkerd.cluster.local certificates/issuer.crt c
 
 - [cert-manager]
 - [external-dns]
-- [ingress-nginx]
 - [kubed]
 - [linkerd]
-- [metrics]
-- [thanos]
 - [meilisearch]
+- [metrics]
+- [nginx-ingress]
+- [oauth2-proxy]
+- [thanos]
 
 [cert-manager]: https://cert-manager.io/
 [external-dns]: https://github.com/kubernetes-sigs/external-dns/
-[ingress-nginx]: https://kubernetes.github.io/ingress-nginx/
 [kubed]: https://appscode.com/products/kubed/
 [linkerd]: https://linkerd.io/
-[metrics]: https://github.com/kubernetes-sigs/metrics-server
-[thanos]: https://thanos.io/
 [meilisearch]: https://www.meilisearch.com/
+[metrics]: https://github.com/kubernetes-sigs/metrics-server
+[nginx-ingress]: https://kubernetes.github.io/ingress-nginx/
+[oauth2-proxy]: https://oauth2-proxy.github.io/oauth2-proxy/
+[thanos]: https://thanos.io/
 
 ## Helpful Commands
 
@@ -140,6 +142,7 @@ terraform output
 terraform output -json
 
 doctl registry login
+doctl compute load-balancer list --format IP,ID,Name,Status
 doctl kubernetes cluster registry add <cluster-id|cluster-name>
 doctl kubernetes cluster kubeconfig save <cluster-id|cluster-name>
 
