@@ -67,6 +67,12 @@ variable "cloudflare_domain" {
   default     = ""
 }
 
+variable "install_charts" {
+  description = "If true, Helm chart releases will be installed."
+  type        = bool
+  default     = false
+}
+
 variable "helm_wait" {
   description = "If true, apply operations will wait for Helm release status."
   type        = bool
@@ -125,4 +131,46 @@ variable "thanos_version" {
   description = "The version of the Helm chart to install."
   type        = string
   default     = "9.0.8"
+}
+
+variable "oauth2_proxy_version" {
+  description = "The version of the Helm chart to install."
+  type        = string
+  default     = "2.0.5"
+}
+
+variable "traefik_version" {
+  description = "The version of the Helm chart to install."
+  type        = string
+  default     = "10.14.2"
+}
+
+variable "coredns_version" {
+  description = "The version of the Helm chart to install."
+  type        = string
+  default     = "1.16.7"
+}
+
+variable "istio_version" {
+  description = "The version of the Helm chart to install."
+  type        = string
+  default     = "1.13.1"
+}
+
+variable "calico_version" {
+  description = "The version of the Helm chart to install."
+  type        = string
+  default     = "3.22.0"
+}
+
+variable "prometheus_version" {
+  description = "The version of the Helm chart to install."
+  type        = string
+  default     = "33.0.0"
+}
+
+variable "fluent_bit_version" {
+  description = "The version of the Helm chart to install."
+  type        = string
+  default     = "0.19.19"
 }

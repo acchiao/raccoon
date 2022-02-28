@@ -4,41 +4,32 @@ resource "kubernetes_namespace" "sandbox" {
   }
 }
 
-resource "kubernetes_namespace" "rng" {
+resource "kubernetes_namespace" "hello_world" {
   metadata {
-    name = "rng"
+    name = "hello-world"
   }
 }
 
-resource "kubernetes_namespace" "traefik" {
+resource "kubernetes_namespace" "echo" {
   metadata {
-    name = "traefik"
+    name = "echo"
   }
 }
 
-# resource "kubernetes_namespace" "kube_system" {
-#   metadata {
-#     name = "kube-system"
-#     labels = {
-#       "istio-injection" = "disabled"
-#     }
-#   }
-# }
+resource "kubernetes_namespace" "cloudflare" {
+  metadata {
+    name = "cloudflare"
+  }
+}
 
-# resource "kubernetes_namespace" "kube_node_lease" {
-#   metadata {
-#     name = "kube-node-lease"
-#   }
-# }
+resource "kubernetes_namespace" "acchiao" {
+  metadata {
+    name = "acchiao"
+  }
+}
 
-# resource "kubernetes_namespace" "kube_public" {
-#   metadata {
-#     name = "kube-public"
-#   }
-# }
-
-# resource "kubernetes_namespace" "default" {
-#   metadata {
-#     name = "default"
-#   }
-# }
+resource "kubernetes_namespace" "limelight" {
+  metadata {
+    name = "limelight"
+  }
+}

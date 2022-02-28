@@ -11,7 +11,8 @@ data "terraform_remote_state" "raccoon" {
   }
 }
 
-# TODO: Replace terraform_remote_state data source with tfe_outputs
+data "kubernetes_all_namespaces" "raccoon" {}
+
 data "tfe_outputs" "raccoon" {
   organization = "acchiao"
   workspace    = "core"
@@ -25,4 +26,26 @@ data "digitalocean_kubernetes_versions" "prefix" {
   version_prefix = "1.21."
 }
 
-data "kubernetes_all_namespaces" "raccoon" {}
+data "kubernetes_namespace" "kube_system" {
+  metadata {
+    name = "kube-system"
+  }
+}
+
+data "kubernetes_namespace" "kube_public" {
+  metadata {
+    name = "kube-public"
+  }
+}
+
+data "kubernetes_namespace" "kube_node_lease" {
+  metadata {
+    name = "kube-node-lease"
+  }
+}
+
+data "kubernetes_namespace" "default" {
+  metadata {
+    name = "default"
+  }
+}
