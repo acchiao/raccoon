@@ -180,3 +180,9 @@ variable "haproxy_version" {
   type        = string
   default     = "0.3.7"
 }
+
+variable "kubernetes_dashboard_version" {
+  description = "The version of the Helm chart to install."
+  type        = string
+  default     = "5.2.0"
+}

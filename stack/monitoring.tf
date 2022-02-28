@@ -20,6 +20,28 @@ resource "helm_release" "metrics" {
   ]
 }
 
+resource "kubernetes_namespace" "kubernetes_dashboard" {
+  metadata {
+    name = "kubernetes-dashboard"
+  }
+}
+
+resource "helm_release" "kubernetes_dashboard" {
+  name       = "kubernetes-dashboard"
+  repository = "https://kubernetes.github.io/dashboard/"
+  chart      = "kubernetes-dashboard"
+  namespace  = kubernetes_namespace.kubernetes_dashboard.metadata[0].name
+  version    = var.kubernetes_dashboard_version
+
+  lint    = true
+  wait    = var.helm_wait
+  timeout = var.helm_timeout
+
+  depends_on = [
+    kubernetes_namespace.kubernetes_dashboard,
+  ]
+}
+
 # resource "helm_release" "prometheus" {
 #   name       = "prometheus"
 #   repository = "https://prometheus-community.github.io/helm-charts"
