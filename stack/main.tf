@@ -8,12 +8,19 @@ resource "digitalocean_project_resources" "raccoon" {
   project = digitalocean_project.raccoon.id
   resources = [
     digitalocean_kubernetes_cluster.raccoon.urn,
-    digitalocean_domain.digitalocean_domain.urn,
+    digitalocean_domain.acchiao.urn,
   ]
 }
 
-resource "digitalocean_domain" "digitalocean_domain" {
+resource "digitalocean_domain" "acchiao" {
   name = var.digitalocean_domain
+}
+
+resource "digitalocean_record" "github" {
+  domain = digitalocean_domain.acchiao.id
+  type   = "TXT"
+  name   = "_github-pages-challenge-acchiao"
+  value  = "bbb69fd4052b905e62f3d32c1b5e1a"
 }
 
 resource "digitalocean_vpc" "raccoon" {
