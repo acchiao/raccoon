@@ -1,5 +1,6 @@
 cloudflare_zone_name = "raccoon.team"
 environment          = "core"
+okta_subdomain       = "sso"
 project_environment  = "production"
 project_name         = "raccoon"
 region               = "nyc1"

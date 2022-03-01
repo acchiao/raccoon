@@ -59,6 +59,13 @@ The [CI workflows] provide static analysis, linting and validation, and [drift d
 [snyk]: https://snyk.io/product/infrastructure-as-code-security/
 [checkov]: https://www.checkov.io/
 
+### Authentication
+
+Okta is the current identity provider for this project and has been configured with a custom domain. Information about the authorization server can be gleaned from the following URLs.
+
+- [https://sso.raccoon.team/oauth2/default/.well-known/oauth-authorization-server](https://sso.raccoon.team/oauth2/default/.well-known/oauth-authorization-server)
+- [https://arthurchiao.okta.com/oauth2/default/.well-known/oauth-authorization-server](https://arthurchiao.okta.com/oauth2/default/.well-known/oauth-authorization-server)
+
 ### Resource Naming
 
 For a project this size, the resource names omit the randomly generated ID typically included to ensure uniqueness. None of the resources use the `count` meta-argument either, so the count/number is also omitted. The typical naming convention is as follows: `${var.project_name}-${var.environment}-${var.region}-<RESOURCE_TYPE>`

@@ -25,3 +25,9 @@ variable "cloudflare_zone_name" {
   type        = string
   default     = ""
 }
+
+variable "okta_subdomain" {
+  description = "The name of the Okta subdomain."
+  type        = string
+  default     = ""
+}
