@@ -33,3 +33,9 @@ resource "kubernetes_namespace" "limelight" {
     name = "limelight"
   }
 }
+
+resource "kubernetes_namespace" "nutshell" {
+  metadata {
+    name = "nutshell"
+  }
+}
