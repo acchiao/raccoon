@@ -121,7 +121,7 @@ variable "metrics_version" {
   default     = "3.8.2"
 }
 
-variable "ingress_nginx_version" {
+variable "nginx_ingress_version" {
   description = "The version of the Helm chart to install."
   type        = string
   default     = "9.1.8"

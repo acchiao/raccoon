@@ -13,5 +13,7 @@ service:
   annotations:
     service.beta.kubernetes.io/do-loadbalancer-enable-proxy-protocol: "true"
     service.beta.kubernetes.io/do-loadbalancer-name: raccoon
-    service.beta.kubernetes.io/do-loadbalancer-protocol: “http”
     service.beta.kubernetes.io/do-loadbalancer-size-unit: "1"
+    # service.beta.kubernetes.io/do-loadbalancer-protocol: “http”
+    # service.beta.kubernetes.io/do-loadbalancer-redirect-http-to-https: “true”
+    # service.beta.kubernetes.io/do-loadbalancer-tls-passthrough: "true"

@@ -23,29 +23,29 @@ data "digitalocean_project" "raccoon" {
 }
 
 data "digitalocean_kubernetes_versions" "prefix" {
-  version_prefix = "1.21."
+  version_prefix = "1.22."
 }
 
-data "kubernetes_namespace" "kube_system" {
-  metadata {
-    name = "kube-system"
-  }
-}
+# data "kubernetes_namespace" "kube_system" {
+#   metadata {
+#     name = "kube-system"
+#   }
+# }
 
-data "kubernetes_namespace" "kube_public" {
-  metadata {
-    name = "kube-public"
-  }
-}
+# data "kubernetes_namespace" "kube_public" {
+#   metadata {
+#     name = "kube-public"
+#   }
+# }
 
-data "kubernetes_namespace" "kube_node_lease" {
-  metadata {
-    name = "kube-node-lease"
-  }
-}
+# data "kubernetes_namespace" "kube_node_lease" {
+#   metadata {
+#     name = "kube-node-lease"
+#   }
+# }
 
-data "kubernetes_namespace" "default" {
-  metadata {
-    name = "default"
-  }
-}
+# data "kubernetes_namespace" "default" {
+#   metadata {
+#     name = "default"
+#   }
+# }
