@@ -38,6 +38,20 @@ resource "cloudflare_record" "raccoon_sso" {
   type    = "CNAME"
 }
 
+resource "cloudflare_record" "charts" {
+  zone_id = cloudflare_zone.raccoon.id
+  name    = "charts"
+  value   = "acchiao.github.io"
+  type    = "CNAME"
+}
+
+resource "cloudflare_record" "galactus" {
+  zone_id = cloudflare_zone.raccoon.id
+  name    = "galactus"
+  value   = "acchiao.github.io"
+  type    = "CNAME"
+}
+
 resource "cloudflare_record" "raccoon_sso_txt" {
   zone_id = cloudflare_zone.raccoon.id
   name    = "_acme-challenge.${var.okta_subdomain}"

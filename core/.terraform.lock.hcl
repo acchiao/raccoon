@@ -88,6 +88,7 @@ provider "registry.terraform.io/okta/okta" {
   version     = "3.22.0"
   constraints = "~> 3.22.0"
   hashes = [
+    "h1:Cp4itKG3GnQ2n0Gl/6gKk3wMzD6rCgVQv5gHfI/OLdM=",
     "h1:NwUPKA5lzl3P2UwNCBVpjumgNz7KJZs0pm2Zwqi4oiA=",
     "zh:19f13794c608e0f59920dad6137dec05c8bf6ea563c0c751329edd596803d671",
     "zh:2404ff5e4d61edbbddf7ae6e862908cc8d52aee4e2a225d1a5a58e75942756e4",
