@@ -12,16 +12,6 @@ terraform {
       version = "~> 3.1.0"
     }
 
-    kubernetes = {
-      source  = "hashicorp/kubernetes"
-      version = "~> 2.8.0"
-    }
-
-    helm = {
-      source  = "hashicorp/helm"
-      version = "~> 2.4.1"
-    }
-
     tfe = {
       source  = "hashicorp/tfe"
       version = "~> 0.28.1"

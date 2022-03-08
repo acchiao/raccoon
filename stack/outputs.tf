@@ -23,11 +23,6 @@ output "kubernetes_node_count" {
   value       = digitalocean_kubernetes_cluster.raccoon.node_pool[0].actual_node_count
 }
 
-output "kubernetes_available_namespaces" {
-  description = "All available namespaces."
-  value       = data.kubernetes_all_namespaces.raccoon.namespaces
-}
-
 output "kubernetes_endpoint" {
   description = "The DigitalOcean Kubernetes cluster endpoint."
   value       = digitalocean_kubernetes_cluster.raccoon.endpoint
