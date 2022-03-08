@@ -27,3 +27,14 @@ output "kubernetes_available_namespaces" {
   description = "All available namespaces."
   value       = data.kubernetes_all_namespaces.raccoon.namespaces
 }
+
+output "kubernetes_endpoint" {
+  description = "The DigitalOcean Kubernetes cluster endpoint."
+  value       = digitalocean_kubernetes_cluster.raccoon.endpoint
+}
+
+output "kubernetes_kube_config" {
+  description = "The DigitalOcean Kubernetes cluster kubeconfig."
+  value       = digitalocean_kubernetes_cluster.raccoon.kube_config
+  sensitive   = true
+}
