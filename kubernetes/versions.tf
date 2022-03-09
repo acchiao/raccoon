@@ -2,14 +2,14 @@ terraform {
   required_version = "~> 1.1.7"
 
   required_providers {
-    digitalocean = {
-      source  = "digitalocean/digitalocean"
-      version = "~> 2.17.1"
+    kubernetes = {
+      source  = "hashicorp/kubernetes"
+      version = "~> 2.8.0"
     }
 
-    random = {
-      source  = "hashicorp/random"
-      version = "~> 3.1.0"
+    helm = {
+      source  = "hashicorp/helm"
+      version = "~> 2.4.1"
     }
 
     tfe = {
@@ -23,7 +23,7 @@ terraform {
     organization = "acchiao"
 
     workspaces {
-      tags = ["raccoon", "stack"]
+      tags = ["raccoon", "stack", "kubernetes"]
     }
   }
 }
