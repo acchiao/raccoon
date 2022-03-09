@@ -37,14 +37,31 @@ raccoon
 │   ├── main.tf
 │   ├── outputs.tf
 │   └── variables.tf
-└── stack
-    ├── env
-    │   ├── development.tfvars
-    │   ├── staging.tfvars
-    │   └── production.tfvars
-    ├── main.tf
-    ├── outputs.tf
-    └── variables.tf
+├── stack
+│   ├── env
+│   │   ├── development.tfvars
+│   │   ├── staging.tfvars
+│   │   └── production.tfvars
+│   ├── main.tf
+│   ├── outputs.tf
+│   └── variables.tf
+├── kubernetes
+│   ├── certificates
+│   │   ├── ca.crt
+│   │   ├── ca.key
+│   │   ├── issuer.crt
+│   │   └── issuer.key
+│   ├── env
+│   │   └── kubernetes.tfvars
+│   ├── locals.tf
+│   ├── main.tf
+│   ├── outputs.tf
+│   ├── providers.tf
+│   ├── values
+│   │   ├── external-dns-values.yaml
+│   │   └── nginx-ingress-values.yaml
+│   ├── variables.tf
+│   └── versions.tf
 ```
 
 At the highest level, this project is split into two logical groupings. For the core and stack folders, each represents a Terraform working directory. Resources that reside in the core directory are common entities that are unique **_per project_** (e.g., a single container registry used across the `test`/`dev`/`stage`/`prod` environments). From an environment perspective, these might be considered global resources or entities, and don't easily fit into the traditional classifications. Resources that reside in the stack directory are entities that are unique **_per environment_** (e.g., creating individual VPCs to isolate execution environments). Whereas the core directory has a one-to-one mapping to a single workspace, the stack directory has a one-to-many relationship; each workspace maps to an environment. Determining where a resource belongs is highly subjective and will be governed by cost, scale, project requirements, and resource limitations.
@@ -70,7 +87,7 @@ Okta is the current identity provider for this project and has been configured w
 
 For a project this size, the resource names omit the randomly generated ID typically included to ensure uniqueness. None of the resources use the `count` meta-argument either, so the count/number is also omitted. The typical naming convention is as follows: `${var.project_name}-${var.environment}-${var.region}-<RESOURCE_TYPE>`
 
-### Core
+### Core Module
 
 When updating the outputs of the `core` module, ensure that the changes don't affect any resources downstream. The `stack` module references the outputs with a `terraform_remote_state` data source, so a plan operation should be run in the `stack` workspace to verify references to the old attributes haven't changed.
 
@@ -86,7 +103,9 @@ When updating the outputs of the `core` module, ensure that the changes don't af
 │ This object does not have an attribute named "core_project_name".
 ```
 
-### Stack
+### Stack Module
+
+The `stack` folder/module contains infrastructure-related resources. The environment-specific items within Kubernetes have been moved to the `kubernetes` directory/module to decouple infrastructure resources and Kubernetes-related items.
 
 The Linkerd Helm chart doesn't generate the trust anchor certificate and the issuer certificate/key required for mTLS connections. Linkerd requires ECDSA P-256 certificates which can be created using `openssl` or `step`. See [Installing Linkerd with Helm].
 
