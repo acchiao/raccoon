@@ -4,7 +4,7 @@ terraform {
   required_providers {
     digitalocean = {
       source  = "digitalocean/digitalocean"
-      version = "~> 2.17.1"
+      version = "~> 2.18.0"
     }
 
     random = {
@@ -14,7 +14,7 @@ terraform {
 
     cloudflare = {
       source  = "cloudflare/cloudflare"
-      version = "~> 3.9.1"
+      version = "~> 3.10.0"
     }
 
     okta = {
