@@ -39,3 +39,9 @@ resource "kubernetes_namespace" "nutshell" {
     name = "nutshell"
   }
 }
+
+resource "kubernetes_namespace" "raccoon_www" {
+  metadata {
+    name = "raccoon-www"
+  }
+}
