@@ -13,3 +13,7 @@ updates:
     directory: "stack"
     schedule:
       interval: "daily"
+  - package-ecosystem: "terraform"
+    directory: "kubernetes"
+    schedule:
+      interval: "daily"
