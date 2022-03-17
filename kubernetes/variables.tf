@@ -43,6 +43,18 @@ variable "helm_timeout" {
   default     = 300
 }
 
+variable "helm_recreate_pods" {
+  description = "Perform pods restart during upgrade/rollback."
+  type        = bool
+  default     = false
+}
+
+variable "helm_replica_count" {
+  description = "Pod replica count requirement."
+  type        = number
+  default     = 1
+}
+
 variable "cert_manager_version" {
   description = "The version of the Helm chart to install."
   type        = string
@@ -52,7 +64,7 @@ variable "cert_manager_version" {
 variable "external_dns_version" {
   description = "The version of the Helm chart to install."
   type        = string
-  default     = "6.1.6"
+  default     = "6.2.1"
 }
 
 variable "kubed_version" {
@@ -82,7 +94,7 @@ variable "metrics_version" {
 variable "nginx_ingress_version" {
   description = "The version of the Helm chart to install."
   type        = string
-  default     = "9.1.8"
+  default     = "9.1.12"
 }
 
 variable "thanos_version" {

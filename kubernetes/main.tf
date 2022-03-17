@@ -6,7 +6,7 @@ resource "kubernetes_namespace" "monitoring" {
 
 resource "helm_release" "metrics" {
   name       = "metrics-server"
-  repository = "https://kubernetes-sigs.github.io/metrics-server/"
+  repository = "https://kubernetes-sigs.github.io/metrics-server"
   chart      = "metrics-server"
   namespace  = kubernetes_namespace.monitoring.metadata[0].name
   version    = var.metrics_version
@@ -36,11 +36,16 @@ resource "helm_release" "cert_manager" {
   lint          = true
   wait          = var.helm_wait
   timeout       = var.helm_timeout
-  recreate_pods = true
+  recreate_pods = var.helm_recreate_pods
 
   set {
     name  = "installCRDs"
     value = "true"
+  }
+
+  set {
+    name  = "replicaCount"
+    value = var.helm_replica_count
   }
 
   depends_on = [
@@ -48,33 +53,33 @@ resource "helm_release" "cert_manager" {
   ]
 }
 
-resource "kubernetes_namespace" "cert_manager_cloudflare" {
-  metadata {
-    name = "cert-manager-cloudflare"
-  }
-}
+# resource "kubernetes_namespace" "cert_manager_cloudflare" {
+#   metadata {
+#     name = "cert-manager-cloudflare"
+#   }
+# }
 
-resource "helm_release" "cert_manager_cloudflare" {
-  name       = "cert-manager-cloudflare"
-  repository = "https://charts.jetstack.io"
-  chart      = "cert-manager"
-  namespace  = kubernetes_namespace.cert_manager_cloudflare.metadata[0].name
-  version    = var.cert_manager_version
+# resource "helm_release" "cert_manager_cloudflare" {
+#   name       = "cert-manager-cloudflare"
+#   repository = "https://charts.jetstack.io"
+#   chart      = "cert-manager"
+#   namespace  = kubernetes_namespace.cert_manager_cloudflare.metadata[0].name
+#   version    = var.cert_manager_version
 
-  lint          = true
-  wait          = var.helm_wait
-  timeout       = var.helm_timeout
-  recreate_pods = true
+#   lint          = true
+#   wait          = var.helm_wait
+#   timeout       = var.helm_timeout
+#   recreate_pods = var.helm_recreate_pods
 
-  set {
-    name  = "installCRDs"
-    value = "false"
-  }
+#   set {
+#     name  = "installCRDs"
+#     value = "false"
+#   }
 
-  depends_on = [
-    kubernetes_namespace.cert_manager_cloudflare,
-  ]
-}
+#   depends_on = [
+#     kubernetes_namespace.cert_manager_cloudflare,
+#   ]
+# }
 
 resource "kubernetes_namespace" "nginx_ingress" {
   metadata {
@@ -83,7 +88,7 @@ resource "kubernetes_namespace" "nginx_ingress" {
 }
 
 resource "helm_release" "nginx_ingress" {
-  name       = "nginx-ingress-controller"
+  name       = "raccoon"
   repository = "https://charts.bitnami.com/bitnami"
   chart      = "nginx-ingress-controller"
   namespace  = kubernetes_namespace.nginx_ingress.metadata[0].name
@@ -92,11 +97,11 @@ resource "helm_release" "nginx_ingress" {
   lint          = true
   wait          = var.helm_wait
   timeout       = var.helm_timeout
-  recreate_pods = true
+  recreate_pods = var.helm_recreate_pods
 
   set {
     name  = "replicaCount"
-    value = "1"
+    value = var.helm_replica_count
   }
 
   values = [
@@ -124,7 +129,7 @@ resource "helm_release" "external_dns" {
   lint          = true
   wait          = var.helm_wait
   timeout       = var.helm_timeout
-  recreate_pods = true
+  recreate_pods = var.helm_recreate_pods
 
   values = [
     file("values/external-dns-values.yaml")
@@ -133,6 +138,11 @@ resource "helm_release" "external_dns" {
   set {
     name  = "rbac.create"
     value = "true"
+  }
+
+  set {
+    name  = "replicaCount"
+    value = var.helm_replica_count
   }
 
   set {
@@ -155,52 +165,52 @@ resource "helm_release" "external_dns" {
   ]
 }
 
-resource "kubernetes_namespace" "external_dns_cloudflare" {
-  metadata {
-    name = "external-dns-cloudflare"
-  }
-}
+# resource "kubernetes_namespace" "external_dns_cloudflare" {
+#   metadata {
+#     name = "external-dns-cloudflare"
+#   }
+# }
 
-resource "helm_release" "external_dns_cloudflare" {
-  name       = "external-dns-cloudflare"
-  repository = "https://charts.bitnami.com/bitnami"
-  chart      = "external-dns"
-  namespace  = kubernetes_namespace.external_dns_cloudflare.metadata[0].name
-  version    = var.external_dns_version
+# resource "helm_release" "external_dns_cloudflare" {
+#   name       = "external-dns-cloudflare"
+#   repository = "https://charts.bitnami.com/bitnami"
+#   chart      = "external-dns"
+#   namespace  = kubernetes_namespace.external_dns_cloudflare.metadata[0].name
+#   version    = var.external_dns_version
 
-  lint          = true
-  wait          = var.helm_wait
-  timeout       = var.helm_timeout
-  recreate_pods = true
+#   lint          = true
+#   wait          = var.helm_wait
+#   timeout       = var.helm_timeout
+#   recreate_pods = var.helm_recreate_pods
 
-  values = [
-    file("values/external-dns-values.yaml")
-  ]
+#   values = [
+#     file("values/external-dns-values.yaml")
+#   ]
 
-  set {
-    name  = "rbac.create"
-    value = "true"
-  }
+#   set {
+#     name  = "rbac.create"
+#     value = "true"
+#   }
 
-  set {
-    name  = "policy"
-    value = "sync"
-  }
+#   set {
+#     name  = "policy"
+#     value = "sync"
+#   }
 
-  set {
-    name  = "interval"
-    value = "30s"
-  }
+#   set {
+#     name  = "interval"
+#     value = "30s"
+#   }
 
-  set {
-    name  = "provider"
-    value = "cloudflare"
-  }
+#   set {
+#     name  = "provider"
+#     value = "cloudflare"
+#   }
 
-  depends_on = [
-    kubernetes_namespace.external_dns_cloudflare,
-  ]
-}
+#   depends_on = [
+#     kubernetes_namespace.external_dns_cloudflare,
+#   ]
+# }
 
 resource "kubernetes_namespace" "kubed" {
   metadata {
@@ -210,7 +220,7 @@ resource "kubernetes_namespace" "kubed" {
 
 resource "helm_release" "kubed" {
   name       = "kubed"
-  repository = "https://charts.appscode.com/stable/"
+  repository = "https://charts.appscode.com/stable"
   chart      = "kubed"
   namespace  = kubernetes_namespace.kubed.metadata[0].name
   version    = var.kubed_version
