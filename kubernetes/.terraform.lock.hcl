@@ -24,6 +24,7 @@ provider "registry.terraform.io/hashicorp/kubernetes" {
   version     = "2.9.0"
   constraints = "~> 2.9.0"
   hashes = [
+    "h1:VDEiKlAv3KaNpfwJ7nPkqN0tLsCzepIMwo5ciyV5z5M=",
     "h1:tlVa13hydZH+bs1e9TTLNDqtzfXW2HgrQtDVAuZvaSg=",
     "zh:114113e9cd0489d2db8374f3352cc9b29667a42462f922eb9c891c6daf1c38fa",
     "zh:31dcf16083142f2978fc933cead038e671798053fb1fd3c18a2331afb7abe264",

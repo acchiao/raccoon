@@ -89,7 +89,7 @@ For a project this size, the resource names omit the randomly generated ID typic
 
 ### Core Module
 
-When updating the outputs of the `core` module, ensure that the changes don't affect any resources downstream. The `stack` module references the outputs with a `terraform_remote_state` data source, so a plan operation should be run in the `stack` workspace to verify references to the old attributes haven't changed.
+When updating the outputs of the `core` module, ensure that the changes don't affect any resources downstream. The `stack` module references the outputs with a `terraform_remote_state` data source, so a plan operation should be run in the `stack` workspace to verify references to the old attributes haven't changed. The same should be done in the `kubernetes` folder.
 
 ```console
 # Example of breaking changes when renaming or removing outputs used downstream
