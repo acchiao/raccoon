@@ -48,6 +48,7 @@ provider "registry.terraform.io/hashicorp/tfe" {
   version     = "0.29.0"
   constraints = "~> 0.29.0"
   hashes = [
+    "h1:NT0+id66t0NOpOabXR+FWmxI6wSNoN2dOo9PtDHltaQ=",
     "h1:huzoA8nYngWcpGjZ4AcCcDbq70pFnimNQQjmCRElXys=",
     "zh:1e5cf8b67ee8e3046ee0c8ee1e506bb093ebb4a06bbc449530e9bfedf75af105",
     "zh:26635fd823b18847df109ba8a6f111babc38eab47f5098cc4052e04e2b598365",
