@@ -156,3 +156,9 @@ variable "kubernetes_dashboard_version" {
   type        = string
   default     = "5.2.0"
 }
+
+variable "falco_version" {
+  description = "The version of the Helm chart to install."
+  type        = string
+  default     = "1.17.4"
+}

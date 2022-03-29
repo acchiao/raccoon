@@ -1,3 +1,25 @@
+# resource "kubernetes_namespace" "falco" {
+#   metadata {
+#     name = "falco"
+#   }
+# }
+
+# resource "helm_release" "falco" {
+#   name       = "falco"
+#   repository = "https://falcosecurity.github.io/charts"
+#   chart      = "falco"
+#   namespace  = kubernetes_namespace.falco.metadata[0].name
+#   version    = var.falco_version
+
+#   lint    = true
+#   wait    = var.helm_wait
+#   timeout = var.helm_timeout
+
+#   depends_on = [
+#     kubernetes_namespace.falco,
+#   ]
+# }
+
 # resource "kubernetes_namespace" "kubernetes_dashboard" {
 #   metadata {
 #     name = "kubernetes-dashboard"
@@ -6,7 +28,7 @@
 
 # resource "helm_release" "kubernetes_dashboard" {
 #   name       = "kubernetes-dashboard"
-#   repository = "https://kubernetes.github.io/dashboard/"
+#   repository = "https://kubernetes.github.io/dashboard"
 #   chart      = "kubernetes-dashboard"
 #   namespace  = kubernetes_namespace.kubernetes_dashboard.metadata[0].name
 #   version    = var.kubernetes_dashboard_version
