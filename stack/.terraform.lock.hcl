@@ -5,6 +5,7 @@ provider "registry.terraform.io/digitalocean/digitalocean" {
   version     = "2.19.0"
   constraints = "~> 2.19.0"
   hashes = [
+    "h1:XcLoKA2a1MR4foSFeFbJgCADRvsXtN9SyIiJX0fSGys=",
     "h1:lpTBlXEjgRRixvRmUuABOIj8P/3H1LULsbav1UHVoxo=",
     "zh:01cee85343dee2dfc01499e19ef4e56b0c9260eee0a47329231cf500c07b4386",
     "zh:099eeddf9baf9c282430231da501a8b96b3fb28507ce3b78e3a185cc9d4b3860",
@@ -48,6 +49,7 @@ provider "registry.terraform.io/hashicorp/tfe" {
   version     = "0.30.2"
   constraints = "~> 0.30.2"
   hashes = [
+    "h1:DKu3E5OJku1q0+AXm/Bfhs1dkOQ2ON1pWwPLr9fqFBA=",
     "h1:sffzxgukfBmyWcf4rn+6a2eJzOlIESx4c6ueyl4mi5E=",
     "zh:1564f7d15e27ee0264f652928fe68b134c04e487ca9d21d4dc5945bd63d3a83f",
     "zh:1aeb73bc7c88e94586bfb43e4fc61b10dc1f9f973df017b720e20e26f9160708",
