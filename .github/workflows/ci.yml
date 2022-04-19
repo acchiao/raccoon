@@ -53,7 +53,7 @@ jobs:
           persist-credentials: false
 
       - name: Setup Terraform v${{ env.TF_VERSION }}
-        uses: hashicorp/setup-terraform@ed3a0531877aca392eb870f440d9ae7aba83a6bd # v1.3.2
+        uses: hashicorp/setup-terraform@17d4c9b8043b238f6f35641cdd8433da1e6f3867 # v1.3.2
         with:
           terraform_version: ${{ env.TF_VERSION }}
 
@@ -84,7 +84,7 @@ jobs:
           persist-credentials: false
 
       - name: Setup Terraform v${{ env.TF_VERSION }}
-        uses: hashicorp/setup-terraform@ed3a0531877aca392eb870f440d9ae7aba83a6bd # v1.3.2
+        uses: hashicorp/setup-terraform@17d4c9b8043b238f6f35641cdd8433da1e6f3867 # v1.3.2
         with:
           cli_config_credentials_hostname: app.terraform.io
           cli_config_credentials_token: ${{ secrets.TERRAFORM_TOKEN }}
