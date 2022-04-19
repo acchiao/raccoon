@@ -19,7 +19,7 @@ terraform {
 
     okta = {
       source  = "okta/okta"
-      version = "~> 3.23.0"
+      version = "~> 3.24.0"
     }
 
     tls = {
