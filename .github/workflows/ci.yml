@@ -23,7 +23,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout ${{ github.ref }} [${{ github.sha }}]
-        uses: actions/checkout@dcd71f646680f2efd8db4afa5ad64fdcba30e748 # v3.0.0
+        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # v3.0.0
         with:
           persist-credentials: false
 
@@ -48,7 +48,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout ${{ github.ref }} [${{ github.sha }}]
-        uses: actions/checkout@dcd71f646680f2efd8db4afa5ad64fdcba30e748 # v3.0.0
+        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # v3.0.0
         with:
           persist-credentials: false
 
@@ -79,7 +79,7 @@ jobs:
       - validate
     steps:
       - name: Checkout ${{ github.ref }} [${{ github.sha }}]
-        uses: actions/checkout@dcd71f646680f2efd8db4afa5ad64fdcba30e748 # v3.0.0
+        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # v3.0.0
         with:
           persist-credentials: false
 
@@ -112,7 +112,7 @@ jobs:
   #   runs-on: ubuntu-20.04
   #   steps:
   #     - name: Checkout ${{ github.ref }} [${{ github.sha }}]
-  #       uses: actions/checkout@dcd71f646680f2efd8db4afa5ad64fdcba30e748 # v2.4.0
+  #       uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # v2.4.0
   #       with:
   #         persist-credentials: false
 
