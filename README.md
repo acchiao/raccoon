@@ -178,4 +178,4 @@ find . -type d -name ".terraform" -print -prune -exec rm -rf {} +
 
 ## DigitalOcean
 
-[![DigitalOcean Referral Badge](https://web-platforms.sfo2.digitaloceanspaces.com/WWW/Badge%203.svg)](https://www.digitalocean.com/?refcode=3d0d2831fcb4&utm_campaign=Referral_Invite&utm_medium=Referral_Program&utm_source=badge)
+[![DigitalOcean Referral Badge](https://web-platforms.sfo2.digitaloceanspaces.com/WWW/Badge%203.svg)](https://www.digitalocean.com/?refcode=f157569516fd&utm_campaign=Referral_Invite&utm_medium=Referral_Program&utm_source=badge)
