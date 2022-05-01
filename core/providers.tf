@@ -1,5 +1,5 @@
 provider "digitalocean" {}
 
-provider "cloudflare" {}
+# provider "cloudflare" {}
 
 provider "tls" {}

@@ -10,7 +10,8 @@ resource "digitalocean_project_resources" "raccoon" {
 
 resource "digitalocean_container_registry" "raccoon" {
   name                   = "${var.project_name}-${var.environment}-registry"
-  subscription_tier_slug = "basic"
+  subscription_tier_slug = "starter"
+  region                 = var.container_registry_region
 }
 
 resource "digitalocean_vpc" "raccoon" {
@@ -18,56 +19,56 @@ resource "digitalocean_vpc" "raccoon" {
   region = var.region
 }
 
-resource "cloudflare_zone" "raccoon" {
-  zone = var.cloudflare_zone_name
-}
+# resource "cloudflare_zone" "raccoon" {
+#   zone = var.cloudflare_zone_name
+# }
 
-resource "okta_domain" "raccoon" {
-  name                    = "${var.okta_subdomain}.${var.cloudflare_zone_name}"
-  certificate_source_type = "OKTA_MANAGED"
-}
+# resource "okta_domain" "raccoon" {
+#   name                    = "${var.okta_subdomain}.${var.cloudflare_zone_name}"
+#   certificate_source_type = "OKTA_MANAGED"
+# }
 
-resource "okta_domain_verification" "raccoon" {
-  domain_id = okta_domain.raccoon.id
-}
+# resource "okta_domain_verification" "raccoon" {
+#   domain_id = okta_domain.raccoon.id
+# }
 
-resource "cloudflare_record" "raccoon_sso" {
-  zone_id = cloudflare_zone.raccoon.id
-  name    = var.okta_subdomain
-  value   = okta_domain.raccoon.dns_records[1].values[0]
-  type    = "CNAME"
-}
+# resource "cloudflare_record" "raccoon_sso" {
+#   zone_id = cloudflare_zone.raccoon.id
+#   name    = var.okta_subdomain
+#   value   = okta_domain.raccoon.dns_records[1].values[0]
+#   type    = "CNAME"
+# }
 
-resource "cloudflare_record" "charts" {
-  zone_id = cloudflare_zone.raccoon.id
-  name    = "charts"
-  value   = "acchiao.github.io"
-  type    = "CNAME"
-}
+# resource "cloudflare_record" "charts" {
+#   zone_id = cloudflare_zone.raccoon.id
+#   name    = "charts"
+#   value   = "acchiao.github.io"
+#   type    = "CNAME"
+# }
 
-resource "cloudflare_record" "galactus" {
-  zone_id = cloudflare_zone.raccoon.id
-  name    = "galactus"
-  value   = "acchiao.github.io"
-  type    = "CNAME"
-}
+# resource "cloudflare_record" "galactus" {
+#   zone_id = cloudflare_zone.raccoon.id
+#   name    = "galactus"
+#   value   = "acchiao.github.io"
+#   type    = "CNAME"
+# }
 
-resource "cloudflare_record" "raccoon_sso_txt" {
-  zone_id = cloudflare_zone.raccoon.id
-  name    = "_acme-challenge.${var.okta_subdomain}"
-  value   = okta_domain.raccoon.dns_records[0].values[0]
-  type    = "TXT"
-}
+# resource "cloudflare_record" "raccoon_sso_txt" {
+#   zone_id = cloudflare_zone.raccoon.id
+#   name    = "_acme-challenge.${var.okta_subdomain}"
+#   value   = okta_domain.raccoon.dns_records[0].values[0]
+#   type    = "TXT"
+# }
 
-resource "okta_auth_server_default" "default" {
-  name                      = "default"
-  credentials_rotation_mode = "AUTO"
-  issuer_mode               = "CUSTOM_URL"
+# resource "okta_auth_server_default" "default" {
+#   name                      = "default"
+#   credentials_rotation_mode = "AUTO"
+#   issuer_mode               = "CUSTOM_URL"
 
-  audiences = [
-    "api://default",
-  ]
-}
+#   audiences = [
+#     "api://default",
+#   ]
+# }
 
 # resource "tls_private_key" "raccoon" {
 #   algorithm   = "ECDSA"

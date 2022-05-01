@@ -12,15 +12,15 @@ terraform {
       version = "~> 3.1.0"
     }
 
-    cloudflare = {
-      source  = "cloudflare/cloudflare"
-      version = "~> 3.13.0"
-    }
+    # cloudflare = {
+    #   source  = "cloudflare/cloudflare"
+    #   version = "~> 3.13.0"
+    # }
 
-    okta = {
-      source  = "okta/okta"
-      version = "~> 3.25.0"
-    }
+    # okta = {
+    #   source  = "okta/okta"
+    #   version = "~> 3.25.0"
+    # }
 
     tls = {
       source  = "hashicorp/tls"

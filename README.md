@@ -9,7 +9,7 @@ The raccoon, sometimes called the common raccoon to distinguish it from other sp
 ## Prerequisites
 
 - [Terraform CLI] ^1.1.0
-- [DigitalOcean CLI] ^1.69.0
+- [DigitalOcean CLI] ^1.73.0
 - [Terraform Cloud] Personal Access Token
 - [DigitalOcean] Personal Access Token
 - [Cloudflare] Personal Access Token

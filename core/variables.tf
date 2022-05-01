@@ -20,14 +20,20 @@ variable "region" {
   default     = "nyc1"
 }
 
-variable "cloudflare_zone_name" {
-  description = "The name of the Cloudflare zone."
+variable "container_registry_region" {
+  description = "See `doctl kubernetes options regions`."
   type        = string
-  default     = ""
+  default     = "nyc3"
 }
 
-variable "okta_subdomain" {
-  description = "The name of the Okta subdomain."
-  type        = string
-  default     = ""
-}
+# variable "cloudflare_zone_name" {
+#   description = "The name of the Cloudflare zone."
+#   type        = string
+#   default     = ""
+# }
+
+# variable "okta_subdomain" {
+#   description = "The name of the Okta subdomain."
+#   type        = string
+#   default     = ""
+# }
