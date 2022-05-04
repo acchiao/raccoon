@@ -66,46 +66,46 @@ jobs:
       - name: Lint configuration files
         run: terraform fmt -list -diff -recursive -check
 
-  drift:
-    name: Drift Detection
-    runs-on: ubuntu-20.04
-    defaults:
-      run:
-        working-directory: core
-    environment:
-      name: core
-    needs:
-      - tfsec
-      - validate
-    steps:
-      - name: Checkout ${{ github.ref }} [${{ github.sha }}]
-        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # v3.0.0
-        with:
-          persist-credentials: false
+  # drift:
+  #   name: Drift Detection
+  #   runs-on: ubuntu-20.04
+  #   defaults:
+  #     run:
+  #       working-directory: core
+  #   environment:
+  #     name: core
+  #   needs:
+  #     - tfsec
+  #     - validate
+  #   steps:
+  #     - name: Checkout ${{ github.ref }} [${{ github.sha }}]
+  #       uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # v3.0.0
+  #       with:
+  #         persist-credentials: false
 
-      - name: Setup Terraform v${{ env.TF_VERSION }}
-        uses: hashicorp/setup-terraform@17d4c9b8043b238f6f35641cdd8433da1e6f3867 # v1.3.2
-        with:
-          cli_config_credentials_hostname: app.terraform.io
-          cli_config_credentials_token: ${{ secrets.TERRAFORM_TOKEN }}
-          terraform_version: ${{ env.TF_VERSION }}
+  #     - name: Setup Terraform v${{ env.TF_VERSION }}
+  #       uses: hashicorp/setup-terraform@17d4c9b8043b238f6f35641cdd8433da1e6f3867 # v1.3.2
+  #       with:
+  #         cli_config_credentials_hostname: app.terraform.io
+  #         cli_config_credentials_token: ${{ secrets.TERRAFORM_TOKEN }}
+  #         terraform_version: ${{ env.TF_VERSION }}
 
-      - name: Initalize Terraform Workspace
-        run: terraform init
+  #     - name: Initalize Terraform Workspace
+  #       run: terraform init
 
-      - name: Detect resource drift
-        env:
-          DIGITALOCEAN_TOKEN: ${{ secrets.DIGITALOCEAN_TOKEN }}
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-        run: |
-          terraform refresh -var-file=env/core.tfvars
-          terraform plan -var-file=env/core.tfvars -out=core.tplan -detailed-exitcode
+  #     - name: Detect resource drift
+  #       env:
+  #         DIGITALOCEAN_TOKEN: ${{ secrets.DIGITALOCEAN_TOKEN }}
+  #         CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+  #       run: |
+  #         terraform refresh -var-file=env/core.tfvars
+  #         terraform plan -var-file=env/core.tfvars -out=core.tplan -detailed-exitcode
 
-      - name: Cleanup workspace
-        if: always()
-        run: |
-          find . -type f -name "*.tfplan" -print -delete;
-          find . -type d -name ".terraform" -print -prune -exec rm -rf {} +;
+  #     - name: Cleanup workspace
+  #       if: always()
+  #       run: |
+  #         find . -type f -name "*.tfplan" -print -delete;
+  #         find . -type d -name ".terraform" -print -prune -exec rm -rf {} +;
 
   # snyk:
   #   name: Snyk IaC
