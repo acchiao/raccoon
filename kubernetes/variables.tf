@@ -64,7 +64,7 @@ variable "cert_manager_version" {
 variable "external_dns_version" {
   description = "The version of the Helm chart to install."
   type        = string
-  default     = "6.2.1"
+  default     = "6.3.0"
 }
 
 variable "kubed_version" {
@@ -89,6 +89,12 @@ variable "metrics_version" {
   description = "The version of the Helm chart to install."
   type        = string
   default     = "3.8.2"
+}
+
+variable "ingress_nginx_version" {
+  description = "The version of the Helm chart to install."
+  type        = string
+  default     = "4.1.0"
 }
 
 variable "nginx_ingress_version" {

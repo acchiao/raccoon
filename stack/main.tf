@@ -43,7 +43,7 @@ resource "digitalocean_kubernetes_cluster" "raccoon" {
     size = var.cluster_size
 
     # Uncomment node_count to explicitly reset the number of nodes to this value
-    # node_count = var.node_count
+    node_count = var.node_count
 
     auto_scale = var.auto_scale
     min_nodes  = var.min_nodes
