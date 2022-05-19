@@ -1,3 +1,15 @@
+resource "kubernetes_config_map" "coredns_custom" {
+  metadata {
+    name      = "coredns-custom"
+    namespace = "kube-system"
+  }
+
+  data = {
+    "empty.override" = "# empty"
+    "empty.server"   = "# empty"
+  }
+}
+
 resource "kubernetes_namespace" "ingress_nginx" {
   metadata {
     name = "ingress-nginx"
@@ -82,25 +94,94 @@ resource "helm_release" "external_dns" {
   ]
 }
 
-# resource "kubernetes_namespace" "monitoring" {
-#   metadata {
-#     name = "monitoring"
-#   }
-# }
+resource "kubernetes_namespace" "datadog" {
+  metadata {
+    name = "datadog"
+  }
+}
 
-# resource "helm_release" "metrics" {
-#   name       = "metrics-server"
-#   repository = "https://kubernetes-sigs.github.io/metrics-server"
-#   chart      = "metrics-server"
-#   namespace  = kubernetes_namespace.monitoring.metadata[0].name
-#   version    = var.metrics_version
+resource "helm_release" "datadog" {
+  name       = "datadog"
+  repository = "https://helm.datadoghq.com"
+  chart      = "datadog"
+  namespace  = kubernetes_namespace.datadog.metadata[0].name
+  version    = var.datadog_version
+
+  lint          = true
+  wait          = var.helm_wait
+  timeout       = var.helm_timeout
+  recreate_pods = var.helm_recreate_pods
+
+  set {
+    name  = "datadog.apiKeyExistingSecret"
+    value = "datadog"
+  }
+
+  set {
+    name  = "datadog.appKeyExistingSecret"
+    value = "datadog"
+  }
+
+  set {
+    name  = "datadog.logs.enabled"
+    value = "true"
+  }
+
+  set {
+    name  = "datadog.logs.containerCollectAll"
+    value = "true"
+  }
+
+  set {
+    name  = "datadog.kubeStateMetricsEnabled"
+    value = "false"
+  }
+
+  depends_on = [
+    kubernetes_namespace.datadog,
+  ]
+}
+
+resource "kubernetes_namespace" "metrics" {
+  metadata {
+    name = "metrics"
+  }
+}
+
+resource "helm_release" "metrics" {
+  name       = "metrics"
+  repository = "https://kubernetes-sigs.github.io/metrics-server"
+  chart      = "metrics-server"
+  namespace  = kubernetes_namespace.metrics.metadata[0].name
+  version    = var.metrics_version
+
+  lint    = true
+  wait    = var.helm_wait
+  timeout = var.helm_timeout
+
+  set {
+    name  = "nameOverride"
+    value = "metrics"
+  }
+
+  depends_on = [
+    kubernetes_namespace.metrics,
+  ]
+}
+
+# resource "helm_release" "kube_state_metrics" {
+#   name       = "ksm"
+#   repository = "https://prometheus-community.github.io/helm-charts"
+#   chart      = "kube-state-metrics"
+#   namespace  = kubernetes_namespace.metrics.metadata[0].name
+#   version    = var.kube_state_metrics_version
 
 #   lint    = true
 #   wait    = var.helm_wait
 #   timeout = var.helm_timeout
 
 #   depends_on = [
-#     kubernetes_namespace.monitoring,
+#     kubernetes_namespace.metrics,
 #   ]
 # }
 

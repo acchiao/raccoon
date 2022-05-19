@@ -94,19 +94,19 @@ variable "metrics_version" {
 variable "ingress_nginx_version" {
   description = "The version of the Helm chart to install."
   type        = string
-  default     = "4.1.0"
+  default     = "4.1.1"
 }
 
 variable "nginx_ingress_version" {
   description = "The version of the Helm chart to install."
   type        = string
-  default     = "9.1.12"
+  default     = "9.2.1"
 }
 
 variable "thanos_version" {
   description = "The version of the Helm chart to install."
   type        = string
-  default     = "9.0.8"
+  default     = "10.4.0"
 }
 
 variable "oauth2_proxy_version" {
@@ -167,4 +167,16 @@ variable "falco_version" {
   description = "The version of the Helm chart to install."
   type        = string
   default     = "1.17.4"
+}
+
+variable "datadog_version" {
+  description = "The version of the Helm chart to install."
+  type        = string
+  default     = "2.33.5"
+}
+
+variable "kube_state_metrics_version" {
+  description = "The version of the Helm chart to install."
+  type        = string
+  default     = "4.7.0"
 }
