@@ -172,7 +172,7 @@ variable "falco_version" {
 variable "datadog_version" {
   description = "The version of the Helm chart to install."
   type        = string
-  default     = "2.33.5"
+  default     = "2.33.6"
 }
 
 variable "kube_state_metrics_version" {

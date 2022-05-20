@@ -137,6 +137,26 @@ resource "helm_release" "datadog" {
     value = "false"
   }
 
+  set {
+    name  = "datadog.kubeStateMetricsCore.enabled"
+    value = "true"
+  }
+
+  set {
+    name  = "datadog.kubeStateMetricsCore.ignoreLegacyKSMCheck"
+    value = "true"
+  }
+
+  set {
+    name  = "agents.containers.agent.env[0].name"
+    value = "DD_CONTAINER_EXCLUDE"
+  }
+
+  set {
+    name  = "agents.containers.agent.env[0].value"
+    value = "image:gcr.io/datadoghq/.*"
+  }
+
   depends_on = [
     kubernetes_namespace.datadog,
   ]
