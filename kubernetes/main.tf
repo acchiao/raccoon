@@ -81,7 +81,7 @@ resource "helm_release" "external_dns" {
 
   set {
     name  = "interval"
-    value = "60s"
+    value = "1m"
   }
 
   set {
@@ -186,6 +186,39 @@ resource "helm_release" "kubed" {
 
   depends_on = [
     kubernetes_namespace.kubed,
+  ]
+}
+
+resource "kubernetes_namespace" "cert_manager" {
+  metadata {
+    name = "cert-manager"
+  }
+}
+
+resource "helm_release" "cert_manager" {
+  name       = "cert-manager"
+  repository = "https://charts.jetstack.io"
+  chart      = "cert-manager"
+  namespace  = kubernetes_namespace.cert_manager.metadata[0].name
+  version    = var.cert_manager_version
+
+  lint          = true
+  wait          = var.helm_wait
+  timeout       = var.helm_timeout
+  recreate_pods = var.helm_recreate_pods
+
+  set {
+    name  = "installCRDs"
+    value = "true"
+  }
+
+  set {
+    name  = "replicaCount"
+    value = var.helm_replica_count
+  }
+
+  depends_on = [
+    kubernetes_namespace.cert_manager,
   ]
 }
 
