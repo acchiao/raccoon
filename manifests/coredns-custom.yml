@@ -1,0 +1,11 @@
+apiVersion: v1
+data:
+  custom.server: '# empty'
+  empty.override: '# empty'
+  empty.server: '# empty'
+  log.override: |
+    log
+kind: ConfigMap
+metadata:
+  name: coredns-custom
+  namespace: kube-system
