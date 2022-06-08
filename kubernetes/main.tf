@@ -1,3 +1,21 @@
+resource "kubernetes_namespace" "rng" {
+  metadata {
+    name = "rng"
+  }
+}
+
+resource "kubernetes_namespace" "cloudflare" {
+  metadata {
+    name = "cloudflare"
+  }
+}
+
+resource "kubernetes_namespace" "sandbox" {
+  metadata {
+    name = "sandbox"
+  }
+}
+
 resource "kubernetes_config_map" "coredns_custom" {
   metadata {
     name      = "coredns-custom"
