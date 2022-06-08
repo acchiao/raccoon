@@ -166,6 +166,26 @@ resource "helm_release" "datadog" {
   }
 
   set {
+    name  = "datadog.resources.requests.cpu"
+    value = "50m"
+  }
+
+  set {
+    name  = "datadog.resources.limits.cpu"
+    value = "100m"
+  }
+
+  set {
+    name  = "datadog.resources.requests.memory"
+    value = "50m"
+  }
+
+  set {
+    name  = "datadog.resources.limits.memory"
+    value = "100m"
+  }
+
+  set {
     name  = "agents.containers.agent.env[0].name"
     value = "DD_CONTAINER_EXCLUDE"
   }
