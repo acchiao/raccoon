@@ -260,29 +260,29 @@ resource "helm_release" "cert_manager" {
   ]
 }
 
-# resource "kubernetes_namespace" "metrics" {
-#   metadata {
-#     name = "metrics"
-#   }
-# }
+resource "kubernetes_namespace" "metrics" {
+  metadata {
+    name = "metrics"
+  }
+}
 
-# resource "helm_release" "metrics" {
-#   name       = "metrics"
-#   repository = "https://kubernetes-sigs.github.io/metrics-server"
-#   chart      = "metrics-server"
-#   namespace  = kubernetes_namespace.metrics.metadata[0].name
-#   version    = var.metrics_version
+resource "helm_release" "metrics" {
+  name       = "metrics"
+  repository = "https://kubernetes-sigs.github.io/metrics-server"
+  chart      = "metrics-server"
+  namespace  = kubernetes_namespace.metrics.metadata[0].name
+  version    = var.metrics_version
 
-#   lint    = true
-#   wait    = var.helm_wait
-#   timeout = var.helm_timeout
+  lint    = true
+  wait    = var.helm_wait
+  timeout = var.helm_timeout
 
-#   set {
-#     name  = "nameOverride"
-#     value = "metrics"
-#   }
+  set {
+    name  = "nameOverride"
+    value = "metrics"
+  }
 
-#   depends_on = [
-#     kubernetes_namespace.metrics,
-#   ]
-# }
+  depends_on = [
+    kubernetes_namespace.metrics,
+  ]
+}
