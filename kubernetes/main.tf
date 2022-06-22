@@ -186,6 +186,31 @@ resource "helm_release" "datadog" {
   }
 
   set {
+    name  = "datadog.processAgent.enabled"
+    value = "true"
+  }
+
+  set {
+    name  = "datadog.processAgent.processCollection"
+    value = "true"
+  }
+
+  set {
+    name  = "datadog.networkMonitoring.enabled"
+    value = "true"
+  }
+
+  set {
+    name  = "datadog.collectEvents"
+    value = "true"
+  }
+
+  set {
+    name  = "datadog.clusterChecks.enabled"
+    value = "true"
+  }
+
+  set {
     name  = "agents.containers.agent.env[0].name"
     value = "DD_CONTAINER_EXCLUDE"
   }
