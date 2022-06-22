@@ -58,13 +58,13 @@ variable "helm_replica_count" {
 variable "cert_manager_version" {
   description = "The version of the Helm chart to install."
   type        = string
-  default     = "1.7.1"
+  default     = "1.8.0"
 }
 
 variable "external_dns_version" {
   description = "The version of the Helm chart to install."
   type        = string
-  default     = "6.3.0"
+  default     = "6.5.6"
 }
 
 variable "kubed_version" {
@@ -94,7 +94,7 @@ variable "metrics_version" {
 variable "ingress_nginx_version" {
   description = "The version of the Helm chart to install."
   type        = string
-  default     = "4.1.1"
+  default     = "4.1.4"
 }
 
 variable "nginx_ingress_version" {
@@ -172,7 +172,7 @@ variable "falco_version" {
 variable "datadog_version" {
   description = "The version of the Helm chart to install."
   type        = string
-  default     = "2.33.6"
+  default     = "2.35.6"
 }
 
 variable "kube_state_metrics_version" {
