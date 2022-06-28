@@ -107,6 +107,11 @@ resource "helm_release" "external_dns" {
     value = "digitalocean"
   }
 
+  set {
+    name  = "logLevel"
+    value = "error"
+  }
+
   depends_on = [
     kubernetes_namespace.external_dns,
   ]
@@ -118,112 +123,177 @@ resource "kubernetes_namespace" "datadog" {
   }
 }
 
-resource "helm_release" "datadog" {
-  name       = "datadog"
-  repository = "https://helm.datadoghq.com"
-  chart      = "datadog"
-  namespace  = kubernetes_namespace.datadog.metadata[0].name
-  version    = var.datadog_version
+# resource "helm_release" "datadog" {
+#   name       = "datadog"
+#   repository = "https://helm.datadoghq.com"
+#   chart      = "datadog"
+#   namespace  = kubernetes_namespace.datadog.metadata[0].name
+#   version    = var.datadog_version
 
-  lint          = true
-  wait          = var.helm_wait
-  timeout       = var.helm_timeout
-  recreate_pods = var.helm_recreate_pods
+#   lint          = true
+#   wait          = var.helm_wait
+#   timeout       = var.helm_timeout
+#   recreate_pods = var.helm_recreate_pods
 
-  set {
-    name  = "datadog.apiKeyExistingSecret"
-    value = "datadog"
-  }
+#   set {
+#     name  = "datadog.clusterName"
+#     value = "raccoon"
+#   }
 
-  set {
-    name  = "datadog.appKeyExistingSecret"
-    value = "datadog"
-  }
+#   set {
+#     name  = "datadog.apiKeyExistingSecret"
+#     value = "datadog"
+#   }
 
-  set {
-    name  = "datadog.logs.enabled"
-    value = "true"
-  }
+#   set {
+#     name  = "datadog.appKeyExistingSecret"
+#     value = "datadog"
+#   }
 
-  set {
-    name  = "datadog.logs.containerCollectAll"
-    value = "true"
-  }
+#   set {
+#     name  = "datadog.logs.enabled"
+#     value = "true"
+#   }
 
-  set {
-    name  = "datadog.kubeStateMetricsEnabled"
-    value = "false"
-  }
+#   set {
+#     name  = "datadog.logs.containerCollectAll"
+#     value = "true"
+#   }
 
-  set {
-    name  = "datadog.kubeStateMetricsCore.enabled"
-    value = "true"
-  }
+#   set {
+#     name  = "datadog.logs.containerCollectUsingFiles"
+#     value = "true"
+#   }
 
-  set {
-    name  = "datadog.kubeStateMetricsCore.ignoreLegacyKSMCheck"
-    value = "true"
-  }
+#   set {
+#     name  = "datadog.logs.autoMultiLineDetection"
+#     value = "true"
+#   }
 
-  set {
-    name  = "datadog.resources.requests.cpu"
-    value = "50m"
-  }
+#   set {
+#     name  = "datadog.apm.portEnabled"
+#     value = "true"
+#   }
 
-  set {
-    name  = "datadog.resources.limits.cpu"
-    value = "100m"
-  }
+#   set {
+#     name  = "datadog.kubeStateMetricsEnabled"
+#     value = "false"
+#   }
 
-  set {
-    name  = "datadog.resources.requests.memory"
-    value = "50m"
-  }
+#   set {
+#     name  = "datadog.kubeStateMetricsCore.enabled"
+#     value = "true"
+#   }
 
-  set {
-    name  = "datadog.resources.limits.memory"
-    value = "100m"
-  }
+#   set {
+#     name  = "datadog.kubeStateMetricsCore.ignoreLegacyKSMCheck"
+#     value = "true"
+#   }
 
-  set {
-    name  = "datadog.processAgent.enabled"
-    value = "true"
-  }
+#   set {
+#     name  = "agents.containers.agent.resources.requests.cpu"
+#     value = "100m"
+#   }
 
-  set {
-    name  = "datadog.processAgent.processCollection"
-    value = "true"
-  }
+#   set {
+#     name  = "agents.containers.agent.resources.limits.cpu"
+#     value = "150m"
+#   }
 
-  set {
-    name  = "datadog.networkMonitoring.enabled"
-    value = "true"
-  }
+#   set {
+#     name  = "agents.containers.agent.resources.requests.memory"
+#     value = "100Mi"
+#   }
 
-  set {
-    name  = "datadog.collectEvents"
-    value = "true"
-  }
+#   set {
+#     name  = "agents.containers.agent.resources.limits.memory"
+#     value = "150Mi"
+#   }
 
-  set {
-    name  = "datadog.clusterChecks.enabled"
-    value = "true"
-  }
+#   set {
+#     name  = "clusterAgent.resources.requests.cpu"
+#     value = "100m"
+#   }
 
-  set {
-    name  = "agents.containers.agent.env[0].name"
-    value = "DD_CONTAINER_EXCLUDE"
-  }
+#   set {
+#     name  = "clusterAgent.resources.limits.cpu"
+#     value = "150m"
+#   }
 
-  set {
-    name  = "agents.containers.agent.env[0].value"
-    value = "image:gcr.io/datadoghq/.*"
-  }
+#   set {
+#     name  = "clusterAgent.resources.requests.memory"
+#     value = "100Mi"
+#   }
 
-  depends_on = [
-    kubernetes_namespace.datadog,
-  ]
-}
+#   set {
+#     name  = "clusterAgent.resources.limits.memory"
+#     value = "150Mi"
+#   }
+
+#   set {
+#     name  = "datadog.processAgent.enabled"
+#     value = "false"
+#   }
+
+#   set {
+#     name  = "datadog.processAgent.processCollection"
+#     value = "false"
+#   }
+
+#   set {
+#     name  = "datadog.networkMonitoring.enabled"
+#     value = "true"
+#   }
+
+#   set {
+#     name  = "datadog.collectEvents"
+#     value = "true"
+#   }
+
+#   set {
+#     name  = "datadog.clusterChecks.enabled"
+#     value = "true"
+#   }
+
+#   set {
+#     name  = "datadog.helmCheck.enabled"
+#     value = "true"
+#   }
+
+#   set {
+#     name  = "datadog.serviceMonitoring.enabled"
+#     value = "true"
+#   }
+
+#   set {
+#     name  = "agents.containers.agent.env[0].name"
+#     value = "DD_CONTAINER_EXCLUDE"
+#   }
+
+#   set {
+#     name  = "agents.containers.agent.env[0].value"
+#     value = "image:gcr.io/datadoghq/.*"
+#   }
+
+#   set {
+#     name  = "datadog.containerExclude"
+#     value = "image:gcr.io/datadoghq/.*"
+#   }
+
+#   set {
+#     name  = "clusterAgent.enabled"
+#     value = "true"
+#   }
+
+#   set {
+#     name  = "clusterChecksRunner.enabled"
+#     value = "false"
+#   }
+
+#   depends_on = [
+#     kubernetes_namespace.datadog,
+#   ]
+# }
 
 resource "kubernetes_namespace" "kubed" {
   metadata {
@@ -311,3 +381,50 @@ resource "helm_release" "metrics" {
     kubernetes_namespace.metrics,
   ]
 }
+
+# resource "kubernetes_namespace" "linkerd" {
+#   metadata {
+#     name = "linkerd"
+#   }
+# }
+
+# resource "helm_release" "linkerd" {
+#   name       = "linkerd"
+#   repository = "https://helm.linkerd.io/stable"
+#   chart      = "linkerd2"
+#   namespace  = kubernetes_namespace.linkerd.metadata[0].name
+#   version    = var.linkerd_version
+
+#   lint    = true
+#   wait    = var.helm_wait
+#   timeout = var.helm_timeout
+
+#   set {
+#     name  = "installNamespace"
+#     value = "false"
+#   }
+
+#   set {
+#     name  = "namespace"
+#     value = kubernetes_namespace.linkerd.metadata[0].name
+#   }
+
+#   set {
+#     name  = "identityTrustAnchorsPEM"
+#     value = file("certificates/ca.crt")
+#   }
+
+#   set {
+#     name  = "identity.issuer.tls.crtPEM"
+#     value = file("certificates/issuer.crt")
+#   }
+
+#   set {
+#     name  = "identity.issuer.tls.keyPEM"
+#     value = file("certificates/issuer.key")
+#   }
+
+#   depends_on = [
+#     kubernetes_namespace.linkerd,
+#   ]
+# }
