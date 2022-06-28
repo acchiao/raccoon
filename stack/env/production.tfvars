@@ -1,4 +1,4 @@
-auto_scale          = true
+auto_scale          = false
 cloudflare_domain   = "raccoon.team"
 cluster_size        = "s-1vcpu-2gb"
 digitalocean_domain = "acchiao.com"
