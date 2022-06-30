@@ -123,6 +123,94 @@ resource "kubernetes_namespace" "datadog" {
   }
 }
 
+resource "kubernetes_namespace" "kubed" {
+  metadata {
+    name = "kubed"
+  }
+}
+
+resource "helm_release" "kubed" {
+  name       = "kubed"
+  repository = "https://charts.appscode.com/stable"
+  chart      = "kubed"
+  namespace  = kubernetes_namespace.kubed.metadata[0].name
+  version    = var.kubed_version
+
+  lint    = true
+  wait    = var.helm_wait
+  timeout = var.helm_timeout
+
+  set {
+    name  = "enableAnalytics"
+    value = "false"
+  }
+
+  depends_on = [
+    kubernetes_namespace.kubed,
+  ]
+}
+
+resource "kubernetes_namespace" "cert_manager" {
+  metadata {
+    name = "cert-manager"
+  }
+}
+
+resource "helm_release" "cert_manager" {
+  name       = "cert-manager"
+  repository = "https://charts.jetstack.io"
+  chart      = "cert-manager"
+  namespace  = kubernetes_namespace.cert_manager.metadata[0].name
+  version    = var.cert_manager_version
+
+  lint          = true
+  wait          = var.helm_wait
+  timeout       = var.helm_timeout
+  recreate_pods = var.helm_recreate_pods
+
+  set {
+    name  = "installCRDs"
+    value = "true"
+  }
+
+  set {
+    name  = "replicaCount"
+    value = var.helm_replica_count
+  }
+
+  depends_on = [
+    kubernetes_namespace.cert_manager,
+  ]
+}
+
+resource "kubernetes_namespace" "metrics" {
+  metadata {
+    name = "metrics"
+  }
+}
+
+resource "helm_release" "metrics" {
+  name       = "metrics"
+  repository = "https://kubernetes-sigs.github.io/metrics-server"
+  chart      = "metrics-server"
+  namespace  = kubernetes_namespace.metrics.metadata[0].name
+  version    = var.metrics_version
+
+  lint    = true
+  wait    = var.helm_wait
+  timeout = var.helm_timeout
+
+  set {
+    name  = "nameOverride"
+    value = "metrics"
+  }
+
+  depends_on = [
+    kubernetes_namespace.metrics,
+  ]
+}
+
+
 # resource "helm_release" "datadog" {
 #   name       = "datadog"
 #   repository = "https://helm.datadoghq.com"
@@ -294,93 +382,6 @@ resource "kubernetes_namespace" "datadog" {
 #     kubernetes_namespace.datadog,
 #   ]
 # }
-
-resource "kubernetes_namespace" "kubed" {
-  metadata {
-    name = "kubed"
-  }
-}
-
-resource "helm_release" "kubed" {
-  name       = "kubed"
-  repository = "https://charts.appscode.com/stable"
-  chart      = "kubed"
-  namespace  = kubernetes_namespace.kubed.metadata[0].name
-  version    = var.kubed_version
-
-  lint    = true
-  wait    = var.helm_wait
-  timeout = var.helm_timeout
-
-  set {
-    name  = "enableAnalytics"
-    value = "false"
-  }
-
-  depends_on = [
-    kubernetes_namespace.kubed,
-  ]
-}
-
-resource "kubernetes_namespace" "cert_manager" {
-  metadata {
-    name = "cert-manager"
-  }
-}
-
-resource "helm_release" "cert_manager" {
-  name       = "cert-manager"
-  repository = "https://charts.jetstack.io"
-  chart      = "cert-manager"
-  namespace  = kubernetes_namespace.cert_manager.metadata[0].name
-  version    = var.cert_manager_version
-
-  lint          = true
-  wait          = var.helm_wait
-  timeout       = var.helm_timeout
-  recreate_pods = var.helm_recreate_pods
-
-  set {
-    name  = "installCRDs"
-    value = "true"
-  }
-
-  set {
-    name  = "replicaCount"
-    value = var.helm_replica_count
-  }
-
-  depends_on = [
-    kubernetes_namespace.cert_manager,
-  ]
-}
-
-resource "kubernetes_namespace" "metrics" {
-  metadata {
-    name = "metrics"
-  }
-}
-
-resource "helm_release" "metrics" {
-  name       = "metrics"
-  repository = "https://kubernetes-sigs.github.io/metrics-server"
-  chart      = "metrics-server"
-  namespace  = kubernetes_namespace.metrics.metadata[0].name
-  version    = var.metrics_version
-
-  lint    = true
-  wait    = var.helm_wait
-  timeout = var.helm_timeout
-
-  set {
-    name  = "nameOverride"
-    value = "metrics"
-  }
-
-  depends_on = [
-    kubernetes_namespace.metrics,
-  ]
-}
 
 # resource "kubernetes_namespace" "linkerd" {
 #   metadata {
