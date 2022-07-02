@@ -4,6 +4,12 @@ resource "kubernetes_namespace" "rng" {
   }
 }
 
+resource "kubernetes_namespace" "tmp" {
+  metadata {
+    name = "tmp"
+  }
+}
+
 resource "kubernetes_namespace" "cloudflare" {
   metadata {
     name = "cloudflare"
@@ -28,37 +34,37 @@ resource "kubernetes_config_map" "coredns_custom" {
   }
 }
 
-resource "kubernetes_namespace" "ingress_nginx" {
-  metadata {
-    name = "ingress-nginx"
-  }
-}
+# resource "kubernetes_namespace" "ingress_nginx" {
+#   metadata {
+#     name = "ingress-nginx"
+#   }
+# }
 
-resource "helm_release" "ingress_nginx" {
-  name       = "ingress-nginx"
-  repository = "https://kubernetes.github.io/ingress-nginx"
-  chart      = "ingress-nginx"
-  namespace  = kubernetes_namespace.ingress_nginx.metadata[0].name
-  version    = var.ingress_nginx_version
+# resource "helm_release" "ingress_nginx" {
+#   name       = "ingress-nginx"
+#   repository = "https://kubernetes.github.io/ingress-nginx"
+#   chart      = "ingress-nginx"
+#   namespace  = kubernetes_namespace.ingress_nginx.metadata[0].name
+#   version    = var.ingress_nginx_version
 
-  lint          = true
-  wait          = var.helm_wait
-  timeout       = var.helm_timeout
-  recreate_pods = var.helm_recreate_pods
+#   lint          = true
+#   wait          = var.helm_wait
+#   timeout       = var.helm_timeout
+#   recreate_pods = var.helm_recreate_pods
 
-  set {
-    name  = "replicaCount"
-    value = var.helm_replica_count
-  }
+#   set {
+#     name  = "replicaCount"
+#     value = var.helm_replica_count
+#   }
 
-  values = [
-    file("values/ingress-nginx-values.yaml")
-  ]
+#   values = [
+#     file("values/ingress-nginx-values.yaml")
+#   ]
 
-  depends_on = [
-    kubernetes_namespace.ingress_nginx,
-  ]
-}
+#   depends_on = [
+#     kubernetes_namespace.ingress_nginx,
+#   ]
+# }
 
 resource "kubernetes_namespace" "external_dns" {
   metadata {

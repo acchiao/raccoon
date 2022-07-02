@@ -168,6 +168,7 @@ terraform output
 terraform output -json
 
 doctl registry login
+doctl kubernetes cluster kubeconfig save <cluster-id|cluster-name>
 doctl compute load-balancer list --format IP,ID,Name,Status
 doctl kubernetes cluster registry add <cluster-id|cluster-name>
 doctl kubernetes cluster kubeconfig save <cluster-id|cluster-name>
@@ -175,6 +176,15 @@ doctl kubernetes cluster kubeconfig save <cluster-id|cluster-name>
 find . -type f -name "*.tfplan" -print -delete
 find . -type d -name ".terraform" -print -prune -exec rm -rf {} +
 ```
+
+## Cost
+
+Current cost for this project hovers around $12 per month. With ingress configured, the price doubles and is to $24.
+
+| Resource            | Count | Cost per Resource |
+| ------------------- | ----- | ----------------- |
+| s-1vcpu-2gb droplet | 1     | $12               |
+| load balancer       | 0     | $12               |
 
 ## DigitalOcean
 
