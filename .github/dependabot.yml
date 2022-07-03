@@ -17,3 +17,7 @@ updates:
     directory: "kubernetes"
     schedule:
       interval: "daily"
+  - package-ecosystem: "terraform"
+    directory: "gke"
+    schedule:
+      interval: "daily"

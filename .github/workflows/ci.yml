@@ -15,7 +15,7 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  TF_VERSION: 1.1.7
+  TF_VERSION: 1.2.4
 
 jobs:
   tfsec:
@@ -23,17 +23,17 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout ${{ github.ref }} [${{ github.sha }}]
-        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # v3.0.0
+        uses: actions/checkout@v3
         with:
           persist-credentials: false
 
       - name: Run tfsec
         run: |
-          wget --no-verbose --show-progress --progress dot:giga https://github.com/aquasecurity/tfsec/releases/download/v1.1.5/tfsec-linux-amd64
-          echo "6d5a20744a31597527ae32ac18dbf55f95e135c981ca52a8e34572a3a0f362d9  tfsec-linux-amd64" | sha256sum -c
+          wget --no-verbose --show-progress --progress dot:giga https://github.com/aquasecurity/tfsec/releases/download/v1.26.0/tfsec-linux-amd64
+          echo "896872247843cc08d4c5b3b3362ca87e8939c2404c6ccb7415a523a114344224  tfsec-linux-amd64" | sha256sum -c
 
-          wget  --no-verbose --show-progress --progress dot:giga https://github.com/aquasecurity/tfsec/releases/download/v1.1.5/tfsec-linux-amd64.D66B222A3EA4C25D5D1A097FC34ACEFB46EC39CE.sig
-          echo "80c37e15ff168254f776db67229e3bbd3066ca5fe1d0d023c9784727bf096795  tfsec-linux-amd64.D66B222A3EA4C25D5D1A097FC34ACEFB46EC39CE.sig" | sha256sum -c
+          wget  --no-verbose --show-progress --progress dot:giga https://github.com/aquasecurity/tfsec/releases/download/v1.26.0/tfsec-linux-amd64.D66B222A3EA4C25D5D1A097FC34ACEFB46EC39CE.sig
+          echo "971a7151ed435ee6f8cadea42c838addef92aa063ab66fda97eb063b66a14a15  tfsec-linux-amd64.D66B222A3EA4C25D5D1A097FC34ACEFB46EC39CE.sig" | sha256sum -c
 
           gpg --import < tfsec/tfsec.asc
           gpg --list-keys signing@tfsec.dev
@@ -48,12 +48,12 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout ${{ github.ref }} [${{ github.sha }}]
-        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # v3.0.0
+        uses: actions/checkout@v3
         with:
           persist-credentials: false
 
       - name: Setup Terraform v${{ env.TF_VERSION }}
-        uses: hashicorp/setup-terraform@17d4c9b8043b238f6f35641cdd8433da1e6f3867 # v1.3.2
+        uses: hashicorp/setup-terraform@v2.0.0
         with:
           terraform_version: ${{ env.TF_VERSION }}
 
