@@ -11,7 +11,7 @@ resource "google_service_account" "default" {
 resource "google_container_cluster" "primary" {
   provider = google-beta
 
-  name     = "${var.cluster_name}-${var.environment}-${random_id.cluster.hex}"
+  name     = "${var.environment}-${var.cluster_name}-${random_id.cluster.hex}"
   location = var.zone
 
   initial_node_count       = 1
@@ -64,7 +64,7 @@ resource "google_container_cluster" "primary" {
 }
 
 resource "google_container_node_pool" "primary" {
-  name     = "${var.pool_name}-${var.environment}-${random_id.cluster.hex}"
+  name     = "${var.environment}-${var.pool_name}-${random_id.cluster.hex}"
   location = var.zone
 
   cluster = google_container_cluster.primary.id

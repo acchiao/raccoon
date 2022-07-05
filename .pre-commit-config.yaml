@@ -3,14 +3,16 @@
 # See https://pre-commit.com/hooks.html for more hooks
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.1.0
+    rev: 3298ddab3c13dd77d6ce1fc0baf97691430d84b0  # frozen: v4.3.0
     hooks:
       - id: trailing-whitespace
       - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: sort-simple-yaml
       - id: check-yaml
 
   - repo: https://github.com/antonbabenko/pre-commit-terraform
-    rev: v1.64.0
+    rev: 57467c56d491420aa6c89f722b120ac7bea0289b  # frozen: v1.73.0
     hooks:
       - id: terraform_fmt
         args:
@@ -21,6 +23,6 @@ repos:
       - id: terraform_validate
 
   - repo: https://github.com/adrienverge/yamllint.git
-    rev: v1.26.3
+    rev: 058fef75598d1a9d9250487d91549abf379878e0  # frozen: v1.26.3
     hooks:
       - id: yamllint
