@@ -28,6 +28,7 @@ jobs:
           persist-credentials: false
 
       - name: Run tfsec
+        continue-on-error: true
         run: |
           wget --no-verbose --show-progress --progress dot:giga https://github.com/aquasecurity/tfsec/releases/download/v1.26.0/tfsec-linux-amd64
           echo "896872247843cc08d4c5b3b3362ca87e8939c2404c6ccb7415a523a114344224  tfsec-linux-amd64" | sha256sum -c
