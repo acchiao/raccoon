@@ -150,6 +150,21 @@ step certificate create identity.linkerd.cluster.local certificates/issuer.crt c
 [oauth2-proxy]: https://oauth2-proxy.github.io/oauth2-proxy/
 [thanos]: https://thanos.io/
 
+## Datadog Upkeep
+
+```sh
+helm upgrade datadog \
+    --install \
+    --namespace datadog \
+    --values values/datadog.yml \
+    --set datadog.clusterName=<CLUSTER_NAME> \
+    --set datadog.apiKey=<API_KEY> \
+    --set datadog.appKey=<APP_KEY> \
+    --set datadog.networkMonitoring.enabled=true \
+    --version 2.36.1 \
+    datadog/datadog
+```
+
 ## Helpful Commands
 
 ```sh
