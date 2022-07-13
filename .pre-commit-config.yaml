@@ -12,7 +12,7 @@ repos:
       - id: check-yaml
 
   - repo: https://github.com/antonbabenko/pre-commit-terraform
-    rev: 57467c56d491420aa6c89f722b120ac7bea0289b  # frozen: v1.73.0
+    rev: 331e7519737c8ec1df60a8a13ebdfa678b99ddc5  # frozen: v1.74.0
     hooks:
       - id: terraform_fmt
         args:

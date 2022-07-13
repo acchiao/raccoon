@@ -10,6 +10,7 @@ The raccoon, sometimes called the common raccoon to distinguish it from other sp
 
 - [Terraform CLI] ^1.1.0
 - [DigitalOcean CLI] ^1.73.0
+- [Google Cloud SDK ^393.0.0]
 - [Terraform Cloud] Personal Access Token
 - [DigitalOcean] Personal Access Token
 - [Cloudflare] Personal Access Token
@@ -19,6 +20,7 @@ The raccoon, sometimes called the common raccoon to distinguish it from other sp
 [terraform cloud]: https://cloud.hashicorp.com/products/terraform/
 [digitalocean]: https://www.digitalocean.com/
 [cloudflare]: https://www.cloudflare.com/
+[google cloud sdk]: https://cloud.google.com/sdk/
 
 ## Usage
 
