@@ -9,4 +9,9 @@ Current configuration averages around $82.34. With the GKE free tier credit appl
 gcloud auth login
 gcloud auth application-default login
 gcloud container clusters get-credentials <CLUSTER>
+gcloud services enable container.googleapis.com --async
+
+export TF_VAR_master_authorized_network_cidr=<CIDR>
+export TF_VAR_project_id=<PROJECT ID>
+
 ```

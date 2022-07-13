@@ -8,6 +8,7 @@ resource "google_service_account" "default" {
   description  = "${data.google_project.project.name} - Service Account"
 }
 
+# tfsec:ignore:google-gke-enable-private-cluster tfsec:ignore:google-gke-enforce-pod-security-policy
 resource "google_container_cluster" "primary" {
   provider = google-beta
 
@@ -24,6 +25,7 @@ resource "google_container_cluster" "primary" {
   networking_mode   = "VPC_NATIVE"
 
   ip_allocation_policy {}
+
 
   cluster_autoscaling {
     enabled = false
@@ -53,6 +55,7 @@ resource "google_container_cluster" "primary" {
     }
   }
 
+  # tfsec:ignore:google-gke-enable-network-policy
   network_policy {
     enabled  = false
     provider = "PROVIDER_UNSPECIFIED"
@@ -67,33 +70,50 @@ resource "google_container_cluster" "primary" {
   workload_identity_config {
     workload_pool = "${data.google_project.project.project_id}.svc.id.goog"
   }
+
+  resource_labels = {
+    "project"     = var.project,
+    "project_id"  = var.project_id,
+    "environment" = var.environment,
+    "release"     = var.release,
+    "region"      = var.region,
+    "zone"        = var.zone,
+  }
 }
 
 resource "google_container_node_pool" "primary" {
-  name     = "${var.environment}-${var.pool_name}-${random_id.cluster.hex}"
-  location = var.zone
-
-  cluster = google_container_cluster.primary.id
-
-  node_count = 1
+  name       = "${var.environment}-${var.pool_name}-${random_id.cluster.hex}"
+  cluster    = google_container_cluster.primary.id
+  node_count = var.node_count
   version    = var.kubernetes_version
+
+  location = var.zone
+  node_locations = [
+    var.zone
+  ]
 
   management {
     auto_repair  = true
     auto_upgrade = true
   }
 
+  # tfsec:ignore:google-gke-enforce-pod-security-policy tfsec:ignore:google-gke-metadata-endpoints-disabled
   node_config {
-    preemptible  = true
-    machine_type = var.machine_type
-    image_type   = "COS_CONTAINERD"
-    disk_size_gb = 50
+    service_account = google_service_account.default.email
 
-    metadata = {
-      disable-legacy-endpoints = "true"
+    preemptible  = var.node_preemptible
+    machine_type = var.node_machine_type
+    image_type   = var.node_image_type
+    disk_size_gb = var.node_disk_size_gb
+
+    workload_metadata_config {
+      mode = "GKE_METADATA"
     }
 
-    service_account = google_service_account.default.email
+    metadata = {
+      disable-legacy-endpoints = true
+    }
+
     oauth_scopes = [
       "https://www.googleapis.com/auth/cloud-platform"
     ]

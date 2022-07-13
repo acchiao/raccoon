@@ -1,8 +1,16 @@
+variable "project" {
+  type = string
+}
+
 variable "project_id" {
   type = string
 }
 
 variable "environment" {
+  type = string
+}
+
+variable "release" {
   type = string
 }
 
@@ -29,12 +37,32 @@ variable "kubernetes_version" {
   default = "1.22.8-gke.202"
 }
 
-variable "machine_type" {
+variable "master_authorized_network_cidr" {
+  type    = string
+  default = "0.0.0.0/0"
+}
+
+variable "node_count" {
+  type    = number
+  default = 1
+}
+
+variable "node_machine_type" {
   type    = string
   default = "e2-medium"
 }
 
-variable "master_authorized_network_cidr" {
+variable "node_preemptible" {
+  type    = bool
+  default = true
+}
+
+variable "node_image_type" {
   type    = string
-  default = "0.0.0.0/0"
+  default = "COS_CONTAINERD"
+}
+
+variable "node_disk_size_gb" {
+  type    = number
+  default = 50
 }
