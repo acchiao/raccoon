@@ -1,0 +1,53 @@
+---
+datadog:
+  clusterName: raccoon
+  kubeStateMetricsEnabled: false
+  kubeStateMetricsCore:
+    enabled: true
+  kubelet:
+    tlsVerify: false
+  logs:
+    enabled: true
+    containerCollectAll: true
+    containerCollectUsingFiles: true
+    autoMultiLineDetection: true
+  apm:
+    portEnabled: true
+  processAgent:
+    enabled: true
+    processCollection: true
+  helmCheck:
+    enabled: true
+    collectEvents: true
+  networkMonitoring:
+    enabled: true
+  systemProbe:
+    enableTCPQueueLength: true
+    enableOOMKill: true
+    collectDNSStats: true
+  containerExclude: image:gcr.io/datadoghq/.*
+  confd:
+    linkerd.yaml: |
+      init_config:
+  tags:
+    - env:production
+    - environment:production
+clusterAgent:
+  enabled: true
+  replicas: 1
+  rbac:
+    create: true
+    serviceAccountName: default
+  metricsProvider:
+    enabled: true
+    createReaderRbac: true
+    useDatadogMetrics: true
+    service:
+      type: ClusterIP
+      port: 8443
+  confd:
+    linkerd.yaml: |-
+      cluster_check: false
+      init_config:
+      instances:
+      - openmetrics_endpoint: http://%%host%%:4191/metrics

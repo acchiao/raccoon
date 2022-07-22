@@ -1,0 +1,37 @@
+replicaCount: 1
+pdb:
+  create: false
+# auth section required for rabbitmq persistence
+fullnameOverride: rabbitmq
+# configuration: |-
+  # loopback_users.guest = false
+extraConfiguration: |-
+  consumer_timeout = 3000
+  log.console = true
+  log.console.level = info
+  log.exchange = true
+  log.exchange.level = info
+  log.dir = /var/log/rabbit
+  log.file = rabbit.log
+livenessProbe:
+  enabled: true
+  initialDelaySeconds: 120
+  timeoutSeconds: 20
+  periodSeconds: 30
+  failureThreshold: 6
+  successThreshold: 1
+readinessProbe:
+  enabled: true
+  initialDelaySeconds: 10
+  timeoutSeconds: 20
+  periodSeconds: 30
+  failureThreshold: 3
+  successThreshold: 1
+metrics:
+  enabled: false
+serviceAccount:
+  create: true
+  automountServiceAccountToken: true
+extraEnvVars:
+  - name: LOG_LEVEL
+    value: info
