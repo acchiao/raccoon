@@ -190,6 +190,14 @@ doctl compute load-balancer list --format IP,ID,Name,Status
 doctl kubernetes cluster registry add <cluster-id|cluster-name>
 doctl kubernetes cluster kubeconfig save <cluster-id|cluster-name>
 
+gcloud auth login
+gcloud auth application-default login
+gcloud container clusters get-credentials <CLUSTER>
+gcloud services enable container.googleapis.com --async
+gcloud components install gke-gcloud-auth-plugin
+
+kubectl delete pod --field-selector=status.phase==Succeeded --all-namespaces
+
 find . -type f -name "*.tfplan" -print -delete
 find . -type d -name ".terraform" -print -prune -exec rm -rf {} +
 ```
