@@ -11,6 +11,10 @@ gcloud auth application-default login
 gcloud container clusters get-credentials <CLUSTER>
 gcloud services enable container.googleapis.com --async
 gcloud components install gke-gcloud-auth-plugin
+gcloud container get-server-config --flatten="channels" --filter="channels.channel=RAPID" \
+    --format="yaml(channels.channel,channels.defaultVersion)"
+gcloud container get-server-config --flatten="channels" --filter="channels.channel=RAPID" \
+    --format="yaml(channels.channel,channels.validVersions)"
 
 export TF_VAR_master_authorized_network_cidr=<AUTHORIZED_NETWORK_CIDR>
 export TF_VAR_project_id=<PROJECT ID>
