@@ -1,11 +1,11 @@
 project     = "raccoon"
-release     = "stable"
+release     = "rapid"
 environment = "production"
-region      = "us-central1"
-zone        = "us-central1-a"
+region      = "us-west2"
+zone        = "us-west2-a"
 
 cluster_name       = "primary"
-kubernetes_version = "1.23.8-gke.400"
+kubernetes_version = "1.25.3-gke.800"
 node_disk_size_gb  = 50
 node_image_type    = "COS_CONTAINERD"
 node_machine_type  = "e2-medium"

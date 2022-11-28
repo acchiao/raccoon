@@ -12,13 +12,12 @@ resource "google_service_account" "default" {
 resource "google_container_cluster" "primary" {
   provider = google-beta
 
-  name     = "${var.environment}-${var.cluster_name}-${random_id.cluster.hex}"
+  name     = "${var.cluster_name}-${random_id.cluster.hex}"
   location = var.zone
 
   initial_node_count       = 1
   remove_default_node_pool = true
   enable_shielded_nodes    = true
-  min_master_version       = var.kubernetes_version
 
   # GKE Dataplane V2
   datapath_provider = "ADVANCED_DATAPATH"
@@ -82,15 +81,12 @@ resource "google_container_cluster" "primary" {
 }
 
 resource "google_container_node_pool" "primary" {
-  name       = "${var.environment}-${var.pool_name}-${random_id.cluster.hex}"
-  cluster    = google_container_cluster.primary.id
-  node_count = var.node_count
-  version    = var.kubernetes_version
-
+  name     = "${var.environment}-${var.pool_name}-${random_id.cluster.hex}"
+  cluster  = google_container_cluster.primary.id
   location = var.zone
-  node_locations = [
-    var.zone
-  ]
+
+  node_count = var.node_count
+  version    = data.google_container_engine_versions.current.release_channel_default_version["RAPID"]
 
   management {
     auto_repair  = true
@@ -118,4 +114,8 @@ resource "google_container_node_pool" "primary" {
       "https://www.googleapis.com/auth/cloud-platform"
     ]
   }
+
+  depends_on = [
+    google_container_cluster.primary
+  ]
 }

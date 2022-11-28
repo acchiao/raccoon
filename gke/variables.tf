@@ -34,7 +34,7 @@ variable "zone" {
 
 variable "kubernetes_version" {
   type    = string
-  default = "1.22.8-gke.202"
+  default = "1.25.3-gke.800"
 }
 
 variable "master_authorized_network_cidr" {
