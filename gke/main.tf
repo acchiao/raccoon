@@ -18,6 +18,7 @@ resource "google_container_cluster" "primary" {
   initial_node_count       = 1
   remove_default_node_pool = true
   enable_shielded_nodes    = true
+  min_master_version       = data.google_container_engine_versions.current.release_channel_default_version["RAPID"]
 
   # GKE Dataplane V2
   datapath_provider = "ADVANCED_DATAPATH"
@@ -81,7 +82,7 @@ resource "google_container_cluster" "primary" {
 }
 
 resource "google_container_node_pool" "primary" {
-  name     = "${var.environment}-${var.pool_name}-${random_id.cluster.hex}"
+  name     = "${var.pool_name}-${random_id.cluster.hex}"
   cluster  = google_container_cluster.primary.id
   location = var.zone
 

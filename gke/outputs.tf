@@ -6,6 +6,10 @@ output "cluster_version" {
   value = google_container_cluster.primary.master_version
 }
 
+output "node_pool_name" {
+  value = google_container_node_pool.primary.name
+}
+
 output "gcloud_auth" {
   value = "gcloud container clusters get-credentials ${google_container_cluster.primary.name}"
 }
