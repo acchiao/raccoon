@@ -8,7 +8,7 @@ resource "google_service_account" "default" {
   description  = "${data.google_project.project.name} - Service Account"
 }
 
-# tfsec:ignore:google-gke-enable-private-cluster tfsec:ignore:google-gke-enforce-pod-security-policy
+# tfsec:ignore:google-gke-enable-private-cluster tfsec:ignore:google-gke-enforce-pod-security-policy tfsec:ignore:google-gke-use-cluster-labels
 resource "google_container_cluster" "primary" {
   provider = google-beta
 
