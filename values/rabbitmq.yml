@@ -4,7 +4,7 @@ pdb:
 # auth section required for rabbitmq persistence
 fullnameOverride: rabbitmq
 # configuration: |-
-  # loopback_users.guest = false
+#   loopback_users.guest = false
 extraConfiguration: |-
   consumer_timeout = 3000
   log.console = true

@@ -1,4 +1,3 @@
----
 name: CI
 
 on:
@@ -11,25 +10,36 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: ci-${{ github.ref }}
+  group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: false
 
 env:
   TF_VERSION: 1.10.3
 
 jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4.2.2
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: super-linter/super-linter@v7.2.1
+        env:
+          DEFAULT_BRANCH: main
+          DISABLE_ERRORS: true
+          VALIDATE_ALL_CODEBASE: true
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   tfsec:
     name: Static Analysis
     runs-on: ubuntu-24.04
     steps:
-      - name: Checkout ${{ github.ref }} [${{ github.sha }}]
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           persist-credentials: false
-
-      - name: Run tfsec
-        continue-on-error: true
-        run: |
+      - run: |
           wget --no-verbose --show-progress --progress dot:giga https://github.com/aquasecurity/tfsec/releases/download/v1.28.11/tfsec-linux-amd64
           echo "18e2f947a4f0ec74bf6db07245fc81f83930835ef1b5d51d2d5152a6548b5e45  tfsec-linux-amd64" | sha256sum -c
 
@@ -43,29 +53,21 @@ jobs:
           chmod +x tfsec-linux-amd64
           mv -vn tfsec-linux-amd64 /usr/local/bin/tfsec
           tfsec .
+        continue-on-error: true
 
   validate:
     name: Validation
     runs-on: ubuntu-24.04
     steps:
-      - name: Checkout ${{ github.ref }} [${{ github.sha }}]
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           persist-credentials: false
-
-      - name: Setup Terraform v${{ env.TF_VERSION }}
-        uses: hashicorp/setup-terraform@v3.1.2
+      - uses: hashicorp/setup-terraform@v3.1.2
         with:
           terraform_version: ${{ env.TF_VERSION }}
-
-      - name: Initalize Terraform workspace
-        run: terraform init -backend=false
-
-      - name: Validate configuration files
-        run: terraform validate
-
-      - name: Lint configuration files
-        run: terraform fmt -list -diff -recursive -check
+      - run: terraform init -backend=false
+      - run: terraform validate
+      - run: terraform fmt -list -diff -recursive -check
 
   # drift:
   #   name: Drift Detection
@@ -79,32 +81,22 @@ jobs:
   #     - tfsec
   #     - validate
   #   steps:
-  #     - name: Checkout ${{ github.ref }} [${{ github.sha }}]
-  #       uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # v3.0.0
+  #     - uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # v3.0.0
   #       with:
   #         persist-credentials: false
-
-  #     - name: Setup Terraform v${{ env.TF_VERSION }}
-  #       uses: hashicorp/setup-terraform@17d4c9b8043b238f6f35641cdd8433da1e6f3867 # v1.3.2
+  #     - uses: hashicorp/setup-terraform@17d4c9b8043b238f6f35641cdd8433da1e6f3867 # v1.3.2
   #       with:
   #         cli_config_credentials_hostname: app.terraform.io
   #         cli_config_credentials_token: ${{ secrets.TERRAFORM_TOKEN }}
   #         terraform_version: ${{ env.TF_VERSION }}
-
-  #     - name: Initalize Terraform Workspace
-  #       run: terraform init
-
-  #     - name: Detect resource drift
+  #     - run: terraform init
+  #     - run: |
+  #         terraform refresh -var-file=env/core.tfvars
+  #         terraform plan -var-file=env/core.tfvars -out=core.tplan -detailed-exitcode
   #       env:
   #         DIGITALOCEAN_TOKEN: ${{ secrets.DIGITALOCEAN_TOKEN }}
   #         CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-  #       run: |
-  #         terraform refresh -var-file=env/core.tfvars
-  #         terraform plan -var-file=env/core.tfvars -out=core.tplan -detailed-exitcode
-
-  #     - name: Cleanup workspace
-  #       if: always()
-  #       run: |
+  #     - run: |
   #         find . -type f -name "*.tfplan" -print -delete;
   #         find . -type d -name ".terraform" -print -prune -exec rm -rf {} +;
 
@@ -112,13 +104,10 @@ jobs:
   #   name: Snyk IaC
   #   runs-on: ubuntu-24.04
   #   steps:
-  #     - name: Checkout ${{ github.ref }} [${{ github.sha }}]
-  #       uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # v2.4.0
+  #     - uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # v2.4.0
   #       with:
   #         persist-credentials: false
-
-  #     - name: Run snyk iac test
-  #       uses: snyk/actions/iac@14818c4695ecc4045f33c9cee9e795a788711ca4
+  #     - uses: snyk/actions/iac@14818c4695ecc4045f33c9cee9e795a788711ca4
   #       with:
   #         file: main.tf
   #       env:
