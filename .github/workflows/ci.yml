@@ -30,11 +30,11 @@ jobs:
       - name: Run tfsec
         continue-on-error: true
         run: |
-          wget --no-verbose --show-progress --progress dot:giga https://github.com/aquasecurity/tfsec/releases/download/v1.26.3/tfsec-linux-amd64
-          echo "896872247843cc08d4c5b3b3362ca87e8939c2404c6ccb7415a523a114344224  tfsec-linux-amd64" | sha256sum -c
+          wget --no-verbose --show-progress --progress dot:giga https://github.com/aquasecurity/tfsec/releases/download/v1.28.11/tfsec-linux-amd64
+          echo "18e2f947a4f0ec74bf6db07245fc81f83930835ef1b5d51d2d5152a6548b5e45  tfsec-linux-amd64" | sha256sum -c
 
-          wget --no-verbose --show-progress --progress dot:giga https://github.com/aquasecurity/tfsec/releases/download/v1.26.3/tfsec-linux-amd64.D66B222A3EA4C25D5D1A097FC34ACEFB46EC39CE.sig
-          echo "971a7151ed435ee6f8cadea42c838addef92aa063ab66fda97eb063b66a14a15  tfsec-linux-amd64.D66B222A3EA4C25D5D1A097FC34ACEFB46EC39CE.sig" | sha256sum -c
+          wget --no-verbose --show-progress --progress dot:giga https://github.com/aquasecurity/tfsec/releases/download/v1.28.11/tfsec-linux-amd64.D66B222A3EA4C25D5D1A097FC34ACEFB46EC39CE.sig
+          echo "41a0b39f39aa860930aa3c7bddb140da433ba61bd4e445c76585e2afa8d4c772  tfsec-linux-amd64.D66B222A3EA4C25D5D1A097FC34ACEFB46EC39CE.sig" | sha256sum -c
 
           gpg --import < tfsec/tfsec.asc
           gpg --list-keys signing@tfsec.dev
