@@ -36,7 +36,7 @@ jobs:
     name: Static Analysis
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4.2.2
         with:
           persist-credentials: false
       - run: |
@@ -59,7 +59,7 @@ jobs:
     name: Validation
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4.2.2
         with:
           persist-credentials: false
       - uses: hashicorp/setup-terraform@v3.1.2
@@ -81,10 +81,10 @@ jobs:
   #     - tfsec
   #     - validate
   #   steps:
-  #     - uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # v3.0.0
+  #     - uses: actions/checkout@v4.2.2
   #       with:
   #         persist-credentials: false
-  #     - uses: hashicorp/setup-terraform@17d4c9b8043b238f6f35641cdd8433da1e6f3867 # v1.3.2
+  #     - uses: hashicorp/setup-terraform@v3.1.2
   #       with:
   #         cli_config_credentials_hostname: app.terraform.io
   #         cli_config_credentials_token: ${{ secrets.TERRAFORM_TOKEN }}
@@ -99,16 +99,3 @@ jobs:
   #     - run: |
   #         find . -type f -name "*.tfplan" -print -delete;
   #         find . -type d -name ".terraform" -print -prune -exec rm -rf {} +;
-
-  # snyk:
-  #   name: Snyk IaC
-  #   runs-on: ubuntu-24.04
-  #   steps:
-  #     - uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # v2.4.0
-  #       with:
-  #         persist-credentials: false
-  #     - uses: snyk/actions/iac@14818c4695ecc4045f33c9cee9e795a788711ca4
-  #       with:
-  #         file: main.tf
-  #       env:
-  #         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
