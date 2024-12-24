@@ -20,7 +20,7 @@ env:
 jobs:
   tfsec:
     name: Static Analysis
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout ${{ github.ref }} [${{ github.sha }}]
         uses: actions/checkout@v4
@@ -46,7 +46,7 @@ jobs:
 
   validate:
     name: Validation
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout ${{ github.ref }} [${{ github.sha }}]
         uses: actions/checkout@v4
@@ -69,7 +69,7 @@ jobs:
 
   # drift:
   #   name: Drift Detection
-  #   runs-on: ubuntu-20.04
+  #   runs-on: ubuntu-24.04
   #   defaults:
   #     run:
   #       working-directory: core
@@ -110,7 +110,7 @@ jobs:
 
   # snyk:
   #   name: Snyk IaC
-  #   runs-on: ubuntu-20.04
+  #   runs-on: ubuntu-24.04
   #   steps:
   #     - name: Checkout ${{ github.ref }} [${{ github.sha }}]
   #       uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # v2.4.0
