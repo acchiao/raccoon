@@ -1,4 +1,2 @@
-output "kubernetes_available_namespaces" {
-  description = "All available namespaces."
-  value       = data.kubernetes_all_namespaces.raccoon.namespaces
-}
+# Output removed: kubernetes_all_namespaces data source was unused and has been removed for performance
+
