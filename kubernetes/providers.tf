@@ -1,17 +1,13 @@
 provider "kubernetes" {
-  host  = data.terraform_remote_state.raccoon.outputs.kubernetes_endpoint
-  token = data.terraform_remote_state.raccoon.outputs.kubernetes_kube_config[0].token
-  cluster_ca_certificate = base64decode(
-    data.terraform_remote_state.raccoon.outputs.kubernetes_kube_config[0].cluster_ca_certificate
-  )
+  host                   = local.k8s_host
+  token                  = local.k8s_token
+  cluster_ca_certificate = local.k8s_ca_certificate
 }
 
 provider "helm" {
-  kubernetes {
-    host  = data.terraform_remote_state.raccoon.outputs.kubernetes_endpoint
-    token = data.terraform_remote_state.raccoon.outputs.kubernetes_kube_config[0].token
-    cluster_ca_certificate = base64decode(
-      data.terraform_remote_state.raccoon.outputs.kubernetes_kube_config[0].cluster_ca_certificate
-    )
+  kubernetes = {
+    host                   = local.k8s_host
+    token                  = local.k8s_token
+    cluster_ca_certificate = local.k8s_ca_certificate
   }
 }

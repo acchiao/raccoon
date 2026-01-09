@@ -4,5 +4,7 @@
 *.cert
 *.crt
 *.key
+*.zip
+LICENSE.txt
 
 external-dns-values.yaml

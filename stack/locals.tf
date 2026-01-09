@@ -1,4 +1,8 @@
 locals {
+  # Cache remote state outputs to reduce repeated lookups
+  core_project_prefix = data.tfe_outputs.raccoon.values.core_project_prefix
+  core_region         = data.tfe_outputs.raccoon.values.core_region
+
   # Standardized naming prefix
   prefix = "${var.project_name}-${var.environment}-${var.region}"
 

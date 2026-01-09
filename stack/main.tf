@@ -24,22 +24,22 @@ resource "digitalocean_record" "github" {
 }
 
 resource "digitalocean_vpc" "raccoon" {
-  name   = "${data.terraform_remote_state.raccoon.outputs.core_project_prefix}-${var.environment}-${data.terraform_remote_state.raccoon.outputs.core_region}-vpc"
-  region = data.terraform_remote_state.raccoon.outputs.core_region
+  name   = "${local.core_project_prefix}-${var.environment}-${local.core_region}-vpc"
+  region = local.core_region
 }
 
 resource "digitalocean_kubernetes_cluster" "raccoon" {
-  name   = "${data.terraform_remote_state.raccoon.outputs.core_project_prefix}-${var.environment}-cluster"
-  region = data.terraform_remote_state.raccoon.outputs.core_region
+  name   = "${local.core_project_prefix}-${var.environment}-cluster"
+  region = local.core_region
 
-  version  = data.digitalocean_kubernetes_versions.prefix.latest_version
+  version  = data.digitalocean_kubernetes_versions.latest.latest_version
   vpc_uuid = digitalocean_vpc.raccoon.id
 
   auto_upgrade  = true
   surge_upgrade = true
 
   node_pool {
-    name = "${data.terraform_remote_state.raccoon.outputs.core_project_prefix}-${var.environment}-pool"
+    name = "${local.core_project_prefix}-${var.environment}-pool"
     size = var.cluster_size
 
     # Uncomment node_count to explicitly reset the number of nodes to this value

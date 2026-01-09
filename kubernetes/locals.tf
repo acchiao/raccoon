@@ -1,4 +1,11 @@
 locals {
+  # Cache Kubernetes cluster connection details to avoid duplication
+  k8s_host  = data.tfe_outputs.raccoon.values.kubernetes_endpoint
+  k8s_token = data.tfe_outputs.raccoon.values.kubernetes_kube_config[0].token
+  k8s_ca_certificate = base64decode(
+    data.tfe_outputs.raccoon.values.kubernetes_kube_config[0].cluster_ca_certificate
+  )
+
   # Standardized naming prefix
   prefix = "${var.project_name}-${var.environment}-${var.region}"
 
