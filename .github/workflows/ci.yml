@@ -21,7 +21,7 @@ jobs:
     name: Lint
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v6.0.1
+      - uses: actions/checkout@v6.0.2
         with:
           persist-credentials: false
           fetch-depth: 0
@@ -36,7 +36,7 @@ jobs:
     name: Static Analysis
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v6.0.1
+      - uses: actions/checkout@v6.0.2
         with:
           persist-credentials: false
       - run: |
@@ -59,7 +59,7 @@ jobs:
     name: Validation
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v6.0.1
+      - uses: actions/checkout@v6.0.2
         with:
           persist-credentials: false
       - uses: hashicorp/setup-terraform@v3.1.2
@@ -81,7 +81,7 @@ jobs:
   #     - tfsec
   #     - validate
   #   steps:
-  #     - uses: actions/checkout@v6.0.1
+  #     - uses: actions/checkout@v6.0.2
   #       with:
   #         persist-credentials: false
   #     - uses: hashicorp/setup-terraform@v3.1.2
