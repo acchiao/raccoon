@@ -3,8 +3,9 @@
 
 provider "registry.terraform.io/digitalocean/digitalocean" {
   version     = "2.74.0"
-  constraints = "~> 2.74.0"
+  constraints = "~> 2.74"
   hashes = [
+    "h1:24sBR9qEEmSX1FzUwKBkv+tOp+t73in7DaRmjsdjxlg=",
     "h1:W0+vdTgJFZp/rXK3CAloLAvyumRLZAhnhWu/6Fnmwhk=",
     "zh:0f92614e594ba80fdda0be9167de9abae0b627402ddeba1ec7140039d3aab992",
     "zh:3982d12b3b94f9c65bf1fd846684575659ffe079f49f598da417dad4aacd0429",
@@ -27,10 +28,9 @@ provider "registry.terraform.io/digitalocean/digitalocean" {
 
 provider "registry.terraform.io/hashicorp/random" {
   version     = "3.8.1"
-  constraints = "~> 3.8.0"
+  constraints = "~> 3.8"
   hashes = [
     "h1:Eexl06+6J+s75uD46+WnZtpJZYRVUMB0AiuPBifK6Jc=",
-    "h1:fdfOl1HabDT42XLH8qjmfTbVZpgQZ5lyOyOa+GQhm0w=",
     "h1:u8AKlWVDTH5r9YLSeswoVEjiY72Rt4/ch7U+61ZDkiQ=",
     "zh:08dd03b918c7b55713026037c5400c48af5b9f468f483463321bd18e17b907b4",
     "zh:0eee654a5542dc1d41920bbf2419032d6f0d5625b03bd81339e5b33394a3e0ae",
@@ -49,11 +49,10 @@ provider "registry.terraform.io/hashicorp/random" {
 
 provider "registry.terraform.io/hashicorp/tfe" {
   version     = "0.73.0"
-  constraints = "~> 0.73.0"
+  constraints = "~> 0.73"
   hashes = [
     "h1:L17oEwUCCIM/BTHFiT4QFUNvr0riGjvraFnUOilPuGE=",
     "h1:ZNeSgNWA/SdS9sBIEeg6w3eQtcHlORZRpdk8Ie3R7Ag=",
-    "h1:nEpaJhjIWHoajso2sW++RDh0A1TmkR1SyGyHGLs6+F4=",
     "zh:063efb04537080f009e3cc4f2402c7d6c583b51ed29af5b1e7575af677e0643b",
     "zh:284ca57835ebdaa2c8aad5881ab0712603c3ccc1654fdb43138e207e3f6272d6",
     "zh:3f5283dfa57c54ae4503c4aca32b28a8ca403bf18823f09723f64966fc4d2757",
