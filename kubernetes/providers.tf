@@ -7,7 +7,7 @@ provider "kubernetes" {
 }
 
 provider "helm" {
-  kubernetes {
+  kubernetes = {
     host  = data.terraform_remote_state.raccoon.outputs.kubernetes_endpoint
     token = data.terraform_remote_state.raccoon.outputs.kubernetes_kube_config[0].token
     cluster_ca_certificate = base64decode(
