@@ -1,23 +1,43 @@
 ---
 version: 2
+
 updates:
-  - package-ecosystem: "github-actions"
-    directory: "/"
+  - package-ecosystem: github-actions
+    directory: /
     schedule:
-      interval: "daily"
-  - package-ecosystem: "terraform"
-    directory: "core"
+      interval: cron
+      cronjob: 0 */2 * * *
+    assignees:
+      - acchiao
+
+  - package-ecosystem: terraform
+    directory: core
     schedule:
-      interval: "daily"
-  - package-ecosystem: "terraform"
-    directory: "stack"
+      interval: cron
+      cronjob: 0 */2 * * *
+    assignees:
+      - acchiao
+
+  - package-ecosystem: terraform
+    directory: stack
     schedule:
-      interval: "daily"
-  - package-ecosystem: "terraform"
-    directory: "kubernetes"
+      interval: cron
+      cronjob: 0 */2 * * *
+    assignees:
+      - acchiao
+
+  - package-ecosystem: terraform
+    directory: kubernetes
     schedule:
-      interval: "daily"
-  - package-ecosystem: "terraform"
-    directory: "gke"
+      interval: cron
+      cronjob: 0 */2 * * *
+    assignees:
+      - acchiao
+
+  - package-ecosystem: terraform
+    directory: gke
     schedule:
-      interval: "daily"
+      interval: cron
+      cronjob: 0 */2 * * *
+    assignees:
+      - acchiao
