@@ -5,8 +5,7 @@ updates:
     directory: /
     schedule:
       timezone: America/Los_Angeles
-      interval: weekly
-      day: monday
+      interval: daily
       time: "09:00"
     commit-message:
       prefix: build
@@ -17,8 +16,7 @@ updates:
     directory: core
     schedule:
       timezone: America/Los_Angeles
-      interval: weekly
-      day: monday
+      interval: daily
       time: "09:00"
     commit-message:
       prefix: build
@@ -29,8 +27,7 @@ updates:
     directory: stack
     schedule:
       timezone: America/Los_Angeles
-      interval: weekly
-      day: monday
+      interval: daily
       time: "09:00"
     commit-message:
       prefix: build
@@ -41,8 +38,7 @@ updates:
     directory: kubernetes
     schedule:
       timezone: America/Los_Angeles
-      interval: weekly
-      day: monday
+      interval: daily
       time: "09:00"
     commit-message:
       prefix: build
@@ -53,8 +49,7 @@ updates:
     directory: gke
     schedule:
       timezone: America/Los_Angeles
-      interval: weekly
-      day: monday
+      interval: daily
       time: "09:00"
     commit-message:
       prefix: build
