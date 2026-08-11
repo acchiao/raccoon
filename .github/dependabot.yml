@@ -55,3 +55,14 @@ updates:
       prefix: build
       include: scope
     open-pull-requests-limit: 20
+
+  - package-ecosystem: pre-commit
+    directory: /
+    schedule:
+      timezone: America/Los_Angeles
+      interval: daily
+      time: "09:00"
+    commit-message:
+      prefix: build
+      include: scope
+    open-pull-requests-limit: 20
